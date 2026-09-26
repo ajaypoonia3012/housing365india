@@ -1,0 +1,488 @@
+@extends('layouts.app')
+
+@section('title', $property->title . ' | Housing 365')
+@section('meta_description', Str::limit(strip_tags($property->description), 150))
+
+@section('content')
+
+<!-- ── BREADCRUMB ── -->
+<div class="bg-white border-b border-slate-100 py-3.5 text-xs text-slate-500">
+    <div class="mx-auto w-full max-w-[1720px] px-4 sm:px-8 lg:px-12 xl:px-16 flex items-center space-x-2">
+        <a href="{{ route('home') }}" class="hover:text-brand-cyan transition font-medium">Home</a>
+        <span class="text-slate-300">/</span>
+        <a href="{{ route('properties.index') }}" class="hover:text-brand-cyan transition font-medium">Properties</a>
+        <span class="text-slate-300">/</span>
+        <span class="text-brand-navy font-bold truncate max-w-xs">{{ $property->title }}</span>
+    </div>
+</div>
+
+<!-- ── PROPERTY DETAILS ── -->
+<section class="py-10 sm:py-14 lg:py-16 bg-[#F8FAFD]">
+    <div class="mx-auto w-full max-w-[1720px] px-4 sm:px-8 lg:px-12 xl:px-16">
+        
+        <!-- Header Row -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8 bg-white p-6 sm:p-8 rounded-3xl border border-slate-200/80 shadow-sm">
+            <div>
+                <div class="flex flex-wrap items-center gap-2 mb-3">
+                    <span class="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-brand-navy text-white">
+                        {{ $property->property_type }}
+                    </span>
+                    <span class="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-800">
+                        {{ $property->status }}
+                    </span>
+                    <span class="text-xs text-slate-400 font-semibold">&bull; Suite ID: H365-{{ $property->id + 1000 }}</span>
+                </div>
+                <h1 class="font-display text-2xl sm:text-3xl lg:text-4xl font-normal text-brand-navy tracking-tight">{{ $property->title }}</h1>
+                <p class="text-slate-500 text-xs sm:text-sm mt-2 flex items-center gap-1.5">
+                    <i class="fa-solid fa-location-dot text-brand-cyan"></i>
+                    <span>{{ $property->address }}, {{ $property->city }}, {{ $property->state }} {{ $property->postal_code }}</span>
+                </p>
+            </div>
+
+            <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                <div class="bg-[#F8FAFD] p-5 rounded-2xl border border-slate-200/80 text-left md:text-right md:min-w-[200px]">
+                    <span class="text-xs text-slate-400 font-bold uppercase tracking-wider block">Monthly Rental</span>
+                    <div class="flex items-baseline md:justify-end gap-1 my-1">
+                        <span class="font-display text-3xl sm:text-4xl font-normal text-brand-navy">₹{{ number_format($property->price, 0) }}</span>
+                        <span class="text-xs font-semibold text-slate-500">/{{ $property->price_frequency }}</span>
+                    </div>
+                    <span class="text-[11px] text-emerald-600 font-bold flex items-center md:justify-end gap-1.5">
+                        <i class="fa-solid fa-circle-check text-xs"></i> 75-Point Inspection Passed
+                    </span>
+                </div>
+                <button type="button" onclick="openTourModal()" class="w-full sm:w-auto px-6 py-4 rounded-2xl bg-brand-cyan hover:bg-brand-cyan-hover text-white text-xs sm:text-sm font-bold uppercase tracking-wider shadow-lg shadow-brand-cyan/30 flex items-center justify-center gap-2 transition hover:-translate-y-0.5">
+                    <i class="fa-regular fa-calendar-check text-base"></i>
+                    Schedule a Tour
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Property Hero Showcase -->
+        <div class="rounded-3xl overflow-hidden shadow-2xl h-[400px] sm:h-[500px] lg:h-[560px] bg-slate-900 relative mb-12 border border-slate-200/80">
+            <img src="{{ $property->image ?? '/city-placeholder-c.svg' }}" 
+                 alt="{{ $property->title }}" 
+                 onerror="this.src='/city-placeholder-c.svg'"
+                 class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent"></div>
+            
+            <div class="absolute bottom-6 left-6 right-6 flex flex-wrap justify-between items-end gap-4">
+                <span class="px-4 py-2 rounded-xl bg-slate-950/70 backdrop-blur-md text-white text-xs font-bold border border-white/10 flex items-center gap-2">
+                    <i class="fa-solid fa-camera text-brand-cyan"></i>
+                    High-Definition Architectural Tour
+                </span>
+                <button type="button" onclick="openTourModal()" class="px-5 py-2.5 rounded-xl bg-brand-cyan/90 hover:bg-brand-cyan backdrop-blur-md text-white text-xs font-bold uppercase tracking-wider border border-white/20 flex items-center gap-2 shadow-lg transition">
+                    <i class="fa-regular fa-calendar-check"></i> Book Showing Slot
+                </button>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12">
+            <!-- Left 8 Cols: Specs, Story & Amenities -->
+            <div class="lg:col-span-8 space-y-10">
+                <!-- Key Specs Grid -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 bg-white p-6 sm:p-7 rounded-3xl border border-slate-200/80 shadow-sm text-center">
+                    <div class="p-4 bg-[#F8FAFD] rounded-2xl border border-slate-100">
+                        <span class="block text-slate-400 text-xs font-bold uppercase tracking-wider mb-1"><i class="fa-solid fa-bed text-brand-cyan mr-1"></i> Configuration</span>
+                        <span class="font-display text-xl sm:text-2xl font-normal text-brand-navy">{{ $property->bedrooms }} BHK Apartment / Home</span>
+                    </div>
+                    <div class="p-4 bg-[#F8FAFD] rounded-2xl border border-slate-100">
+                        <span class="block text-slate-400 text-xs font-bold uppercase tracking-wider mb-1"><i class="fa-solid fa-bath text-brand-cyan mr-1"></i> Bathrooms</span>
+                        <span class="font-display text-xl sm:text-2xl font-normal text-brand-navy">{{ $property->bathrooms }} Bath{{ $property->bathrooms > 1 ? 's' : '' }}</span>
+                    </div>
+                    <div class="p-4 bg-[#F8FAFD] rounded-2xl border border-slate-100">
+                        <span class="block text-slate-400 text-xs font-bold uppercase tracking-wider mb-1"><i class="fa-solid fa-ruler-combined text-brand-cyan mr-1"></i> Area</span>
+                        <span class="font-display text-xl sm:text-2xl font-normal text-brand-navy">{{ $property->sqft ? $property->sqft . ' Sq Ft' : 'Spacious' }}</span>
+                    </div>
+                    <div class="p-4 bg-[#F8FAFD] rounded-2xl border border-slate-100">
+                        <span class="block text-slate-400 text-xs font-bold uppercase tracking-wider mb-1"><i class="fa-solid fa-key text-brand-cyan mr-1"></i> Move-In</span>
+                        <span class="font-display text-xl sm:text-2xl font-normal text-brand-navy">Immediate</span>
+                    </div>
+                </div>
+
+                <!-- Description Card -->
+                <div class="bg-white p-8 sm:p-10 rounded-3xl border border-slate-200/80 shadow-sm">
+                    <h3 class="font-display text-2xl font-normal text-brand-navy mb-4 pb-4 border-b border-slate-100">About This Residence</h3>
+                    <div class="text-slate-600 text-sm sm:text-base leading-relaxed space-y-4">
+                        <p>{{ $property->description }}</p>
+                    </div>
+                </div>
+
+                <!-- Amenities -->
+                @if($property->amenities && is_array($property->amenities))
+                <div class="bg-white p-8 sm:p-10 rounded-3xl border border-slate-200/80 shadow-sm">
+                    <h3 class="font-display text-2xl font-normal text-brand-navy mb-6 pb-4 border-b border-slate-100">Features & Building Amenities</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        @foreach($property->amenities as $amenity)
+                            <div class="flex items-center text-sm text-slate-700 gap-3">
+                                <div class="size-6 rounded-full bg-brand-cyan/10 text-brand-cyan flex items-center justify-center text-xs shrink-0">
+                                    <i class="fa-solid fa-check"></i>
+                                </div>
+                                <span class="font-medium">{{ $amenity }}</span>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+                @endif
+
+                <!-- Lease Terms & Policy -->
+                <div class="bg-white p-8 sm:p-10 rounded-3xl border border-slate-200/80 shadow-sm">
+                    <h3 class="font-display text-2xl font-normal text-brand-navy mb-4 pb-4 border-b border-slate-100">Housing 365 Resident Assurance</h3>
+                    <ul class="space-y-3.5 text-xs sm:text-sm text-slate-600">
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-circle-check text-brand-cyan text-sm mt-0.5"></i>
+                            <span><strong>Standard Legal Tenancy Lease:</strong> Fully compliant with provincial and state residential tenancy boards.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-circle-check text-brand-cyan text-sm mt-0.5"></i>
+                            <span><strong>Rapid Digital Verification:</strong> Fast application approval within 24-48 business hours with verified credit checks.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-circle-check text-brand-cyan text-sm mt-0.5"></i>
+                            <span><strong>24/7 Concierge & Maintenance Portal:</strong> Direct emergency support and ticket tracking throughout your tenancy.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Right 4 Cols: Booking & Tour Application Form -->
+            <div class="lg:col-span-4">
+                <div class="sticky top-28 bg-white p-8 rounded-3xl border border-slate-200/80 shadow-xl">
+                    <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-brand-cyan/10 text-brand-cyan mb-3">
+                        <span class="size-1.5 rounded-full bg-brand-cyan"></span> Instant Showing
+                    </span>
+                    <h3 class="font-display text-2xl font-normal text-brand-navy mb-1">Book a Tour / Apply</h3>
+                    <p class="text-xs text-slate-500 mb-6">Schedule an in-person or live virtual showing with our property specialist.</p>
+
+                    <form action="{{ route('inquiry.store') }}" method="POST" class="space-y-4">
+                        @csrf
+                        <div class="hidden" style="display:none !important;" aria-hidden="true">
+                            <label for="website_url_hp">Security Check - Leave Empty</label>
+                            <input type="text" name="website_url_hp" id="website_url_hp" tabindex="-1" autocomplete="off">
+                        </div>
+                        <input type="hidden" name="service_type" value="Property Tour / Application">
+                        <input type="hidden" name="subject" value="Inquiry for {{ $property->title }} (ID: {{ $property->id }})">
+
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">Your Full Name *</label>
+                            <input type="text" name="name" required class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-4 py-2.5 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-brand-cyan focus:border-brand-cyan transition" placeholder="Jane Doe">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">Email Address *</label>
+                            <input type="email" name="email" required class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-4 py-2.5 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-brand-cyan focus:border-brand-cyan transition" placeholder="jane@example.com">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">Phone Number</label>
+                            <input type="tel" name="phone" class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-4 py-2.5 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-brand-cyan focus:border-brand-cyan transition" placeholder="+1 (555) 000-0000">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">Preferred Date / Message</label>
+                            <textarea name="message" rows="3" required class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-4 py-2.5 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-brand-cyan focus:border-brand-cyan transition" placeholder="I would like to schedule a tour this weekend..."></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full py-3.5 px-4 rounded-xl bg-brand-cyan hover:bg-brand-cyan-hover text-white font-bold text-xs uppercase tracking-wider shadow-lg shadow-brand-cyan/25 transition-all duration-200 hover:-translate-y-0.5">
+                            Submit Inquiry & Book Tour
+                        </button>
+
+                        <p class="text-[11px] text-center text-slate-400 mt-3 flex items-center justify-center gap-1">
+                            <i class="fa-solid fa-lock text-[10px]"></i> Your information is private & encrypted.
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ── SCHEDULE TOUR MODAL ── -->
+<div id="tourModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-950/75 backdrop-blur-sm transition-opacity duration-300" role="dialog" aria-modal="true">
+    <div class="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl relative max-h-[92vh] overflow-y-auto border border-slate-100">
+        <!-- Close Button -->
+        <button type="button" onclick="closeTourModal()" class="absolute top-5 right-5 size-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 flex items-center justify-center text-sm transition">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <!-- Initial Form State -->
+        <div id="tourFormContainer">
+            <div class="mb-5 pr-8">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-brand-cyan/10 text-brand-cyan mb-2">
+                    <span class="size-1.5 rounded-full bg-brand-cyan animate-pulse"></span> Instant Tour Booking
+                </span>
+                <h3 class="font-display text-2xl font-bold text-brand-navy">Schedule a Showing</h3>
+                <p class="text-xs text-slate-500 mt-0.5 truncate">{{ $property->title }} &bull; {{ $property->city }}, {{ $property->state }}</p>
+            </div>
+
+            <!-- Tour Type Selector -->
+            <div class="mb-6">
+                <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">Select Tour Experience</label>
+                <div class="grid grid-cols-2 gap-3">
+                    <button type="button" id="tourTypeInPerson" onclick="setTourType('In-Person Tour')" class="flex items-center justify-center gap-2 p-3 rounded-2xl border-2 border-brand-cyan bg-brand-cyan/5 text-brand-navy text-xs font-bold transition">
+                        <i class="fa-solid fa-person-walking text-brand-cyan"></i>
+                        <span>In-Person Tour</span>
+                    </button>
+                    <button type="button" id="tourTypeVideo" onclick="setTourType('Live Video Walkthrough')" class="flex items-center justify-center gap-2 p-3 rounded-2xl border-2 border-slate-200 hover:border-slate-300 bg-white text-slate-600 text-xs font-bold transition">
+                        <i class="fa-solid fa-video text-slate-400"></i>
+                        <span>Live Video Tour</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Date Picker Carousel -->
+            <div class="mb-6">
+                <div class="flex items-center justify-between mb-2">
+                    <label class="text-xs font-bold uppercase tracking-wider text-slate-700">Choose Showing Date</label>
+                    <span id="selectedDateLabel" class="text-xs font-bold text-brand-cyan"></span>
+                </div>
+                <div id="datesContainer" class="flex gap-2.5 overflow-x-auto pb-2 scrollbar-thin">
+                    <!-- Dynamic Date Buttons rendered by JS -->
+                </div>
+            </div>
+
+            <!-- Time Slots Grid -->
+            <div class="mb-6">
+                <div class="flex items-center justify-between mb-2">
+                    <label class="text-xs font-bold uppercase tracking-wider text-slate-700">Available Time Slots</label>
+                    <span id="selectedTimeLabel" class="text-xs font-bold text-brand-cyan"></span>
+                </div>
+                <div id="slotsGrid" class="grid grid-cols-3 gap-2.5">
+                    <button type="button" onclick="selectSlot('10:00 AM', this)" class="slot-btn p-2.5 rounded-xl border border-slate-200 hover:border-brand-cyan text-center text-xs font-bold text-slate-700 hover:text-brand-navy transition">10:00 AM</button>
+                    <button type="button" onclick="selectSlot('11:30 AM', this)" class="slot-btn p-2.5 rounded-xl border border-slate-200 hover:border-brand-cyan text-center text-xs font-bold text-slate-700 hover:text-brand-navy transition">11:30 AM</button>
+                    <button type="button" onclick="selectSlot('1:00 PM', this)" class="slot-btn p-2.5 rounded-xl border border-slate-200 hover:border-brand-cyan text-center text-xs font-bold text-slate-700 hover:text-brand-navy transition">1:00 PM</button>
+                    <button type="button" onclick="selectSlot('2:30 PM', this)" class="slot-btn p-2.5 rounded-xl border border-slate-200 hover:border-brand-cyan text-center text-xs font-bold text-slate-700 hover:text-brand-navy transition">2:30 PM</button>
+                    <button type="button" onclick="selectSlot('4:00 PM', this)" class="slot-btn p-2.5 rounded-xl border border-slate-200 hover:border-brand-cyan text-center text-xs font-bold text-slate-700 hover:text-brand-navy transition">4:00 PM</button>
+                    <button type="button" onclick="selectSlot('5:30 PM', this)" class="slot-btn p-2.5 rounded-xl border border-slate-200 hover:border-brand-cyan text-center text-xs font-bold text-slate-700 hover:text-brand-navy transition">5:30 PM</button>
+                </div>
+            </div>
+
+            <!-- Contact Information Form -->
+            <form id="tourBookingForm" onsubmit="handleTourSubmit(event)" class="space-y-4">
+                <input type="hidden" id="tourTypeInput" name="tour_type" value="In-Person Tour">
+                <input type="hidden" id="selectedDateInput" name="showing_date" value="">
+                <input type="hidden" id="selectedTimeInput" name="showing_time" value="10:00 AM">
+                <input type="hidden" name="property_id" value="{{ $property->id }}">
+                <input type="hidden" name="property_title" value="{{ $property->title }}">
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">First Name *</label>
+                        <input type="text" id="tourFirstName" required class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-3.5 py-2 text-xs focus:ring-2 focus:ring-brand-cyan outline-none" placeholder="Alex">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Last Name *</label>
+                        <input type="text" id="tourLastName" required class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-3.5 py-2 text-xs focus:ring-2 focus:ring-brand-cyan outline-none" placeholder="Smith">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Email *</label>
+                        <input type="email" id="tourEmail" required class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-3.5 py-2 text-xs focus:ring-2 focus:ring-brand-cyan outline-none" placeholder="alex@example.com">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Phone Number *</label>
+                        <input type="tel" id="tourPhone" required class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-3.5 py-2 text-xs focus:ring-2 focus:ring-brand-cyan outline-none" placeholder="+1 (555) 000-0000">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Target Move-In Date</label>
+                    <input type="date" id="tourMoveIn" class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-3.5 py-2 text-xs focus:ring-2 focus:ring-brand-cyan outline-none">
+                </div>
+
+                <div id="tourSubmitError" class="hidden p-3 rounded-xl bg-red-50 text-red-700 text-xs font-semibold"></div>
+
+                <button type="submit" id="tourSubmitBtn" class="w-full py-3.5 px-4 rounded-xl bg-brand-cyan hover:bg-brand-cyan-hover text-white font-bold text-xs uppercase tracking-wider shadow-lg shadow-brand-cyan/25 flex items-center justify-center gap-2 transition hover:-translate-y-0.5">
+                    <span id="tourSubmitText">Confirm & Schedule Tour</span>
+                    <i id="tourSpinner" class="fa-solid fa-spinner fa-spin hidden"></i>
+                </button>
+            </form>
+        </div>
+
+        <!-- Success Confirmation State -->
+        <div id="tourSuccessContainer" class="hidden text-center py-8">
+            <div class="size-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-3xl mx-auto mb-4 animate-bounce">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <h3 class="font-display text-2xl font-bold text-brand-navy mb-2">Tour Request Confirmed!</h3>
+            <p class="text-xs sm:text-sm text-slate-600 max-w-sm mx-auto mb-6">
+                Your tour for <strong class="text-brand-navy">{{ $property->title }}</strong> has been scheduled. A showing specialist has received your request and will send calendar confirmation shortly.
+            </p>
+            <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 max-w-xs mx-auto text-left text-xs space-y-1.5 mb-6">
+                <div><span class="text-slate-400 font-semibold">Date:</span> <strong id="confirmDate" class="text-slate-800"></strong></div>
+                <div><span class="text-slate-400 font-semibold">Time:</span> <strong id="confirmTime" class="text-slate-800"></strong></div>
+                <div><span class="text-slate-400 font-semibold">Type:</span> <strong id="confirmType" class="text-slate-800"></strong></div>
+            </div>
+            <button type="button" onclick="closeTourModal()" class="px-6 py-2.5 rounded-xl bg-brand-navy hover:bg-brand-navy-hover text-white text-xs font-bold uppercase tracking-wider transition">
+                Done
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+let currentTourType = 'In-Person Tour';
+let currentSelectedDate = '';
+let currentSelectedTime = '10:00 AM';
+
+function generateTourDates() {
+    const container = document.getElementById('datesContainer');
+    if (!container) return;
+    container.innerHTML = '';
+
+    const days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+    const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+
+    let dateObj = new Date();
+    let count = 0;
+
+    while (count < 7) {
+        dateObj.setDate(dateObj.getDate() + 1);
+        const dayIdx = dateObj.getDay();
+        if (dayIdx !== 0 && dayIdx !== 6) { // skip weekends
+            const yyyy = dateObj.getFullYear();
+            const mm = String(dateObj.getMonth() + 1).padStart(2, '0');
+            const dd = String(dateObj.getDate()).padStart(2, '0');
+            const dateStr = `${yyyy}-${mm}-${dd}`;
+            const dayName = days[dayIdx];
+            const monthName = months[dateObj.getMonth()];
+            const dayNum = dateObj.getDate();
+
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = `date-btn shrink-0 flex flex-col items-center justify-center p-3 rounded-2xl border min-w-[70px] text-center transition ${count === 0 ? 'border-brand-cyan bg-brand-cyan text-white shadow-md' : 'border-slate-200 hover:border-brand-cyan bg-slate-50 text-slate-700'}`;
+            btn.innerHTML = `
+                <span class="text-[10px] font-bold uppercase tracking-wider ${count === 0 ? 'text-white/80' : 'text-slate-400'}">${dayName}</span>
+                <span class="font-display text-lg font-bold my-0.5">${dayNum}</span>
+                <span class="text-[9px] uppercase font-bold ${count === 0 ? 'text-white/90' : 'text-slate-500'}">${monthName}</span>
+            `;
+
+            btn.onclick = () => selectDate(dateStr, `${dayName}, ${monthName} ${dayNum}`, btn);
+            container.appendChild(btn);
+
+            if (count === 0) {
+                currentSelectedDate = dateStr;
+                document.getElementById('selectedDateInput').value = dateStr;
+                document.getElementById('selectedDateLabel').innerText = `${dayName}, ${monthName} ${dayNum}`;
+            }
+
+            count++;
+        }
+    }
+}
+
+function selectDate(dateStr, label, element) {
+    currentSelectedDate = dateStr;
+    document.getElementById('selectedDateInput').value = dateStr;
+    document.getElementById('selectedDateLabel').innerText = label;
+
+    document.querySelectorAll('.date-btn').forEach(b => {
+        b.className = 'date-btn shrink-0 flex flex-col items-center justify-center p-3 rounded-2xl border min-w-[70px] text-center transition border-slate-200 hover:border-brand-cyan bg-slate-50 text-slate-700';
+    });
+    element.className = 'date-btn shrink-0 flex flex-col items-center justify-center p-3 rounded-2xl border min-w-[70px] text-center transition border-brand-cyan bg-brand-cyan text-white shadow-md';
+}
+
+function selectSlot(timeStr, element) {
+    currentSelectedTime = timeStr;
+    document.getElementById('selectedTimeInput').value = timeStr;
+    document.getElementById('selectedTimeLabel').innerText = timeStr;
+
+    document.querySelectorAll('.slot-btn').forEach(b => {
+        b.className = 'slot-btn p-2.5 rounded-xl border border-slate-200 hover:border-brand-cyan text-center text-xs font-bold text-slate-700 hover:text-brand-navy transition';
+    });
+    element.className = 'slot-btn p-2.5 rounded-xl border-2 border-brand-cyan bg-brand-cyan/10 text-center text-xs font-bold text-brand-navy transition';
+}
+
+function setTourType(type) {
+    currentTourType = type;
+    document.getElementById('tourTypeInput').value = type;
+    const inPersonBtn = document.getElementById('tourTypeInPerson');
+    const videoBtn = document.getElementById('tourTypeVideo');
+
+    if (type === 'In-Person Tour') {
+        inPersonBtn.className = 'flex items-center justify-center gap-2 p-3 rounded-2xl border-2 border-brand-cyan bg-brand-cyan/5 text-brand-navy text-xs font-bold transition';
+        videoBtn.className = 'flex items-center justify-center gap-2 p-3 rounded-2xl border-2 border-slate-200 hover:border-slate-300 bg-white text-slate-600 text-xs font-bold transition';
+    } else {
+        videoBtn.className = 'flex items-center justify-center gap-2 p-3 rounded-2xl border-2 border-brand-cyan bg-brand-cyan/5 text-brand-navy text-xs font-bold transition';
+        inPersonBtn.className = 'flex items-center justify-center gap-2 p-3 rounded-2xl border-2 border-slate-200 hover:border-slate-300 bg-white text-slate-600 text-xs font-bold transition';
+    }
+}
+
+function openTourModal() {
+    const modal = document.getElementById('tourModal');
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+    generateTourDates();
+}
+
+function closeTourModal() {
+    const modal = document.getElementById('tourModal');
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+    document.body.style.overflow = '';
+}
+
+async function handleTourSubmit(e) {
+    e.preventDefault();
+    const errorEl = document.getElementById('tourSubmitError');
+    const submitBtn = document.getElementById('tourSubmitBtn');
+    const spinnerText = document.getElementById('tourSubmitText');
+    const spinner = document.getElementById('tourSpinner');
+
+    errorEl.classList.add('hidden');
+    submitBtn.disabled = true;
+    spinnerText.innerText = 'Scheduling Tour...';
+    spinner.classList.remove('hidden');
+
+    const firstName = document.getElementById('tourFirstName').value;
+    const lastName = document.getElementById('tourLastName').value;
+    const email = document.getElementById('tourEmail').value;
+    const phone = document.getElementById('tourPhone').value;
+    const moveIn = document.getElementById('tourMoveIn').value;
+
+    const payload = {
+        name: `${firstName} ${lastName}`,
+        email: email,
+        phone: phone,
+        service_type: 'Property Tour',
+        subject: `Tour Request: ${currentTourType} for {{ $property->title }}`,
+        message: `Preferred Tour Date: ${currentSelectedDate}\nTime Slot: ${currentSelectedTime}\nTour Type: ${currentTourType}\nTarget Move-in: ${moveIn || 'Immediate'}\nProperty: {{ $property->title }} (ID: {{ $property->id }})`,
+        _token: '{{ csrf_token() }}'
+    };
+
+    try {
+        const res = await fetch('{{ route("inquiry.store") }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify(payload)
+        });
+
+        if (res.ok) {
+            document.getElementById('tourFormContainer').classList.add('hidden');
+            document.getElementById('confirmDate').innerText = currentSelectedDate;
+            document.getElementById('confirmTime').innerText = currentSelectedTime;
+            document.getElementById('confirmType').innerText = currentTourType;
+            document.getElementById('tourSuccessContainer').classList.remove('hidden');
+        } else {
+            const data = await res.json().catch(() => ({}));
+            throw new Error(data.message || 'Unable to schedule tour. Please try again or contact us directly.');
+        }
+    } catch (err) {
+        errorEl.innerText = err.message || 'An error occurred while booking. Please try again.';
+        errorEl.classList.remove('hidden');
+    } finally {
+        submitBtn.disabled = false;
+        spinnerText.innerText = 'Confirm & Schedule Tour';
+        spinner.classList.add('hidden');
+    }
+}
+</script>
+
+@endsection

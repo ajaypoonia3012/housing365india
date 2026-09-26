@@ -1,0 +1,18 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Deny direct access to sensitive config files, dotfiles, source files, and database files
+    <FilesMatch "(^\.|\.(env|log|yml|yaml|ini|sh|sql|sqlite|bak|config|dist|md|json|lock))$">
+        Require all denied
+    </FilesMatch>
+
+    # Deny access to sensitive directories if root is targeted
+    RewriteRule ^(\.git|vendor|storage|bootstrap|config|database|app|routes) - [F,L,NC]
+
+    # Forward all traffic to the public directory
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteRule ^(.*)$ public/$1 [L,QSA]
+</IfModule>
+
+# Disable directory browsing
+Options -Indexes

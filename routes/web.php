@@ -1,0 +1,41 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FrontendController;
+use App\Http\Controllers\PropertyListingController;
+use App\Http\Controllers\BlogController;
+
+// Public Dynamic Frontend Routes
+Route::get('/', [FrontendController::class, 'home'])->name('home');
+Route::get('/about', [FrontendController::class, 'about'])->name('about');
+Route::get('/services', [FrontendController::class, 'services'])->name('services');
+Route::get('/services/{slug}', [FrontendController::class, 'serviceDetail'])->name('services.show');
+Route::get('/locations', [FrontendController::class, 'locations'])->name('locations');
+Route::get('/locations/{city}', [FrontendController::class, 'locationDetail'])->name('locations.show');
+Route::get('/pricing', [FrontendController::class, 'pricing'])->name('pricing');
+Route::get('/reviews', [FrontendController::class, 'reviews'])->name('reviews');
+Route::get('/contact', [FrontendController::class, 'contact'])->name('contact');
+Route::post('/inquiry', [FrontendController::class, 'storeInquiry'])->name('inquiry.store')->middleware('throttle:5,1');
+
+// Role-Based Silo Hubs
+Route::get('/owners', [FrontendController::class, 'owners'])->name('owners');
+Route::get('/tenants', [FrontendController::class, 'tenants'])->name('tenants');
+Route::get('/property-managers', [FrontendController::class, 'propertyManagers'])->name('property-managers');
+Route::get('/portal-and-technology', [FrontendController::class, 'portalTechnology'])->name('portal-and-technology');
+
+// Programmatic SEO Indian State & City Directory
+Route::get('/india', [FrontendController::class, 'indiaIndex'])->name('india.index');
+Route::get('/india/{state}', [FrontendController::class, 'indiaState'])->name('india.state');
+Route::get('/india/{state}/{city}', [FrontendController::class, 'indiaCity'])->name('india.city');
+
+// Backwards-compatible legacy redirects
+Route::redirect('/us', '/india', 301);
+Route::redirect('/us/{any}', '/india', 301)->where('any', '.*');
+
+// Properties
+Route::get('/properties', [PropertyListingController::class, 'index'])->name('properties.index');
+Route::get('/properties/{slug}', [PropertyListingController::class, 'show'])->name('properties.show');
+
+// Blog & Guides
+Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
+Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');

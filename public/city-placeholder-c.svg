@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0B1D3A"/>
+      <stop offset="55%" stop-color="#1B2F58"/>
+      <stop offset="100%" stop-color="#10B981" stop-opacity="0.22"/>
+    </linearGradient>
+    <linearGradient id="b" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0B1D3A"/>
+      <stop offset="100%" stop-color="#051026"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#sky)"/>
+  <circle cx="690" cy="90" r="28" fill="#D4A853" opacity="0.5"/>
+  <g fill="url(#b)" stroke="#D4A853" stroke-width="0.4" stroke-opacity="0.3">
+    <rect x="50" y="260" width="70" height="200"/>
+    <rect x="130" y="220" width="80" height="240"/>
+    <polygon points="130,220 170,180 210,220"/>
+    <rect x="220" y="280" width="60" height="180"/>
+    <rect x="290" y="200" width="100" height="260"/>
+    <rect x="400" y="240" width="70" height="220"/>
+    <rect x="480" y="170" width="90" height="290"/>
+    <polygon points="480,170 525,130 570,170"/>
+    <rect x="580" y="260" width="60" height="200"/>
+    <rect x="650" y="230" width="70" height="230"/>
+  </g>
+  <rect y="455" width="800" height="2" fill="#D4A853" opacity="0.5"/>
+</svg>

@@ -1,0 +1,392 @@
+<?php
+
+namespace App\Services;
+
+class IndiaLocationCatalog
+{
+    public static function getStates(): array
+    {
+        return [
+            'maharashtra' => [
+                'name' => 'Maharashtra',
+                'capital' => 'Mumbai',
+                'region' => 'Western India',
+                'tenancy_act' => 'Maharashtra Rent Control Act & Registered Leave and License Agreement Rules',
+                'police_verification' => 'Mumbai Police Citizen Portal & Maharashtra Police Clearance Services',
+                'stamp_duty_note' => '0.25% of total rent plus refundable deposit for registered agreement',
+                'cities' => [
+                    'mumbai' => [
+                        'name' => 'Mumbai',
+                        'title' => 'Mumbai Metropolitan Region (MMR)',
+                        'avg_rent_1bhk' => 32000,
+                        'avg_rent_2bhk' => 58000,
+                        'avg_rent_3bhk' => 110000,
+                        'deposit_months' => '3 to 6 months',
+                        'localities' => ['Bandra West', 'Andheri West', 'Powai', 'Worli', 'Juhu', 'Lower Parel', 'Malad West', 'Goregaon East', 'Borivali West', 'Dadar', 'Chembur', 'Thane West', 'Navi Mumbai Vashi', 'Kharghar'],
+                        'meta_desc' => 'Verified rental flats, 1BHK, 2BHK, 3BHK apartments and luxury sea-view homes in Mumbai. 100% verified owners, zero spam calls, legal Leave & License agreement.',
+                    ],
+                    'pune' => [
+                        'name' => 'Pune',
+                        'title' => 'Pune & PCMC',
+                        'avg_rent_1bhk' => 18000,
+                        'avg_rent_2bhk' => 30000,
+                        'avg_rent_3bhk' => 52000,
+                        'deposit_months' => '2 to 3 months',
+                        'localities' => ['Hinjawadi IT Park', 'Wakad', 'Baner', 'Kharadi EON Free Zone', 'Koregaon Park', 'Viman Nagar', 'Kalyani Nagar', 'Magarpatta City', 'Aundh', 'Pimple Saudagar'],
+                        'meta_desc' => 'Rental apartments near Hinjawadi & Kharadi IT hubs in Pune. Verified gated societies, zero broker hassle, online biometric police verification.',
+                    ],
+                    'nagpur' => [
+                        'name' => 'Nagpur',
+                        'title' => 'Nagpur & MIHAN',
+                        'avg_rent_1bhk' => 10000,
+                        'avg_rent_2bhk' => 18000,
+                        'avg_rent_3bhk' => 28000,
+                        'deposit_months' => '2 to 3 months',
+                        'localities' => ['Dharampeth', 'Civil Lines', 'Manish Nagar', 'Wardha Road', 'Besha', 'Ramdaspeth'],
+                        'meta_desc' => 'Houses and apartments for rent in Nagpur with verified tenancy agreements and zero broker spam.',
+                    ],
+                    'nashik' => [
+                        'name' => 'Nashik',
+                        'title' => 'Nashik',
+                        'avg_rent_1bhk' => 8500,
+                        'avg_rent_2bhk' => 15000,
+                        'avg_rent_3bhk' => 24000,
+                        'deposit_months' => '2 to 3 months',
+                        'localities' => ['Indira Nagar', 'College Road', 'Gangapur Road', 'Panchavati'],
+                        'meta_desc' => 'Affordable and premium homes for rent in Nashik with verified owner contact and digital lease execution.',
+                    ]
+                ]
+            ],
+            'karnataka' => [
+                'name' => 'Karnataka',
+                'capital' => 'Bengaluru',
+                'region' => 'Southern India',
+                'tenancy_act' => 'Karnataka Rent Control Act & Model Tenancy Framework',
+                'police_verification' => 'Bengaluru City Police Tenant Verification Portal',
+                'stamp_duty_note' => '₹100 to ₹500 e-stamp paper with standard 11-month agreement',
+                'cities' => [
+                    'bengaluru' => [
+                        'name' => 'Bengaluru',
+                        'title' => 'Bengaluru (Bangalore)',
+                        'avg_rent_1bhk' => 22000,
+                        'avg_rent_2bhk' => 38000,
+                        'avg_rent_3bhk' => 65000,
+                        'deposit_months' => '3 to 6 months',
+                        'localities' => ['Koramangala', 'Indiranagar', 'HSR Layout', 'Whitefield', 'Electronic City Phase 1', 'Sarjapur Road', 'Bellandur', 'Marathahalli', 'Hebbal', 'Jayanagar', 'JP Nagar', 'Malleshwaram'],
+                        'meta_desc' => 'Flats for rent in Bengaluru near tech parks. Verified gated societies in Whitefield, HSR Layout, Koramangala, and Indiranagar. Beat broker spam.',
+                    ],
+                    'mysuru' => [
+                        'name' => 'Mysuru',
+                        'title' => 'Mysuru (Mysore)',
+                        'avg_rent_1bhk' => 9000,
+                        'avg_rent_2bhk' => 16000,
+                        'avg_rent_3bhk' => 26000,
+                        'deposit_months' => '3 to 5 months',
+                        'localities' => ['Gokulam', 'Jayalakshmipuram', 'Vijayanagar', 'Kuvempunagar', 'Saraswathipuram'],
+                        'meta_desc' => 'Independent houses and rental flats in Mysuru with transparent leasing terms and verified owners.',
+                    ]
+                ]
+            ],
+            'delhi-ncr' => [
+                'name' => 'Delhi NCR',
+                'capital' => 'New Delhi',
+                'region' => 'Northern India',
+                'tenancy_act' => 'Delhi Rent Control Act & Haryana/UP Tenancy Regulations',
+                'police_verification' => 'Delhi Police Online Tenant Verification Portal & Haryana Police VeriFast',
+                'stamp_duty_note' => '₹100 e-stamp with notarized or registered 11-month lease deed',
+                'cities' => [
+                    'new-delhi' => [
+                        'name' => 'New Delhi',
+                        'title' => 'New Delhi & Central NCR',
+                        'avg_rent_1bhk' => 24000,
+                        'avg_rent_2bhk' => 45000,
+                        'avg_rent_3bhk' => 85000,
+                        'deposit_months' => '1 to 2 months',
+                        'localities' => ['Hauz Khas', 'Greater Kailash 1 & 2', 'Vasant Kunj', 'Saket', 'Dwarka Sector 6-22', 'Lajpat Nagar', 'Defence Colony', 'Rohini Sector 9-18', 'Chanakyapuri'],
+                        'meta_desc' => 'Builder floors, gated DDA flats, and luxury apartments for rent in New Delhi. Direct owner listings with Delhi Police verification.',
+                    ],
+                    'gurugram' => [
+                        'name' => 'Gurugram',
+                        'title' => 'Gurugram (Gurgaon)',
+                        'avg_rent_1bhk' => 25000,
+                        'avg_rent_2bhk' => 46000,
+                        'avg_rent_3bhk' => 80000,
+                        'deposit_months' => '1 to 2 months',
+                        'localities' => ['DLF Phase 1-5', 'Cyber City', 'Golf Course Road', 'Golf Course Extension', 'Sohna Road', 'Sector 56-57', 'Nirvana Country', 'Sector 48', 'Ambience Island'],
+                        'meta_desc' => 'Condominiums and gated community apartments for rent in Gurugram near Cyber Hub and Golf Course Road. Transparent leasing, zero broker spam.',
+                    ],
+                    'noida' => [
+                        'name' => 'Noida',
+                        'title' => 'Noida & Greater Noida',
+                        'avg_rent_1bhk' => 15000,
+                        'avg_rent_2bhk' => 26000,
+                        'avg_rent_3bhk' => 42000,
+                        'deposit_months' => '1 to 2 months',
+                        'localities' => ['Sector 62', 'Sector 137 Expressway', 'Sector 150 Sports City', 'Sector 74-78', 'Sector 18 Atta Market', 'Greater Noida West', 'Pari Chowk', 'Jaypee Greens'],
+                        'meta_desc' => 'Modern high-rise society apartments for rent in Noida Expressway and Greater Noida. Complete digital documentation and rent guarantee.',
+                    ],
+                    'faridabad' => [
+                        'name' => 'Faridabad',
+                        'title' => 'Faridabad',
+                        'avg_rent_1bhk' => 11000,
+                        'avg_rent_2bhk' => 19000,
+                        'avg_rent_3bhk' => 30000,
+                        'deposit_months' => '1 to 2 months',
+                        'localities' => ['Sector 14-16', 'Greenfield Colony', 'Neharpar', 'Sector 21C', 'Surajkund'],
+                        'meta_desc' => 'Builder floors and high-rise apartments in Faridabad with direct owner verification.',
+                    ],
+                    'ghaziabad' => [
+                        'name' => 'Ghaziabad',
+                        'title' => 'Ghaziabad',
+                        'avg_rent_1bhk' => 11500,
+                        'avg_rent_2bhk' => 20000,
+                        'avg_rent_3bhk' => 32000,
+                        'deposit_months' => '1 to 2 months',
+                        'localities' => ['Indirapuram', 'Vaishali', 'Vasundhara', 'Crossings Republik', 'Raj Nagar Extension'],
+                        'meta_desc' => 'Rental flats in Indirapuram and Vaishali Ghaziabad near Delhi metro corridors. Fast 11-month agreement execution.',
+                    ]
+                ]
+            ],
+            'telangana' => [
+                'name' => 'Telangana',
+                'capital' => 'Hyderabad',
+                'region' => 'Southern India',
+                'tenancy_act' => 'Telangana Buildings (Lease, Rent and Eviction) Control Act & Model Tenancy Guidelines',
+                'police_verification' => 'Hyderabad City Police & Cyberabad Police Tenant Verification',
+                'stamp_duty_note' => '₹100 e-stamp with standard 11-month lease registration',
+                'cities' => [
+                    'hyderabad' => [
+                        'name' => 'Hyderabad',
+                        'title' => 'Hyderabad & Cyberabad',
+                        'avg_rent_1bhk' => 18000,
+                        'avg_rent_2bhk' => 32000,
+                        'avg_rent_3bhk' => 55000,
+                        'deposit_months' => '2 to 3 months',
+                        'localities' => ['Gachibowli', 'Hitec City', 'Madhapur', 'Kondapur', 'Jubilee Hills', 'Banjara Hills', 'Financial District Nanakramguda', 'Kukatpally', 'Manikonda', 'Miyapur'],
+                        'meta_desc' => 'Gated community flats and villas for rent in Hyderabad IT corridor. Direct owner verification, zero fake broker spam, 11-month digital agreements.',
+                    ]
+                ]
+            ],
+            'tamil-nadu' => [
+                'name' => 'Tamil Nadu',
+                'capital' => 'Chennai',
+                'region' => 'Southern India',
+                'tenancy_act' => 'Tamil Nadu Regulation of Rights and Responsibilities of Landlords and Tenants Act 2017 (TNRRRLT Act)',
+                'police_verification' => 'Greater Chennai Police Online Tenant Verification Portal',
+                'stamp_duty_note' => 'Mandatory registration under TNRRRLT Act with standard tenancy agreement',
+                'cities' => [
+                    'chennai' => [
+                        'name' => 'Chennai',
+                        'title' => 'Chennai Metropolitan Area',
+                        'avg_rent_1bhk' => 16000,
+                        'avg_rent_2bhk' => 28000,
+                        'avg_rent_3bhk' => 48000,
+                        'deposit_months' => '5 to 10 months',
+                        'localities' => ['OMR IT Corridor', 'Anna Nagar', 'Adyar', 'Velachery', 'Besant Nagar', 'T. Nagar', 'Mylapore', 'Thoraipakkam', 'Perungudi', 'Sholinganallur', 'Porur', 'ECR'],
+                        'meta_desc' => 'Flats for rent in Chennai along OMR and prime residential hubs. TNRRRLT Act compliant tenancy agreements and verified owner listings.',
+                    ],
+                    'coimbatore' => [
+                        'name' => 'Coimbatore',
+                        'title' => 'Coimbatore',
+                        'avg_rent_1bhk' => 9500,
+                        'avg_rent_2bhk' => 17000,
+                        'avg_rent_3bhk' => 28000,
+                        'deposit_months' => '4 to 6 months',
+                        'localities' => ['RS Puram', 'Gandhipuram', 'Saibaba Colony', 'Saravanampatti IT Corridor', 'Peelamedu', 'Race Course'],
+                        'meta_desc' => 'Rental apartments and independent villas in Coimbatore with zero broker harassment.',
+                    ]
+                ]
+            ],
+            'gujarat' => [
+                'name' => 'Gujarat',
+                'capital' => 'Gandhinagar',
+                'region' => 'Western India',
+                'tenancy_act' => 'Gujarat Rent Control Act & GIFT City Tenancy Framework',
+                'police_verification' => 'Gujarat Police Citizen Portal (GujCop)',
+                'stamp_duty_note' => 'Registered leave and license deed with e-stamping',
+                'cities' => [
+                    'ahmedabad' => [
+                        'name' => 'Ahmedabad',
+                        'title' => 'Ahmedabad & Gandhinagar (GIFT City)',
+                        'avg_rent_1bhk' => 14000,
+                        'avg_rent_2bhk' => 24000,
+                        'avg_rent_3bhk' => 42000,
+                        'deposit_months' => '2 to 3 months',
+                        'localities' => ['SG Highway', 'Prahlad Nagar', 'Bodakdev', 'Satellite', 'Bopal & South Bopal', 'Vastrapur', 'Science City Road', 'GIFT City SEZ', 'Gandhinagar Sector 1-28'],
+                        'meta_desc' => 'Modern flats and penthouses for rent in Ahmedabad and GIFT City. Verified owners, transparent leasing agreements, zero spam.',
+                    ],
+                    'surat' => [
+                        'name' => 'Surat',
+                        'title' => 'Surat',
+                        'avg_rent_1bhk' => 11000,
+                        'avg_rent_2bhk' => 19000,
+                        'avg_rent_3bhk' => 31000,
+                        'deposit_months' => '2 to 3 months',
+                        'localities' => ['Vesu', 'Pal', 'Adajan', 'Piplod', 'Ghod Dod Road', 'VIP Road'],
+                        'meta_desc' => 'High-rise residential society apartments for rent in Surat with verified legal agreements.',
+                    ]
+                ]
+            ],
+            'west-bengal' => [
+                'name' => 'West Bengal',
+                'capital' => 'Kolkata',
+                'region' => 'Eastern India',
+                'tenancy_act' => 'West Bengal Premises Tenancy Act',
+                'police_verification' => 'Kolkata Police Online Tenant Verification Services',
+                'stamp_duty_note' => 'Standard 11-month agreement with e-stamp duty',
+                'cities' => [
+                    'kolkata' => [
+                        'name' => 'Kolkata',
+                        'title' => 'Kolkata & Salt Lake / New Town',
+                        'avg_rent_1bhk' => 13000,
+                        'avg_rent_2bhk' => 22000,
+                        'avg_rent_3bhk' => 38000,
+                        'deposit_months' => '2 to 3 months',
+                        'localities' => ['Salt Lake Sector 1-5', 'New Town Action Area 1-3', 'Rajarhat', 'Ballygunge', 'Alipore', 'Southern Avenue', 'Gariahat', 'EM Bypass', 'Behala'],
+                        'meta_desc' => 'Gated community flats and heritage houses for rent in Kolkata, Salt Lake, and New Town. Transparent leasing and zero fake broker listings.',
+                    ]
+                ]
+            ],
+            'rajasthan' => [
+                'name' => 'Rajasthan',
+                'capital' => 'Jaipur',
+                'region' => 'Northern India',
+                'tenancy_act' => 'Rajasthan Rent Control Act 2001',
+                'police_verification' => 'Rajasthan Police Citizen Portal',
+                'stamp_duty_note' => '₹100 or ₹500 e-stamp agreement',
+                'cities' => [
+                    'jaipur' => [
+                        'name' => 'Jaipur',
+                        'title' => 'Jaipur (Pink City)',
+                        'avg_rent_1bhk' => 12000,
+                        'avg_rent_2bhk' => 21000,
+                        'avg_rent_3bhk' => 35000,
+                        'deposit_months' => '2 months',
+                        'localities' => ['Vaishali Nagar', 'Malviya Nagar', 'Mansarovar', 'C-Scheme', 'Raja Park', 'Jagatpura', 'Tonk Road', 'Ajmer Road'],
+                        'meta_desc' => 'Villas, builder floors, and apartments for rent in Jaipur with 100% verified owners and legal rent agreements.',
+                    ]
+                ]
+            ],
+            'uttar-pradesh' => [
+                'name' => 'Uttar Pradesh',
+                'capital' => 'Lucknow',
+                'region' => 'Northern India',
+                'tenancy_act' => 'Uttar Pradesh Regulation of Urban Premises Tenancy Act 2021',
+                'police_verification' => 'UP Police UPCOP Mobile App & Tenant Verification Portal',
+                'stamp_duty_note' => 'Model Tenancy compliant digital lease contract',
+                'cities' => [
+                    'lucknow' => [
+                        'name' => 'Lucknow',
+                        'title' => 'Lucknow',
+                        'avg_rent_1bhk' => 11000,
+                        'avg_rent_2bhk' => 19000,
+                        'avg_rent_3bhk' => 32000,
+                        'deposit_months' => '2 months',
+                        'localities' => ['Gomti Nagar & Extension', 'Hazratganj', 'Aliganj', 'Indira Nagar', 'Mahanagar', 'Sushant Golf City', 'Vibhuti Khand'],
+                        'meta_desc' => 'Builder floors and society flats for rent in Lucknow with verified landlord credentials and UPCOP police verification.',
+                    ]
+                ]
+            ],
+            'punjab-haryana' => [
+                'name' => 'Punjab & Chandigarh Tricity',
+                'capital' => 'Chandigarh',
+                'region' => 'Northern India',
+                'tenancy_act' => 'East Punjab Urban Rent Restriction Act & Chandigarh Tenancy Rules',
+                'police_verification' => 'Chandigarh Police & Punjab Saanjh Tenant Verification',
+                'stamp_duty_note' => 'Standard registered agreement with Punjab/Haryana e-stamp',
+                'cities' => [
+                    'chandigarh' => [
+                        'name' => 'Chandigarh Tricity (Mohali & Panchkula)',
+                        'title' => 'Chandigarh & Tricity',
+                        'avg_rent_1bhk' => 14000,
+                        'avg_rent_2bhk' => 25000,
+                        'avg_rent_3bhk' => 45000,
+                        'deposit_months' => '1 to 2 months',
+                        'localities' => ['Sector 8-11', 'Sector 35-37', 'Sector 43-44', 'Mohali Phase 7-11', 'Aerocity Mohali', 'Panchkula Sector 1-21', 'Zirakpur VIP Road', 'New Chandigarh'],
+                        'meta_desc' => 'Independent kothis, floors, and society flats for rent in Chandigarh, Mohali, and Panchkula with verified landlords.',
+                    ]
+                ]
+            ],
+            'kerala' => [
+                'name' => 'Kerala',
+                'capital' => 'Thiruvananthapuram',
+                'region' => 'Southern India',
+                'tenancy_act' => 'Kerala Buildings (Lease and Rent Control) Act',
+                'police_verification' => 'Kerala Police Thuna Citizen Portal',
+                'stamp_duty_note' => 'Registered lease deed with Kerala e-stamping',
+                'cities' => [
+                    'kochi' => [
+                        'name' => 'Kochi',
+                        'title' => 'Kochi (Cochin) & Kakkanad Infopark',
+                        'avg_rent_1bhk' => 14000,
+                        'avg_rent_2bhk' => 24000,
+                        'avg_rent_3bhk' => 40000,
+                        'deposit_months' => '3 to 4 months',
+                        'localities' => ['Kakkanad Infopark', 'Marine Drive', 'Panampilly Nagar', 'Edappally', 'Kadavanthra', 'Aluva', 'Vyttila', 'Palarivattom'],
+                        'meta_desc' => 'High-rise waterfront apartments and flats for rent in Kochi and Kakkanad Infopark with verified owner documentation.',
+                    ]
+                ]
+            ],
+            'madhya-pradesh' => [
+                'name' => 'Madhya Pradesh',
+                'capital' => 'Bhopal',
+                'region' => 'Central India',
+                'tenancy_act' => 'MP Accommodation Control Act 1961',
+                'police_verification' => 'MP Police Citizen Portal',
+                'stamp_duty_note' => 'Registered 11-month rent agreement with e-stamping',
+                'cities' => [
+                    'indore' => [
+                        'name' => 'Indore',
+                        'title' => 'Indore (Cleanest City)',
+                        'avg_rent_1bhk' => 11000,
+                        'avg_rent_2bhk' => 19000,
+                        'avg_rent_3bhk' => 32000,
+                        'deposit_months' => '2 months',
+                        'localities' => ['Vijay Nagar', 'Super Corridor IT SEZ', 'Palasia', 'AB Road', 'Bypass Road', 'Mahalaxmi Nagar', 'Rau'],
+                        'meta_desc' => 'Flats and independent homes for rent in Indore Vijay Nagar and Super Corridor with zero broker spam.',
+                    ]
+                ]
+            ],
+            'andhra-pradesh' => [
+                'name' => 'Andhra Pradesh',
+                'capital' => 'Amaravati',
+                'region' => 'Southern India',
+                'tenancy_act' => 'AP Buildings (Lease, Rent and Eviction) Control Act',
+                'police_verification' => 'AP Police Citizen Services',
+                'stamp_duty_note' => 'Standard tenancy agreement with AP e-stamping',
+                'cities' => [
+                    'visakhapatnam' => [
+                        'name' => 'Visakhapatnam',
+                        'title' => 'Visakhapatnam (Vizag)',
+                        'avg_rent_1bhk' => 10500,
+                        'avg_rent_2bhk' => 18000,
+                        'avg_rent_3bhk' => 30000,
+                        'deposit_months' => '2 to 3 months',
+                        'localities' => ['MVP Colony', 'Madhurawada IT SEZ', 'Seethammadhara', 'Gajuwaka', 'Rushikonda', 'Dwaraka Nagar'],
+                        'meta_desc' => 'Coastal homes and apartments for rent in Vizag MVP Colony and Madhurawada with verified owners.',
+                    ]
+                ]
+            ],
+            'goa' => [
+                'name' => 'Goa',
+                'capital' => 'Panaji',
+                'region' => 'Western India',
+                'tenancy_act' => 'Goa Buildings (Lease, Rent and Eviction) Control Act 1968',
+                'police_verification' => 'Goa Police Online Tenant Verification (Strictly Enforced)',
+                'stamp_duty_note' => 'Registered leave & license agreement with mandatory police intimation',
+                'cities' => [
+                    'goa' => [
+                        'name' => 'Goa',
+                        'title' => 'Goa (North & South Goa)',
+                        'avg_rent_1bhk' => 18000,
+                        'avg_rent_2bhk' => 35000,
+                        'avg_rent_3bhk' => 65000,
+                        'deposit_months' => '2 to 3 months',
+                        'localities' => ['Panaji (Miramar & Dona Paula)', 'Candolim', 'Calangute', 'Siolim', 'Assagao', 'Anjuna', 'Porvorim', 'Margao', 'Colva', 'Vagator'],
+                        'meta_desc' => 'Luxury villas, Portuguese holiday homes, and residential apartments for rent in North & South Goa. Verified owners and mandatory police clearance assistance.',
+                    ]
+                ]
+            ]
+        ];
+    }
+}
