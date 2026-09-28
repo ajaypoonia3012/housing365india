@@ -214,16 +214,12 @@
                     </button>
                 </div>
 
-                <!-- Post Free Property & Prime CTAs -->
-                <div class="flex items-center gap-2.5 flex-wrap">
-                    <a href="{{ route('prime') }}" class="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-500 hover:from-amber-600 text-slate-950 font-black text-xs uppercase tracking-wider shadow-md shadow-amber-500/20 transition-all duration-200 hover:-translate-y-0.5 border border-amber-300">
-                        <i class="fa-solid fa-crown text-amber-950"></i>
-                        <span>Housing365 Prime</span>
-                        <span class="bg-black/20 text-white text-[9px] px-1.5 py-0.5 rounded font-black">ZERO BROKERAGE</span>
-                    </a>
-                    <a href="{{ route('properties.post') }}" class="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-brand-navy text-white font-bold text-xs uppercase tracking-wider shadow-sm transition-all duration-200 hover:-translate-y-0.5">
-                        <i class="fa-solid fa-circle-plus text-amber-400"></i>
-                        <span>Post Free Property</span>
+                <!-- Direct Post Property Link -->
+                <div class="hidden sm:flex items-center gap-2">
+                    <span class="text-xs text-slate-500">Property Owner?</span>
+                    <a href="{{ route('properties.post') }}" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold transition">
+                        <i class="fa-solid fa-circle-plus text-amber-500 text-xs"></i>
+                        <span>List Property Free</span>
                     </a>
                 </div>
             </div>

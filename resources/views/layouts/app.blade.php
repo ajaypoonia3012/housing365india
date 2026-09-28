@@ -145,36 +145,41 @@
             </a>
 
             <!-- Desktop Nav Groups (xl+ only) -->
-            <nav class="hidden xl:flex items-center space-x-1 text-sm font-medium">
-                <a href="{{ route('home') }}" class="px-3 py-2 rounded-lg text-brand-navy/75 hover:text-brand-navy hover:bg-slate-100 transition">Home</a>
+            <nav class="hidden xl:flex items-center space-x-1 text-sm font-semibold">
+                <a href="{{ route('properties.index') }}" class="px-3.5 py-2 rounded-xl text-brand-navy/80 hover:text-brand-navy hover:bg-slate-100 transition">
+                    Properties
+                </a>
                 
                 <!-- Owners Dropdown -->
                 <div class="relative group">
-                    <button class="flex items-center gap-1.5 px-3 py-2 rounded-lg text-brand-navy/75 hover:text-brand-navy hover:bg-slate-100 transition">
+                    <button class="flex items-center gap-1 px-3.5 py-2 rounded-xl text-brand-navy/80 hover:text-brand-navy hover:bg-slate-100 transition">
                         <span>Owners</span>
-                        <i class="fa-solid fa-chevron-down text-[10px] text-slate-400 group-hover:rotate-180 transition-transform"></i>
+                        <i class="fa-solid fa-chevron-down text-[9px] text-slate-400 group-hover:rotate-180 transition-transform"></i>
                     </button>
                     <div class="absolute left-0 top-full pt-1.5 hidden group-hover:block z-50">
-                        <div class="min-w-[280px] bg-white rounded-xl shadow-xl border border-slate-100 p-2 space-y-1">
-                            <a href="{{ route('owners') }}" class="block px-3 py-2 rounded-lg hover:bg-brand-cyan/5 transition">
-                                <span class="font-semibold text-sm text-[#0B1D3A] block">Landlord &amp; Owner Hub</span>
-                                <span class="text-xs text-slate-500 block">Command centre for property owners</span>
+                        <div class="min-w-[270px] bg-white rounded-2xl shadow-xl border border-slate-100 p-2 space-y-1">
+                            <a href="{{ route('owners') }}" class="block px-3 py-2 rounded-xl hover:bg-brand-cyan/5 transition">
+                                <span class="font-bold text-xs text-brand-navy block">Landlord &amp; Owner Hub</span>
+                                <span class="text-[11px] text-slate-500 block">Command centre for property owners</span>
                             </a>
-                            <a href="{{ route('property-managers') }}" class="block px-3 py-2 rounded-lg hover:bg-brand-cyan/5 transition">
-                                <span class="font-semibold text-sm text-[#0B1D3A] block">Property Managers</span>
-                                <span class="text-xs text-slate-500 block">White-label leasing-as-a-service</span>
+                            <a href="{{ route('properties.post') }}" class="block px-3 py-2 rounded-xl hover:bg-amber-50 transition">
+                                <span class="font-bold text-xs text-amber-800 flex items-center gap-1.5">
+                                    <i class="fa-solid fa-circle-plus text-amber-500"></i>
+                                    <span>Post Property (Free Listing)</span>
+                                </span>
+                                <span class="text-[11px] text-slate-500 block">List rental or resale home in 2 mins</span>
                             </a>
-                            <a href="{{ route('portal-and-technology') }}" class="block px-3 py-2 rounded-lg hover:bg-brand-cyan/5 transition">
-                                <span class="font-semibold text-sm text-[#0B1D3A] block">Portal &amp; Technology</span>
-                                <span class="text-xs text-slate-500 block">Owner analytics and reporting dashboard</span>
+                            <a href="{{ route('pricing') }}" class="block px-3 py-2 rounded-xl hover:bg-brand-cyan/5 transition">
+                                <span class="font-bold text-xs text-brand-navy block">Transparent Pricing</span>
+                                <span class="text-[11px] text-slate-500 block">199 setup fee, no monthly retainer</span>
                             </a>
-                            <a href="{{ route('pricing') }}" class="block px-3 py-2 rounded-lg hover:bg-brand-cyan/5 transition">
-                                <span class="font-semibold text-sm text-[#0B1D3A] block">Pricing</span>
-                                <span class="text-xs text-slate-500 block">Transparent leasing fees, no monthly lock-in</span>
+                            <a href="{{ route('property-managers') }}" class="block px-3 py-2 rounded-xl hover:bg-brand-cyan/5 transition">
+                                <span class="font-bold text-xs text-brand-navy block">Property Managers</span>
+                                <span class="text-[11px] text-slate-500 block">Institutional leasing-as-a-service</span>
                             </a>
-                            <a href="{{ route('reviews') }}" class="block px-3 py-2 rounded-lg hover:bg-brand-cyan/5 transition">
-                                <span class="font-semibold text-sm text-[#0B1D3A] block">Reviews</span>
-                                <span class="text-xs text-slate-500 block">See what landlords say about Housing365</span>
+                            <a href="{{ route('portal-and-technology') }}" class="block px-3 py-2 rounded-xl hover:bg-brand-cyan/5 transition">
+                                <span class="font-bold text-xs text-brand-navy block">Owner Portal &amp; Tech</span>
+                                <span class="text-[11px] text-slate-500 block">Real-time tenant ledger &amp; inspection logs</span>
                             </a>
                         </div>
                     </div>
@@ -182,23 +187,27 @@
 
                 <!-- Tenants Dropdown -->
                 <div class="relative group">
-                    <button class="flex items-center gap-1.5 px-3 py-2 rounded-lg text-brand-navy/75 hover:text-brand-navy hover:bg-slate-100 transition">
+                    <button class="flex items-center gap-1 px-3.5 py-2 rounded-xl text-brand-navy/80 hover:text-brand-navy hover:bg-slate-100 transition">
                         <span>Tenants</span>
-                        <i class="fa-solid fa-chevron-down text-[10px] text-slate-400 group-hover:rotate-180 transition-transform"></i>
+                        <i class="fa-solid fa-chevron-down text-[9px] text-slate-400 group-hover:rotate-180 transition-transform"></i>
                     </button>
                     <div class="absolute left-0 top-full pt-1.5 hidden group-hover:block z-50">
-                        <div class="min-w-[280px] bg-white rounded-xl shadow-xl border border-slate-100 p-2 space-y-1">
-                            <a href="{{ route('tenants') }}" class="block px-3 py-2 rounded-lg hover:bg-brand-cyan/5 transition">
-                                <span class="font-semibold text-sm text-[#0B1D3A] block">Tenant Hub</span>
-                                <span class="text-xs text-slate-500 block">Everything renters need in one place</span>
+                        <div class="min-w-[270px] bg-white rounded-2xl shadow-xl border border-slate-100 p-2 space-y-1">
+                            <a href="{{ route('tenants') }}" class="block px-3 py-2 rounded-xl hover:bg-brand-cyan/5 transition">
+                                <span class="font-bold text-xs text-brand-navy block">Tenant Hub</span>
+                                <span class="text-[11px] text-slate-500 block">Everything renters need in one place</span>
                             </a>
-                            <a href="{{ route('properties.index') }}" class="block px-3 py-2 rounded-lg hover:bg-brand-cyan/5 transition">
-                                <span class="font-semibold text-sm text-[#0B1D3A] block">Browse Properties</span>
-                                <span class="text-xs text-slate-500 block">Current verified rental listings</span>
+                            <a href="{{ route('properties.index') }}" class="block px-3 py-2 rounded-xl hover:bg-brand-cyan/5 transition">
+                                <span class="font-bold text-xs text-brand-navy block">Browse Verified Rentals</span>
+                                <span class="text-[11px] text-slate-500 block">Flats, villas, and PGs across top cities</span>
                             </a>
-                            <a href="{{ url('/services/tenant-insurance') }}" class="block px-3 py-2 rounded-lg hover:bg-brand-cyan/5 transition">
-                                <span class="font-semibold text-sm text-[#0B1D3A] block">Tenant Insurance</span>
-                                <span class="text-xs text-slate-500 block">Mandatory and contents coverage</span>
+                            <a href="{{ url('/services/rental-agreement-registration') }}" class="block px-3 py-2 rounded-xl hover:bg-brand-cyan/5 transition">
+                                <span class="font-bold text-xs text-brand-navy block">Rent Agreement &amp; e-Stamping</span>
+                                <span class="text-[11px] text-slate-500 block">11-month draft delivered digitally</span>
+                            </a>
+                            <a href="{{ url('/services/tenant-insurance') }}" class="block px-3 py-2 rounded-xl hover:bg-brand-cyan/5 transition">
+                                <span class="font-bold text-xs text-brand-navy block">Tenant Insurance</span>
+                                <span class="text-[11px] text-slate-500 block">Mandatory and contents coverage</span>
                             </a>
                         </div>
                     </div>
@@ -206,96 +215,100 @@
 
                 <!-- Services Dropdown -->
                 <div class="relative group">
-                    <button class="flex items-center gap-1.5 px-3 py-2 rounded-lg text-brand-navy/75 hover:text-brand-navy hover:bg-slate-100 transition">
+                    <button class="flex items-center gap-1 px-3.5 py-2 rounded-xl text-brand-navy/80 hover:text-brand-navy hover:bg-slate-100 transition">
                         <span>Services</span>
-                        <i class="fa-solid fa-chevron-down text-[10px] text-slate-400 group-hover:rotate-180 transition-transform"></i>
+                        <i class="fa-solid fa-chevron-down text-[9px] text-slate-400 group-hover:rotate-180 transition-transform"></i>
                     </button>
                     <div class="absolute left-0 top-full pt-1.5 hidden group-hover:block z-50">
-                        <div class="min-w-[320px] bg-white rounded-xl shadow-xl border border-slate-100 p-2 space-y-1">
-                            <a href="{{ url('/services/tenant-placement') }}" class="block px-3 py-2 rounded-lg hover:bg-brand-cyan/5 transition">
-                                <span class="font-semibold text-sm text-[#0B1D3A] block">Tenant Placement</span>
-                                <span class="text-xs text-slate-500 block">Marketing, showings, and lease signing</span>
+                        <div class="min-w-[300px] bg-white rounded-2xl shadow-xl border border-slate-100 p-2 space-y-1">
+                            <a href="{{ url('/services/tenant-placement') }}" class="block px-3 py-2 rounded-xl hover:bg-brand-cyan/5 transition">
+                                <span class="font-bold text-xs text-brand-navy block">Tenant Placement</span>
+                                <span class="text-[11px] text-slate-500 block">Marketing, showings, and lease signing</span>
                             </a>
-                            <a href="{{ url('/services/leasing-services') }}" class="block px-3 py-2 rounded-lg hover:bg-brand-cyan/5 transition">
-                                <span class="font-semibold text-sm text-[#0B1D3A] block">Leasing Services</span>
-                                <span class="text-xs text-slate-500 block">Full-service leasing for owners</span>
+                            <a href="{{ url('/services/leasing-services') }}" class="block px-3 py-2 rounded-xl hover:bg-brand-cyan/5 transition">
+                                <span class="font-bold text-xs text-brand-navy block">Full Leasing Management</span>
+                                <span class="text-[11px] text-slate-500 block">End-to-end leasing for owners &amp; NRIs</span>
                             </a>
-                            <a href="{{ url('/services/tenant-screening') }}" class="block px-3 py-2 rounded-lg hover:bg-brand-cyan/5 transition">
-                                <span class="font-semibold text-sm text-[#0B1D3A] block">Tenant Screening</span>
-                                <span class="text-xs text-slate-500 block">75-point applicant verification</span>
+                            <a href="{{ url('/services/tenant-screening') }}" class="block px-3 py-2 rounded-xl hover:bg-brand-cyan/5 transition">
+                                <span class="font-bold text-xs text-brand-navy block">Tenant Screening</span>
+                                <span class="text-[11px] text-slate-500 block">75-point applicant verification</span>
                             </a>
-                            <a href="{{ url('/services/rental-agreement-registration') }}" class="block px-3 py-2 rounded-lg hover:bg-brand-cyan/5 transition">
-                                <span class="font-semibold text-sm text-[#0B1D3A] block">Rental Agreement &amp; Registration</span>
-                                <span class="text-xs text-slate-500 block">11-month e-stamping &amp; police verification</span>
+                            <a href="{{ url('/services/rental-agreement-registration') }}" class="block px-3 py-2 rounded-xl hover:bg-brand-cyan/5 transition">
+                                <span class="font-bold text-xs text-brand-navy block">Rent Agreement Registration</span>
+                                <span class="text-[11px] text-slate-500 block">Legal e-stamping &amp; police verification</span>
                             </a>
-                            <a href="{{ url('/services/institutional-lease-up') }}" class="block px-3 py-2 rounded-lg hover:bg-brand-cyan/5 transition">
-                                <span class="font-semibold text-sm text-[#0B1D3A] block">Institutional Lease-Up</span>
-                                <span class="text-xs text-slate-500 block">High-velocity multi-family lease-up</span>
-                            </a>
-                            <a href="{{ route('services') }}" class="block px-3 py-2 rounded-lg bg-slate-50 hover:bg-brand-cyan/10 transition mt-1 text-center">
+                            <a href="{{ route('services') }}" class="block px-3 py-2 rounded-xl bg-slate-50 hover:bg-brand-cyan/10 transition mt-1 text-center">
                                 <span class="font-bold text-xs uppercase tracking-wider text-brand-cyan block">View All 14 Services &rarr;</span>
                             </a>
                         </div>
                     </div>
                 </div>
 
-                <a href="{{ route('properties.index') }}" class="px-3 py-2 rounded-lg text-brand-navy/75 hover:text-brand-navy hover:bg-slate-100 transition">Properties</a>
-                <a href="{{ route('prime') }}" class="px-3 py-2 rounded-lg text-amber-700 font-bold hover:text-amber-800 hover:bg-amber-50 transition flex items-center gap-1.5">
-                    <i class="fa-solid fa-crown text-amber-500 text-xs"></i>
-                    <span>Prime</span>
-                    <span class="bg-amber-100 text-amber-800 text-[9px] px-1.5 py-0.5 rounded-full font-black uppercase">Zero Brokerage</span>
+                <a href="{{ route('pricing') }}" class="px-3.5 py-2 rounded-xl text-brand-navy/80 hover:text-brand-navy hover:bg-slate-100 transition">
+                    Pricing
                 </a>
-                <a href="{{ route('locations') }}" class="px-3 py-2 rounded-lg text-brand-navy/75 hover:text-brand-navy hover:bg-slate-100 transition">Locations</a>
-                <a href="{{ route('pricing') }}" class="px-3 py-2 rounded-lg text-brand-navy/75 hover:text-brand-navy hover:bg-slate-100 transition">Pricing</a>
-                <a href="{{ route('about') }}" class="px-3 py-2 rounded-lg text-brand-navy/75 hover:text-brand-navy hover:bg-slate-100 transition">About</a>
-                <a href="{{ route('contact') }}" class="px-3 py-2 rounded-lg text-brand-navy/75 hover:text-brand-navy hover:bg-slate-100 transition">Contact</a>
+
+                <a href="{{ url('/india') }}" class="px-3.5 py-2 rounded-xl text-brand-navy/80 hover:text-brand-navy hover:bg-slate-100 transition">
+                    Cities
+                </a>
             </nav>
 
-            <!-- Right CTAs -->
-            <div class="hidden xl:flex items-center space-x-2.5">
-                <a href="{{ route('properties.post') }}" class="inline-flex items-center justify-center gap-1.5 rounded-xl bg-slate-900 hover:bg-brand-navy px-3.5 py-2.5 text-xs font-bold uppercase tracking-wider text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5">
-                    <i class="fa-solid fa-circle-plus text-xs text-amber-400"></i>
-                    <span>Post Property</span>
-                    <span class="ml-1 bg-amber-400 text-slate-950 text-[10px] px-1.5 py-0.5 rounded font-extrabold uppercase">FREE</span>
+            <!-- Right Action Hub -->
+            <div class="hidden xl:flex items-center space-x-3">
+                <!-- Prime Badge Button (Single, Clean CTA) -->
+                <a href="{{ route('prime') }}" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-gradient-to-r from-amber-400 via-amber-400 to-yellow-400 hover:from-amber-500 hover:to-yellow-500 text-slate-950 font-black text-xs uppercase tracking-wider shadow-sm transition hover:-translate-y-0.5 border border-amber-300">
+                    <i class="fa-solid fa-crown text-amber-900 text-xs"></i>
+                    <span>Prime</span>
+                    <span class="bg-amber-950/15 text-slate-950 text-[9px] px-1.5 py-0.5 rounded-full font-bold">Zero Brokerage</span>
                 </a>
+
+                <!-- Post Property Free -->
+                <a href="{{ route('properties.post') }}" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-brand-navy text-white text-xs font-bold uppercase tracking-wider shadow-sm transition hover:-translate-y-0.5">
+                    <i class="fa-solid fa-circle-plus text-amber-400 text-xs"></i>
+                    <span>Post Property</span>
+                    <span class="bg-amber-400 text-slate-950 text-[9px] px-1.5 py-0.5 rounded font-black">FREE</span>
+                </a>
+
+                <div class="h-5 w-px bg-slate-200"></div>
 
                 @auth
                     <!-- Authenticated User Menu -->
                     <div class="relative group">
-                        <a href="{{ route('my.prime') }}" class="inline-flex items-center gap-2 rounded-xl border {{ auth()->user()->isPrimeActive() ? 'border-amber-400 bg-amber-50/70 text-amber-950' : 'border-slate-200 bg-slate-50 text-slate-800' }} px-3.5 py-2 text-xs font-bold transition hover:bg-white shadow-sm">
+                        <a href="{{ route('my.prime') }}" class="inline-flex items-center gap-2 rounded-xl border {{ auth()->user()->isPrimeActive() ? 'border-amber-400 bg-amber-50/70 text-amber-950' : 'border-slate-200 bg-slate-50 text-slate-800' }} px-3 py-1.5 text-xs font-bold transition hover:bg-white shadow-sm">
+                            <div class="size-6 rounded-full {{ auth()->user()->isPrimeActive() ? 'bg-amber-500 text-slate-950' : 'bg-brand-navy text-white' }} flex items-center justify-center text-[10px] font-bold">
+                                {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                            </div>
+                            <span class="max-w-[85px] truncate">{{ auth()->user()->name }}</span>
                             @if(auth()->user()->isPrimeActive())
-                                <i class="fa-solid fa-crown text-amber-500 text-xs"></i>
-                            @else
-                                <i class="fa-solid fa-user text-slate-400 text-xs"></i>
+                                <i class="fa-solid fa-crown text-amber-600 text-xs"></i>
                             @endif
-                            <span class="max-w-[110px] truncate">{{ auth()->user()->name }}</span>
-                            <i class="fa-solid fa-chevron-down text-[10px] text-slate-400 group-hover:rotate-180 transition-transform"></i>
+                            <i class="fa-solid fa-chevron-down text-[9px] text-slate-400 group-hover:rotate-180 transition-transform"></i>
                         </a>
                         <div class="absolute right-0 top-full pt-1.5 hidden group-hover:block z-50">
-                            <div class="min-w-[220px] bg-white rounded-2xl shadow-xl border border-slate-100 p-2 space-y-1">
+                            <div class="min-w-[210px] bg-white rounded-2xl shadow-xl border border-slate-100 p-2 space-y-1">
                                 <div class="px-3 py-2 border-b border-slate-100">
-                                    <span class="text-xs font-bold text-brand-navy block">{{ auth()->user()->name }}</span>
+                                    <span class="text-xs font-bold text-brand-navy block truncate">{{ auth()->user()->name }}</span>
                                     <span class="text-[11px] text-slate-500 block truncate">{{ auth()->user()->email }}</span>
                                     @if(auth()->user()->isPrimeActive())
-                                        <span class="inline-flex items-center gap-1 mt-1 px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-amber-400 text-slate-950">
-                                            <i class="fa-solid fa-crown text-[9px]"></i> {{ auth()->user()->prime_plan ?? 'Prime' }}
+                                        <span class="inline-flex items-center gap-1 mt-1 px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-wider bg-amber-400 text-slate-950">
+                                            <i class="fa-solid fa-crown text-[8px]"></i> {{ auth()->user()->prime_plan ?? 'Prime' }}
                                         </span>
                                     @endif
                                 </div>
                                 <a href="{{ route('my.prime') }}" class="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold text-slate-700 hover:bg-slate-50 hover:text-brand-navy transition">
-                                    <i class="fa-solid fa-gauge-high text-brand-cyan"></i>
+                                    <i class="fa-solid fa-gauge-high text-brand-cyan text-xs"></i>
                                     <span>My Dashboard</span>
                                 </a>
                                 @if(!auth()->user()->isPrimeActive())
                                     <a href="{{ route('prime') }}" class="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold text-amber-800 hover:bg-amber-50 transition">
-                                        <i class="fa-solid fa-crown text-amber-500"></i>
-                                        <span>Join Housing365 Prime</span>
+                                        <i class="fa-solid fa-crown text-amber-500 text-xs"></i>
+                                        <span>Upgrade to Prime</span>
                                     </a>
                                 @endif
                                 <form action="{{ route('logout') }}" method="POST" class="pt-1 border-t border-slate-100">
                                     @csrf
                                     <button type="submit" class="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold text-rose-600 hover:bg-rose-50 transition text-left">
-                                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                                        <i class="fa-solid fa-arrow-right-from-bracket text-xs"></i>
                                         <span>Sign Out</span>
                                     </button>
                                 </form>
@@ -303,17 +316,15 @@
                         </div>
                     </div>
                 @else
-                    <!-- Guest Links -->
-                    <a href="{{ route('prime') }}" class="inline-flex items-center justify-center gap-1.5 rounded-xl bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 px-3.5 py-2.5 text-xs font-black uppercase tracking-wider text-slate-950 shadow-md shadow-amber-500/20 transition-all duration-200 hover:-translate-y-0.5 border border-amber-300">
-                        <i class="fa-solid fa-crown text-amber-950 text-xs"></i>
-                        <span>Housing365 Prime</span>
-                    </a>
-                    <a href="{{ route('login') }}" class="inline-flex items-center justify-center gap-1 px-3 py-2 text-xs font-bold text-slate-700 hover:text-brand-navy transition">
-                        <span>Sign In</span>
-                    </a>
-                    <a href="{{ route('register') }}" class="inline-flex items-center justify-center gap-1.5 rounded-xl bg-brand-cyan hover:bg-brand-cyan-hover px-3.5 py-2.5 text-xs font-bold uppercase tracking-wider text-white shadow-md shadow-brand-cyan/20 transition">
-                        <span>Register</span>
-                    </a>
+                    <!-- Clean Sign In / Register Links -->
+                    <div class="flex items-center gap-1">
+                        <a href="{{ route('login') }}" class="px-2.5 py-1.5 text-xs font-bold text-slate-600 hover:text-brand-navy transition rounded-lg hover:bg-slate-50">
+                            Sign In
+                        </a>
+                        <a href="{{ route('register') }}" class="px-3 py-1.5 rounded-xl bg-brand-cyan hover:bg-brand-cyan-hover text-white text-xs font-bold uppercase tracking-wider shadow-sm transition">
+                            Register
+                        </a>
+                    </div>
                 @endauth
             </div>
 
