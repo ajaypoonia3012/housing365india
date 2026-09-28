@@ -18,7 +18,7 @@ class SecurityHeadersMiddleware
         $response = $next($request);
 
         // 1. Remove identifying server headers to prevent reconnaissance
-        if (function_exists('header_remove')) {
+        if (function_exists('header_remove') && !headers_sent()) {
             header_remove('X-Powered-By');
         }
         $response->headers->remove('X-Powered-By');

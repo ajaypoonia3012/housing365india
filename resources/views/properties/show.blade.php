@@ -24,36 +24,72 @@
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8 bg-white p-6 sm:p-8 rounded-3xl border border-slate-200/80 shadow-sm">
             <div>
                 <div class="flex flex-wrap items-center gap-2 mb-3">
-                    <span class="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-brand-navy text-white">
-                        {{ $property->property_type }}
+                    @if($property->purpose === 'sale')
+                        <span class="px-3 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-wider bg-emerald-600 text-white shadow-sm">
+                            FOR SALE
+                        </span>
+                    @elseif($property->purpose === 'lease')
+                        <span class="px-3 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-wider bg-indigo-600 text-white shadow-sm">
+                            COMMERCIAL LEASE
+                        </span>
+                    @else
+                        <span class="px-3 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-wider bg-brand-navy text-white">
+                            FOR RENT
+                        </span>
+                    @endif
+
+                    @if($property->category === 'plot_land')
+                        <span class="px-3 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-wider bg-amber-500 text-white shadow-sm">
+                            PLOT / LAND
+                        </span>
+                    @elseif($property->category === 'commercial')
+                        <span class="px-3 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-wider bg-purple-600 text-white shadow-sm">
+                            COMMERCIAL
+                        </span>
+                    @else
+                        <span class="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-slate-100 text-slate-700">
+                            {{ $property->property_type }}
+                        </span>
+                    @endif
+
+                    <span class="px-3 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-wider bg-teal-50 text-teal-700 border border-teal-200">
+                        Zero Brokerage
                     </span>
-                    <span class="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-800">
-                        {{ $property->status }}
+
+                    <span class="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-emerald-50 text-emerald-700">
+                        <i class="fa-solid fa-circle-check text-[10px] mr-1"></i> Verified
                     </span>
-                    <span class="text-xs text-slate-400 font-semibold">&bull; Suite ID: H365-{{ $property->id + 1000 }}</span>
+
+                    <span class="text-xs text-slate-400 font-semibold">&bull; Property ID: H365-{{ $property->id + 1000 }}</span>
                 </div>
                 <h1 class="font-display text-2xl sm:text-3xl lg:text-4xl font-normal text-brand-navy tracking-tight">{{ $property->title }}</h1>
                 <p class="text-slate-500 text-xs sm:text-sm mt-2 flex items-center gap-1.5">
                     <i class="fa-solid fa-location-dot text-brand-cyan"></i>
-                    <span>{{ $property->address }}, {{ $property->city }}, {{ $property->state }} {{ $property->postal_code }}</span>
+                    <span>{{ $property->locality ? $property->locality . ', ' : '' }}{{ $property->address }}, {{ $property->city }}, {{ $property->state }} {{ $property->postal_code }}</span>
                 </p>
             </div>
 
             <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                <div class="bg-[#F8FAFD] p-5 rounded-2xl border border-slate-200/80 text-left md:text-right md:min-w-[200px]">
-                    <span class="text-xs text-slate-400 font-bold uppercase tracking-wider block">Monthly Rental</span>
+                <div class="bg-[#F8FAFD] p-5 rounded-2xl border border-slate-200/80 text-left md:text-right md:min-w-[220px]">
+                    <span class="text-xs text-slate-400 font-bold uppercase tracking-wider block">
+                        {{ $property->purpose === 'sale' ? 'Total Asking Price' : ($property->purpose === 'lease' ? 'Monthly Lease Rent' : 'Monthly Rental') }}
+                    </span>
                     <div class="flex items-baseline md:justify-end gap-1 my-1">
-                        <span class="font-display text-3xl sm:text-4xl font-normal text-brand-navy">₹{{ number_format($property->price, 0) }}</span>
-                        <span class="text-xs font-semibold text-slate-500">/{{ $property->price_frequency }}</span>
+                        @if(!empty($property->price_display))
+                            <span class="font-display text-3xl sm:text-4xl font-normal text-brand-navy">{{ $property->price_display }}</span>
+                        @else
+                            <span class="font-display text-3xl sm:text-4xl font-normal text-brand-navy">₹{{ number_format($property->price, 0) }}</span>
+                            <span class="text-xs font-semibold text-slate-500">{{ $property->purpose === 'sale' ? '' : '/' . ($property->price_frequency ?? 'mo') }}</span>
+                        @endif
                     </div>
                     <span class="text-[11px] text-emerald-600 font-bold flex items-center md:justify-end gap-1.5">
-                        <i class="fa-solid fa-circle-check text-xs"></i> 75-Point Inspection Passed
+                        <i class="fa-solid fa-circle-check text-xs"></i> 100% Direct Owner &bull; No Brokerage
                     </span>
                 </div>
-                <button type="button" onclick="openTourModal()" class="w-full sm:w-auto px-6 py-4 rounded-2xl bg-brand-cyan hover:bg-brand-cyan-hover text-white text-xs sm:text-sm font-bold uppercase tracking-wider shadow-lg shadow-brand-cyan/30 flex items-center justify-center gap-2 transition hover:-translate-y-0.5">
-                    <i class="fa-regular fa-calendar-check text-base"></i>
-                    Schedule a Tour
-                </button>
+                <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $property->seller_phone ?? '916376163263') }}?text=Hi,%20I%20am%20interested%20in%20your%20listing:%20{{ urlencode($property->title) }}%20({{ urlencode(url()->current()) }})" target="_blank" class="w-full sm:w-auto px-6 py-4 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold uppercase tracking-wider shadow-lg shadow-emerald-600/30 flex items-center justify-center gap-2 transition hover:-translate-y-0.5">
+                    <i class="fa-brands fa-whatsapp text-lg"></i>
+                    Chat on WhatsApp
+                </a>
             </div>
         </div>
 
@@ -81,22 +117,58 @@
             <div class="lg:col-span-8 space-y-10">
                 <!-- Key Specs Grid -->
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 bg-white p-6 sm:p-7 rounded-3xl border border-slate-200/80 shadow-sm text-center">
-                    <div class="p-4 bg-[#F8FAFD] rounded-2xl border border-slate-100">
-                        <span class="block text-slate-400 text-xs font-bold uppercase tracking-wider mb-1"><i class="fa-solid fa-bed text-brand-cyan mr-1"></i> Configuration</span>
-                        <span class="font-display text-xl sm:text-2xl font-normal text-brand-navy">{{ $property->bedrooms }} BHK Apartment / Home</span>
-                    </div>
-                    <div class="p-4 bg-[#F8FAFD] rounded-2xl border border-slate-100">
-                        <span class="block text-slate-400 text-xs font-bold uppercase tracking-wider mb-1"><i class="fa-solid fa-bath text-brand-cyan mr-1"></i> Bathrooms</span>
-                        <span class="font-display text-xl sm:text-2xl font-normal text-brand-navy">{{ $property->bathrooms }} Bath{{ $property->bathrooms > 1 ? 's' : '' }}</span>
-                    </div>
-                    <div class="p-4 bg-[#F8FAFD] rounded-2xl border border-slate-100">
-                        <span class="block text-slate-400 text-xs font-bold uppercase tracking-wider mb-1"><i class="fa-solid fa-ruler-combined text-brand-cyan mr-1"></i> Area</span>
-                        <span class="font-display text-xl sm:text-2xl font-normal text-brand-navy">{{ $property->sqft ? $property->sqft . ' Sq Ft' : 'Spacious' }}</span>
-                    </div>
-                    <div class="p-4 bg-[#F8FAFD] rounded-2xl border border-slate-100">
-                        <span class="block text-slate-400 text-xs font-bold uppercase tracking-wider mb-1"><i class="fa-solid fa-key text-brand-cyan mr-1"></i> Move-In</span>
-                        <span class="font-display text-xl sm:text-2xl font-normal text-brand-navy">Immediate</span>
-                    </div>
+                    @if($property->category === 'plot_land')
+                        <div class="p-4 bg-[#F8FAFD] rounded-2xl border border-slate-100">
+                            <span class="block text-slate-400 text-xs font-bold uppercase tracking-wider mb-1"><i class="fa-solid fa-vector-square text-brand-cyan mr-1"></i> Plot Area</span>
+                            <span class="font-display text-xl sm:text-2xl font-normal text-brand-navy">{{ $property->sqft ? $property->sqft . ' ' . ($property->area_unit ?? 'Sq.Yds') : 'Open Land' }}</span>
+                        </div>
+                        <div class="p-4 bg-[#F8FAFD] rounded-2xl border border-slate-100">
+                            <span class="block text-slate-400 text-xs font-bold uppercase tracking-wider mb-1"><i class="fa-solid fa-stamp text-brand-cyan mr-1"></i> Ownership</span>
+                            <span class="font-display text-xl sm:text-2xl font-normal text-brand-navy">Freehold Clear Title</span>
+                        </div>
+                        <div class="p-4 bg-[#F8FAFD] rounded-2xl border border-slate-100">
+                            <span class="block text-slate-400 text-xs font-bold uppercase tracking-wider mb-1"><i class="fa-solid fa-shield-halved text-brand-cyan mr-1"></i> Approvals</span>
+                            <span class="font-display text-xl sm:text-2xl font-normal text-brand-navy">RERA / Approved</span>
+                        </div>
+                        <div class="p-4 bg-[#F8FAFD] rounded-2xl border border-slate-100">
+                            <span class="block text-slate-400 text-xs font-bold uppercase tracking-wider mb-1"><i class="fa-solid fa-key text-brand-cyan mr-1"></i> Possession</span>
+                            <span class="font-display text-xl sm:text-2xl font-normal text-brand-navy">Immediate</span>
+                        </div>
+                    @elseif($property->category === 'commercial')
+                        <div class="p-4 bg-[#F8FAFD] rounded-2xl border border-slate-100">
+                            <span class="block text-slate-400 text-xs font-bold uppercase tracking-wider mb-1"><i class="fa-solid fa-building text-brand-cyan mr-1"></i> Asset Type</span>
+                            <span class="font-display text-xl sm:text-2xl font-normal text-brand-navy">{{ $property->property_type ?? 'Commercial' }}</span>
+                        </div>
+                        <div class="p-4 bg-[#F8FAFD] rounded-2xl border border-slate-100">
+                            <span class="block text-slate-400 text-xs font-bold uppercase tracking-wider mb-1"><i class="fa-solid fa-ruler-combined text-brand-cyan mr-1"></i> Super Built-up</span>
+                            <span class="font-display text-xl sm:text-2xl font-normal text-brand-navy">{{ $property->sqft ? number_format($property->sqft) . ' ' . ($property->area_unit ?? 'sqft') : 'Spacious' }}</span>
+                        </div>
+                        <div class="p-4 bg-[#F8FAFD] rounded-2xl border border-slate-100">
+                            <span class="block text-slate-400 text-xs font-bold uppercase tracking-wider mb-1"><i class="fa-solid fa-couch text-brand-cyan mr-1"></i> Fit-Out</span>
+                            <span class="font-display text-xl sm:text-2xl font-normal text-brand-navy">{{ $property->furnishing ? ucfirst($property->furnishing) : 'Fitted / Ready' }}</span>
+                        </div>
+                        <div class="p-4 bg-[#F8FAFD] rounded-2xl border border-slate-100">
+                            <span class="block text-slate-400 text-xs font-bold uppercase tracking-wider mb-1"><i class="fa-solid fa-key text-brand-cyan mr-1"></i> Occupancy</span>
+                            <span class="font-display text-xl sm:text-2xl font-normal text-brand-navy">Ready to Move</span>
+                        </div>
+                    @else
+                        <div class="p-4 bg-[#F8FAFD] rounded-2xl border border-slate-100">
+                            <span class="block text-slate-400 text-xs font-bold uppercase tracking-wider mb-1"><i class="fa-solid fa-bed text-brand-cyan mr-1"></i> Configuration</span>
+                            <span class="font-display text-xl sm:text-2xl font-normal text-brand-navy">{{ $property->bedrooms ?? 2 }} BHK Home</span>
+                        </div>
+                        <div class="p-4 bg-[#F8FAFD] rounded-2xl border border-slate-100">
+                            <span class="block text-slate-400 text-xs font-bold uppercase tracking-wider mb-1"><i class="fa-solid fa-bath text-brand-cyan mr-1"></i> Bathrooms</span>
+                            <span class="font-display text-xl sm:text-2xl font-normal text-brand-navy">{{ $property->bathrooms ?? 2 }} Bath{{ ($property->bathrooms ?? 2) > 1 ? 's' : '' }}</span>
+                        </div>
+                        <div class="p-4 bg-[#F8FAFD] rounded-2xl border border-slate-100">
+                            <span class="block text-slate-400 text-xs font-bold uppercase tracking-wider mb-1"><i class="fa-solid fa-ruler-combined text-brand-cyan mr-1"></i> Area</span>
+                            <span class="font-display text-xl sm:text-2xl font-normal text-brand-navy">{{ $property->sqft ? $property->sqft . ' Sq Ft' : 'Spacious' }}</span>
+                        </div>
+                        <div class="p-4 bg-[#F8FAFD] rounded-2xl border border-slate-100">
+                            <span class="block text-slate-400 text-xs font-bold uppercase tracking-wider mb-1"><i class="fa-solid fa-couch text-brand-cyan mr-1"></i> Furnishing</span>
+                            <span class="font-display text-xl sm:text-2xl font-normal text-brand-navy">{{ $property->furnishing ? ucfirst($property->furnishing) : 'Semi-Furnished' }}</span>
+                        </div>
+                    @endif
                 </div>
 
                 <!-- Description Card -->
@@ -144,52 +216,98 @@
                 </div>
             </div>
 
-            <!-- Right 4 Cols: Booking & Tour Application Form -->
+            <!-- Right 4 Cols: Seller Card & Inquiry Form -->
             <div class="lg:col-span-4">
-                <div class="sticky top-28 bg-white p-8 rounded-3xl border border-slate-200/80 shadow-xl">
-                    <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-brand-cyan/10 text-brand-cyan mb-3">
-                        <span class="size-1.5 rounded-full bg-brand-cyan"></span> Instant Showing
-                    </span>
-                    <h3 class="font-display text-2xl font-normal text-brand-navy mb-1">Book a Tour / Apply</h3>
-                    <p class="text-xs text-slate-500 mb-6">Schedule an in-person or live virtual showing with our property specialist.</p>
-
-                    <form action="{{ route('inquiry.store') }}" method="POST" class="space-y-4">
-                        @csrf
-                        <div class="hidden" style="display:none !important;" aria-hidden="true">
-                            <label for="website_url_hp">Security Check - Leave Empty</label>
-                            <input type="text" name="website_url_hp" id="website_url_hp" tabindex="-1" autocomplete="off">
-                        </div>
-                        <input type="hidden" name="service_type" value="Property Tour / Application">
-                        <input type="hidden" name="subject" value="Inquiry for {{ $property->title }} (ID: {{ $property->id }})">
-
-                        <div>
-                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">Your Full Name *</label>
-                            <input type="text" name="name" required class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-4 py-2.5 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-brand-cyan focus:border-brand-cyan transition" placeholder="Jane Doe">
+                <div class="sticky top-28 space-y-6">
+                    
+                    <!-- Direct Owner / Seller Contact Card (OLX / MagicBricks style) -->
+                    <div class="bg-gradient-to-br from-slate-900 to-brand-navy p-6 rounded-3xl text-white shadow-xl border border-slate-700/50">
+                        <div class="flex items-center gap-3.5 mb-4">
+                            <div class="w-12 h-12 rounded-2xl bg-brand-cyan/20 border border-brand-cyan/40 text-brand-cyan flex items-center justify-center font-bold text-lg shrink-0">
+                                <i class="fa-solid fa-user-shield"></i>
+                            </div>
+                            <div class="min-w-0">
+                                <div class="flex items-center gap-1.5">
+                                    <h4 class="font-bold text-white text-base truncate">{{ $property->seller_name ?? 'Property Owner' }}</h4>
+                                    <i class="fa-solid fa-circle-check text-emerald-400 text-xs shrink-0" title="Verified Owner"></i>
+                                </div>
+                                <span class="text-xs text-slate-300 font-medium block">Posted by {{ ucfirst($property->posted_by ?? 'Owner') }} &bull; Direct Deal</span>
+                            </div>
                         </div>
 
-                        <div>
-                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">Email Address *</label>
-                            <input type="email" name="email" required class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-4 py-2.5 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-brand-cyan focus:border-brand-cyan transition" placeholder="jane@example.com">
+                        <div class="space-y-2 mb-5">
+                            <div class="flex items-center justify-between text-xs bg-white/10 px-3.5 py-2 rounded-xl backdrop-blur-sm">
+                                <span class="text-slate-300">Brokerage</span>
+                                <span class="font-bold text-emerald-300 uppercase">₹0 (Zero Brokerage)</span>
+                            </div>
+                            <div class="flex items-center justify-between text-xs bg-white/10 px-3.5 py-2 rounded-xl backdrop-blur-sm">
+                                <span class="text-slate-300">Direct Contact</span>
+                                <span class="font-bold text-white tracking-wider">{{ $property->seller_phone ?? '+91 63761 63263' }}</span>
+                            </div>
                         </div>
 
-                        <div>
-                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">Phone Number</label>
-                            <input type="tel" name="phone" class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-4 py-2.5 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-brand-cyan focus:border-brand-cyan transition" placeholder="+1 (555) 000-0000">
+                        <!-- Direct Contact Actions -->
+                        <div class="grid grid-cols-2 gap-2.5">
+                            <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $property->seller_phone ?? '916376163263') }}?text=Hi,%20I%20am%20interested%20in%20your%20property%20listing:%20{{ urlencode($property->title) }}%20({{ urlencode(url()->current()) }})" 
+                               target="_blank" 
+                               class="flex items-center justify-center gap-2 py-3 px-3 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs uppercase tracking-wider transition shadow-md shadow-emerald-500/20">
+                                <i class="fa-brands fa-whatsapp text-sm"></i>
+                                <span>WhatsApp</span>
+                            </a>
+                            <a href="tel:{{ $property->seller_phone ?? '+916376163263' }}" 
+                               class="flex items-center justify-center gap-2 py-3 px-3 rounded-xl bg-brand-cyan hover:bg-brand-cyan-hover text-white font-bold text-xs uppercase tracking-wider transition shadow-md shadow-brand-cyan/20">
+                                <i class="fa-solid fa-phone text-xs"></i>
+                                <span>Call Now</span>
+                            </a>
                         </div>
+                    </div>
 
-                        <div>
-                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">Preferred Date / Message</label>
-                            <textarea name="message" rows="3" required class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-4 py-2.5 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-brand-cyan focus:border-brand-cyan transition" placeholder="I would like to schedule a tour this weekend..."></textarea>
-                        </div>
+                    <!-- Instant Tour & Inquiry Form -->
+                    <div class="bg-white p-7 rounded-3xl border border-slate-200/80 shadow-md">
+                        <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-brand-cyan/10 text-brand-cyan mb-3">
+                            <span class="size-1.5 rounded-full bg-brand-cyan"></span> Instant Showing
+                        </span>
+                        <h3 class="font-display text-2xl font-normal text-brand-navy mb-1">Book a Tour / Apply</h3>
+                        <p class="text-xs text-slate-500 mb-6">Schedule an in-person or live virtual showing with our property specialist.</p>
 
-                        <button type="submit" class="w-full py-3.5 px-4 rounded-xl bg-brand-cyan hover:bg-brand-cyan-hover text-white font-bold text-xs uppercase tracking-wider shadow-lg shadow-brand-cyan/25 transition-all duration-200 hover:-translate-y-0.5">
-                            Submit Inquiry & Book Tour
-                        </button>
+                        <form action="{{ route('inquiry.store') }}" method="POST" class="space-y-4">
+                            @csrf
+                            <div class="hidden" style="display:none !important;" aria-hidden="true">
+                                <label for="website_url_hp">Security Check - Leave Empty</label>
+                                <input type="text" name="website_url_hp" id="website_url_hp" tabindex="-1" autocomplete="off">
+                            </div>
+                            <input type="hidden" name="service_type" value="Property Tour / Application">
+                            <input type="hidden" name="subject" value="Inquiry for {{ $property->title }} (ID: {{ $property->id }})">
 
-                        <p class="text-[11px] text-center text-slate-400 mt-3 flex items-center justify-center gap-1">
-                            <i class="fa-solid fa-lock text-[10px]"></i> Your information is private & encrypted.
-                        </p>
-                    </form>
+                            <div>
+                                <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">Your Full Name *</label>
+                                <input type="text" name="name" required class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-4 py-2.5 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-brand-cyan focus:border-brand-cyan transition" placeholder="Ajay Poonia">
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">Email Address *</label>
+                                <input type="email" name="email" required class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-4 py-2.5 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-brand-cyan focus:border-brand-cyan transition" placeholder="name@example.com">
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">Phone Number</label>
+                                <input type="tel" name="phone" class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-4 py-2.5 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-brand-cyan focus:border-brand-cyan transition" placeholder="+91 63761 63263">
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">Preferred Date / Message</label>
+                                <textarea name="message" rows="3" required class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-4 py-2.5 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-brand-cyan focus:border-brand-cyan transition" placeholder="I would like to schedule a site visit / inquiry..."></textarea>
+                            </div>
+
+                            <button type="submit" class="w-full py-3.5 px-4 rounded-xl bg-brand-cyan hover:bg-brand-cyan-hover text-white font-bold text-xs uppercase tracking-wider shadow-lg shadow-brand-cyan/25 transition-all duration-200 hover:-translate-y-0.5">
+                                Submit Inquiry & Book Tour
+                            </button>
+
+                            <p class="text-[11px] text-center text-slate-400 mt-3 flex items-center justify-center gap-1">
+                                <i class="fa-solid fa-lock text-[10px]"></i> Your information is private & encrypted.
+                            </p>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

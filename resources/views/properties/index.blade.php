@@ -1,65 +1,115 @@
 @extends('layouts.app')
 
-@section('title', 'Verified Rental Properties Across India | Housing 365 India')
-@section('meta_description', 'Search 100% owner-verified rental apartments, builder floors, and gated villas across Mumbai, Bengaluru, Delhi NCR, Hyderabad, and Pune. Zero broker spam.')
+@section('title', 'Verified Properties, Plots, Lands & Commercial Leasing | Housing 365 India')
+@section('meta_description', 'Search 100% owner-verified apartments, luxury villas, commercial offices, retail shops, and plots for sale and rent across India. Zero brokerage.')
 
 @section('content')
 
 <!-- ── SECTION 1: HERO SHOWCASE ── -->
-<section class="relative overflow-hidden bg-gradient-to-b from-[#F7FAFD] via-white to-white pt-10 pb-14 sm:pt-16 sm:pb-20 lg:pt-20 lg:pb-24">
+<section class="relative overflow-hidden bg-gradient-to-b from-[#F7FAFD] via-white to-white pt-10 pb-12 sm:pt-14 sm:pb-16 border-b border-slate-100">
     <!-- Ambient Glow Effects -->
     <div class="pointer-events-none absolute -left-40 top-0 h-[500px] w-[500px] rounded-full opacity-40 blur-3xl" style="background: radial-gradient(circle, rgba(0,174,239,0.18) 0%, transparent 70%)" aria-hidden="true"></div>
     <div class="pointer-events-none absolute right-0 top-20 h-[600px] w-[600px] rounded-full opacity-30 blur-3xl" style="background: radial-gradient(circle, rgba(0,174,239,0.12) 0%, transparent 70%)" aria-hidden="true"></div>
 
     <div class="relative mx-auto w-full max-w-[1720px] px-4 sm:px-8 lg:px-12 xl:px-16">
-        <div class="max-w-3xl mx-auto text-center">
+        <div class="max-w-4xl mx-auto text-center">
             <!-- Eyebrow Badge -->
             <div class="mb-4 inline-flex items-center gap-2 rounded-full border border-brand-cyan/20 bg-brand-cyan/5 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-brand-cyan">
                 <span class="h-1.5 w-1.5 rounded-full bg-brand-cyan"></span>
-                VERIFIED SUITES & HOMES
+                INDIA'S VERIFIED REAL ESTATE MARKETPLACE
             </div>
 
             <!-- Headline -->
-            <h1 class="font-display text-4xl font-normal leading-[1.12] tracking-tight text-brand-navy sm:text-5xl md:text-6xl">
-                Explore Available 
-                <span class="font-display font-medium text-brand-cyan">Rental Properties.</span>
+            <h1 class="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-[1.15] tracking-tight text-brand-navy">
+                Buy, Rent, Sell &amp; Lease <br class="hidden sm:inline">
+                <span class="text-brand-cyan font-extrabold">Flats, Commercial Spaces, Plots &amp; Lands.</span>
             </h1>
 
             <!-- Subheadline -->
-            <p class="mt-5 text-base leading-relaxed text-slate-600 sm:text-lg">
-                Browse our curated portfolio of verified apartments, luxury condos, and executive townhomes with 360° virtual tours and rapid digital lease applications.
+            <p class="mt-4 text-base leading-relaxed text-slate-600 sm:text-lg max-w-2xl mx-auto">
+                Discover 100% verified properties with zero broker spam. Looking to sell or lease your property? Post it free in 60 seconds.
             </p>
 
-            <!-- Value Highlights -->
-            <div class="mt-8 flex flex-wrap justify-center items-center gap-6 text-xs font-semibold text-slate-700">
-                <div class="flex items-center gap-2">
-                    <i class="fa-solid fa-circle-check text-brand-cyan"></i>
-                    <span>75-Point Physical Inspection</span>
-                </div>
-                <div class="flex items-center gap-2">
-                    <i class="fa-solid fa-circle-check text-brand-cyan"></i>
-                    <span>24/7 Digital Lease Application</span>
-                </div>
-                <div class="flex items-center gap-2">
-                    <i class="fa-solid fa-circle-check text-brand-cyan"></i>
-                    <span>Zero Duplicate Listings</span>
-                </div>
+            <!-- Action Pill CTAs -->
+            <div class="mt-8 flex flex-wrap justify-center items-center gap-3">
+                <a href="{{ route('properties.post') }}" class="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-brand-cyan hover:bg-brand-cyan-hover text-white font-bold text-sm shadow-lg shadow-brand-cyan/25 transition-all duration-200 hover:-translate-y-0.5">
+                    <i class="fa-solid fa-circle-plus"></i>
+                    <span>+ Post Free Property</span>
+                    <span class="px-2 py-0.5 text-[10px] rounded-full bg-white/20 font-bold uppercase">Zero Brokerage</span>
+                </a>
+                <a href="#marketplace-filters" class="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-white border border-slate-200 hover:border-brand-cyan text-brand-navy font-bold text-sm shadow-sm transition">
+                    <i class="fa-solid fa-sliders text-brand-cyan"></i>
+                    <span>Explore Listings ({{ $counts['all'] ?? 80 }}+)</span>
+                </a>
             </div>
         </div>
     </div>
 </section>
 
 <!-- ── SECTION 2: SEARCH & LISTINGS ── -->
-<section class="py-12 sm:py-16 bg-[#F8FAFD]">
+<section class="py-10 sm:py-14 bg-[#F8FAFD]" id="marketplace-filters">
     <div class="mx-auto w-full max-w-[1720px] px-4 sm:px-8 lg:px-12 xl:px-16">
         
+        <!-- Marketplace Quick Intent Tabs -->
+        <div class="mb-6 flex flex-wrap items-center gap-2">
+            <a href="{{ route('properties.index') }}" 
+               class="px-4 py-2.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 {{ !request('purpose') && !request('category') ? 'bg-brand-navy text-white shadow-md' : 'bg-white text-slate-700 border border-slate-200 hover:border-brand-cyan' }}">
+                <i class="fa-solid fa-layer-group"></i>
+                <span>All Properties</span>
+                <span class="ml-1 px-1.5 py-0.5 rounded-full text-[10px] {{ !request('purpose') && !request('category') ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-600' }}">{{ $counts['all'] ?? 0 }}</span>
+            </a>
+
+            <a href="{{ route('properties.index', ['purpose' => 'rent']) }}" 
+               class="px-4 py-2.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 {{ request('purpose') === 'rent' && !request('category') ? 'bg-brand-cyan text-white shadow-md' : 'bg-white text-slate-700 border border-slate-200 hover:border-brand-cyan' }}">
+                <i class="fa-solid fa-key"></i>
+                <span>For Rent</span>
+                <span class="ml-1 px-1.5 py-0.5 rounded-full text-[10px] {{ request('purpose') === 'rent' ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-600' }}">{{ $counts['rent'] ?? 0 }}</span>
+            </a>
+
+            <a href="{{ route('properties.index', ['purpose' => 'sale']) }}" 
+               class="px-4 py-2.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 {{ request('purpose') === 'sale' && !request('category') ? 'bg-emerald-600 text-white shadow-md' : 'bg-white text-slate-700 border border-slate-200 hover:border-brand-cyan' }}">
+                <i class="fa-solid fa-tag"></i>
+                <span>For Sale</span>
+                <span class="ml-1 px-1.5 py-0.5 rounded-full text-[10px] {{ request('purpose') === 'sale' ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-600' }}">{{ $counts['sale'] ?? 0 }}</span>
+            </a>
+
+            <a href="{{ route('properties.index', ['category' => 'commercial']) }}" 
+               class="px-4 py-2.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 {{ request('category') === 'commercial' ? 'bg-indigo-600 text-white shadow-md' : 'bg-white text-slate-700 border border-slate-200 hover:border-brand-cyan' }}">
+                <i class="fa-solid fa-building"></i>
+                <span>Commercial Leasing</span>
+                <span class="ml-1 px-1.5 py-0.5 rounded-full text-[10px] {{ request('category') === 'commercial' ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-600' }}">{{ $counts['commercial'] ?? 0 }}</span>
+            </a>
+
+            <a href="{{ route('properties.index', ['category' => 'plot_land']) }}" 
+               class="px-4 py-2.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 {{ request('category') === 'plot_land' ? 'bg-amber-600 text-white shadow-md' : 'bg-white text-slate-700 border border-slate-200 hover:border-brand-cyan' }}">
+                <i class="fa-solid fa-map-location-dot"></i>
+                <span>Plots &amp; Lands</span>
+                <span class="ml-1 px-1.5 py-0.5 rounded-full text-[10px] {{ request('category') === 'plot_land' ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-600' }}">{{ $counts['plot_land'] ?? 0 }}</span>
+            </a>
+
+            <!-- Post Property Button right on tab strip -->
+            <a href="{{ route('properties.post') }}" class="ml-auto inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider shadow-sm transition">
+                <i class="fa-solid fa-plus text-xs"></i>
+                <span>List Your Property Free</span>
+            </a>
+        </div>
+
         <!-- Filter Bar -->
-        <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200/80 shadow-md mb-10">
-            <form action="{{ route('properties.index') }}" method="GET" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 items-end">
+        <div class="bg-white p-5 sm:p-7 rounded-3xl border border-slate-200/80 shadow-md mb-8">
+            <form action="{{ route('properties.index') }}" method="GET" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3.5 items-end">
+                <!-- Keyword / Locality Search -->
+                <div class="lg:col-span-2">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Search Locality / Project</label>
+                    <div class="relative">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-slate-400 text-xs"></i>
+                        <input type="text" name="q" value="{{ request('q') }}" placeholder="e.g. Bandra, HSR, DLF Cyber City, Plot" class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl pl-9 pr-3 py-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-brand-cyan focus:border-brand-cyan transition">
+                    </div>
+                </div>
+
                 <!-- City -->
                 <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5">City</label>
-                    <select name="city" class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-cyan focus:border-brand-cyan transition">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">City</label>
+                    <select name="city" class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-3 py-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-brand-cyan focus:border-brand-cyan transition font-medium">
                         <option value="">All Cities</option>
                         @foreach($cities as $c)
                             <option value="{{ $c }}" {{ request('city') == $c ? 'selected' : '' }}>{{ $c }}</option>
@@ -67,40 +117,34 @@
                     </select>
                 </div>
 
-                <!-- Property Type -->
+                <!-- Category -->
                 <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5">Property Type</label>
-                    <select name="property_type" class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-cyan focus:border-brand-cyan transition">
-                        <option value="">All Types</option>
-                        @foreach($types as $t)
-                            <option value="{{ $t }}" {{ request('property_type') == $t ? 'selected' : '' }}>{{ $t }}</option>
-                        @endforeach
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Category</label>
+                    <select name="category" class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-3 py-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-brand-cyan focus:border-brand-cyan transition font-medium">
+                        <option value="">All Categories</option>
+                        <option value="residential" {{ request('category') == 'residential' ? 'selected' : '' }}>Residential</option>
+                        <option value="commercial" {{ request('category') == 'commercial' ? 'selected' : '' }}>Commercial</option>
+                        <option value="plot_land" {{ request('category') == 'plot_land' ? 'selected' : '' }}>Plots &amp; Land</option>
                     </select>
                 </div>
 
-                <!-- Bedrooms -->
+                <!-- Purpose / Intent -->
                 <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5">Bedrooms</label>
-                    <select name="bedrooms" class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-cyan focus:border-brand-cyan transition">
-                        <option value="">Any BHK Configuration</option>
-                        <option value="1">1 BHK</option><option style="display:none;" value="1_legacy" {{ request('bedrooms') == '1' ? 'selected' : '' }}>1 BHK</option>
-                        <option value="2" {{ request('bedrooms') == '2' ? 'selected' : '' }}>2 BHK</option>
-                        <option value="3" {{ request('bedrooms') == '3' ? 'selected' : '' }}>3 BHK</option>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Intent</label>
+                    <select name="purpose" class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-3 py-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-brand-cyan focus:border-brand-cyan transition font-medium">
+                        <option value="">Rent &amp; Buy</option>
+                        <option value="rent" {{ request('purpose') == 'rent' ? 'selected' : '' }}>For Rent</option>
+                        <option value="sale" {{ request('purpose') == 'sale' ? 'selected' : '' }}>For Sale</option>
+                        <option value="lease" {{ request('purpose') == 'lease' ? 'selected' : '' }}>Commercial Lease</option>
                     </select>
-                </div>
-
-                <!-- Max Price -->
-                <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5">Max Rent</label>
-                    <input type="number" name="max_price" value="{{ request('max_price') }}" placeholder="Max Monthly Rent" class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-cyan focus:border-brand-cyan transition">
                 </div>
 
                 <!-- Action Buttons -->
                 <div class="flex gap-2">
-                    <button type="submit" class="flex-1 bg-brand-cyan hover:bg-brand-cyan-hover text-white font-bold py-2.5 px-4 rounded-xl text-xs uppercase tracking-wider transition shadow-md shadow-brand-cyan/20">
+                    <button type="submit" class="flex-1 bg-brand-cyan hover:bg-brand-cyan-hover text-white font-bold py-2.5 px-3 rounded-xl text-xs uppercase tracking-wider transition shadow-sm">
                         Filter
                     </button>
-                    <a href="{{ route('properties.index') }}" class="py-2.5 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold text-xs uppercase tracking-wider transition flex items-center justify-center">
+                    <a href="{{ route('properties.index') }}" class="py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold text-xs uppercase tracking-wider transition flex items-center justify-center">
                         Reset
                     </a>
                 </div>
@@ -141,28 +185,73 @@
                              alt="{{ $prop->title }}" 
                              onerror="this.src='/city-placeholder-b.svg'"
                              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                        <div class="absolute top-4 left-4 flex gap-2">
-                            <span class="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-brand-navy/90 text-white backdrop-blur-md">
-                                {{ $prop->property_type }}
-                            </span>
+                        
+                        <!-- Top Left Badges: Purpose & Category -->
+                        <div class="absolute top-4 left-4 flex flex-wrap gap-1.5 max-w-[80%]">
+                            @if($prop->purpose === 'sale')
+                                <span class="px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-emerald-600 text-white shadow-md">
+                                    FOR SALE
+                                </span>
+                            @elseif($prop->purpose === 'lease')
+                                <span class="px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-indigo-600 text-white shadow-md">
+                                    COMMERCIAL LEASE
+                                </span>
+                            @else
+                                <span class="px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-brand-navy/90 text-white backdrop-blur-md">
+                                    FOR RENT
+                                </span>
+                            @endif
+
+                            @if($prop->category === 'plot_land')
+                                <span class="px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-amber-500 text-white shadow-md">
+                                    PLOT / LAND
+                                </span>
+                            @elseif($prop->category === 'commercial')
+                                <span class="px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-purple-600 text-white shadow-md">
+                                    COMMERCIAL
+                                </span>
+                            @else
+                                <span class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-white/90 text-slate-800 backdrop-blur-md">
+                                    {{ $prop->property_type }}
+                                </span>
+                            @endif
+
                             @if($prop->featured)
-                                <span class="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-brand-cyan text-white shadow-md">
+                                <span class="px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-brand-cyan text-white shadow-md">
                                     Featured
                                 </span>
                             @endif
                         </div>
+
+                        <!-- Top Right: Zero Brokerage / Verified -->
+                        <div class="absolute top-4 right-4">
+                            <span class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-teal-500/90 text-white backdrop-blur-md shadow-sm">
+                                <i class="fa-solid fa-check text-[9px] mr-1"></i> Zero Brokerage
+                            </span>
+                        </div>
+
+                        <!-- Bottom Right: Price Badge -->
                         <div class="absolute bottom-4 right-4 bg-white/95 backdrop-blur-md px-3.5 py-1.5 rounded-xl shadow-lg border border-white/60">
-                            <span class="text-base sm:text-lg font-bold text-brand-navy">₹{{ number_format($prop->price, 0) }}</span>
-                            <span class="text-xs text-slate-500 font-medium">/{{ $prop->price_frequency }}</span>
+                            @if(!empty($prop->price_display))
+                                <span class="text-base sm:text-lg font-bold text-brand-navy">{{ $prop->price_display }}</span>
+                            @else
+                                <span class="text-base sm:text-lg font-bold text-brand-navy">₹{{ number_format($prop->price, 0) }}</span>
+                                <span class="text-xs text-slate-500 font-medium">{{ $prop->purpose === 'sale' ? '' : '/' . ($prop->price_frequency ?? 'mo') }}</span>
+                            @endif
                         </div>
                     </div>
 
                     <!-- Body -->
                     <div class="p-7 flex-grow flex flex-col justify-between">
                         <div>
-                            <div class="text-xs font-bold text-brand-cyan mb-2 flex items-center gap-1.5">
-                                <i class="fa-solid fa-location-dot"></i>
-                                <span>{{ $prop->city }}, {{ $prop->state }}</span>
+                            <div class="text-xs font-bold text-brand-cyan mb-2 flex items-center justify-between">
+                                <span class="flex items-center gap-1.5">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                    <span>{{ $prop->locality ? $prop->locality . ', ' : '' }}{{ $prop->city }}, {{ $prop->state }}</span>
+                                </span>
+                                @if($prop->posted_by)
+                                    <span class="text-[10px] uppercase font-bold text-slate-400 bg-slate-100 px-2 py-0.5 rounded-md">By {{ $prop->posted_by }}</span>
+                                @endif
                             </div>
                             <h3 class="font-heading font-bold text-lg text-brand-navy line-clamp-1 group-hover:text-brand-cyan transition-colors mb-2">
                                 <a href="{{ route('properties.show', $prop->slug) }}">{{ $prop->title }}</a>
@@ -170,16 +259,31 @@
                             <p class="text-slate-500 text-xs sm:text-sm line-clamp-2 mb-4 leading-relaxed">{{ $prop->description }}</p>
                         </div>
 
-                        <!-- Amenities Bar -->
+                        <!-- Amenities / Specs Bar tailored to Category -->
                         <div class="pt-5 border-t border-slate-100">
                             <div class="flex items-center justify-between text-xs text-slate-600 font-medium mb-4">
-                                <span class="flex items-center gap-1.5"><i class="fa-solid fa-bed text-brand-cyan"></i> {{ $prop->bedrooms }} BHK</span>
-                                <span class="flex items-center gap-1.5"><i class="fa-solid fa-bath text-brand-cyan"></i> {{ $prop->bathrooms }} Baths</span>
-                                <span class="flex items-center gap-1.5"><i class="fa-solid fa-ruler-combined text-brand-cyan"></i> {{ $prop->sqft ? $prop->sqft . ' sqft' : 'Spacious' }}</span>
+                                @if($prop->category === 'plot_land')
+                                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-vector-square text-brand-cyan"></i> {{ $prop->sqft ? $prop->sqft . ' ' . ($prop->area_unit ?? 'Sq.Yd') : 'Plot Area' }}</span>
+                                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-shield-halved text-brand-cyan"></i> RERA Approved</span>
+                                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-compass text-brand-cyan"></i> Clear Title</span>
+                                @elseif($prop->category === 'commercial')
+                                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-building text-brand-cyan"></i> {{ $prop->property_type ?? 'Office' }}</span>
+                                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-ruler-combined text-brand-cyan"></i> {{ $prop->sqft ? number_format($prop->sqft) . ' ' . ($prop->area_unit ?? 'sqft') : 'Spacious' }}</span>
+                                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-couch text-brand-cyan"></i> {{ $prop->furnishing ? ucfirst($prop->furnishing) : 'Fitted' }}</span>
+                                @else
+                                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-bed text-brand-cyan"></i> {{ $prop->bedrooms ?? 2 }} BHK</span>
+                                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-bath text-brand-cyan"></i> {{ $prop->bathrooms ?? 2 }} Baths</span>
+                                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-ruler-combined text-brand-cyan"></i> {{ $prop->sqft ? $prop->sqft . ' ' . ($prop->area_unit ?? 'sqft') : 'Spacious' }}</span>
+                                @endif
                             </div>
-                            <a href="{{ route('properties.show', $prop->slug) }}" class="w-full block text-center py-3 rounded-xl bg-slate-50 hover:bg-brand-cyan hover:text-white text-brand-navy font-bold text-xs uppercase tracking-wider transition duration-200">
-                                View Details & Apply
-                            </a>
+                            <div class="grid grid-cols-2 gap-2">
+                                <a href="{{ route('properties.show', $prop->slug) }}" class="block text-center py-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 text-brand-navy font-bold text-xs uppercase tracking-wider transition">
+                                    View Details
+                                </a>
+                                <a href="https://wa.me/916376163263?text=Hi,%20I%20am%20interested%20in%20your%20listing:%20{{ urlencode($prop->title) }}%20(Price:%20{{ urlencode($prop->price_display ?? '₹' . number_format($prop->price)) }})" target="_blank" class="block text-center py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider transition shadow-sm flex items-center justify-center gap-1.5">
+                                    <i class="fa-brands fa-whatsapp"></i> Contact
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>

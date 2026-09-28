@@ -19,7 +19,11 @@ class FrontendController extends Controller
     public function home()
     {
         $page = Page::where('slug', 'home')->first();
-        $featuredProperties = Property::where('featured', true)->take(4)->get();
+        $featuredProperties = Property::where('featured', true)->latest()->take(6)->get();
+        if ($featuredProperties->count() < 6) {
+            $extra = Property::where('featured', false)->latest()->take(6 - $featuredProperties->count())->get();
+            $featuredProperties = $featuredProperties->concat($extra);
+        }
         $services = Service::where('is_active', true)->orderBy('order')->take(8)->get();
         $cities = CityLocation::where('is_featured', true)->take(6)->get();
         $testimonials = Testimonial::where('is_featured', true)->orderBy('order')->take(3)->get();

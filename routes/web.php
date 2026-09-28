@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\PropertyListingController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\PostPropertyController;
 
 // Public Dynamic Frontend Routes
 Route::get('/', [FrontendController::class, 'home'])->name('home');
@@ -32,8 +33,10 @@ Route::get('/india/{state}/{city}', [FrontendController::class, 'indiaCity'])->n
 Route::redirect('/us', '/india', 301);
 Route::redirect('/us/{any}', '/india', 301)->where('any', '.*');
 
-// Properties
+// Properties & Free Listing Marketplace
 Route::get('/properties', [PropertyListingController::class, 'index'])->name('properties.index');
+Route::get('/post-property', [PostPropertyController::class, 'create'])->name('properties.post');
+Route::post('/post-property', [PostPropertyController::class, 'store'])->name('properties.store');
 Route::get('/properties/{slug}', [PropertyListingController::class, 'show'])->name('properties.show');
 
 // Blog & Guides

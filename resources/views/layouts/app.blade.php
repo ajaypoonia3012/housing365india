@@ -248,6 +248,11 @@
 
             <!-- Right CTAs -->
             <div class="hidden xl:flex items-center space-x-3">
+                <a href="{{ route('properties.post') }}" class="inline-flex items-center justify-center gap-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-white shadow-md shadow-amber-500/20 transition-all duration-200 hover:-translate-y-0.5">
+                    <i class="fa-solid fa-circle-plus text-xs"></i>
+                    <span>Post Free Property</span>
+                    <span class="ml-1 bg-white/25 text-[10px] px-1.5 py-0.5 rounded-md font-extrabold uppercase">FREE</span>
+                </a>
                 <a href="{{ route('contact') }}" class="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-cyan px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-white shadow-md shadow-brand-cyan/20 hover:bg-brand-cyan-hover transition">
                     <span>Talk to an Expert</span>
                     <i class="fa-solid fa-arrow-right text-[10px]"></i>
@@ -256,6 +261,9 @@
 
             <!-- Mobile Hamburger Button -->
             <div class="xl:hidden flex items-center space-x-2">
+                <a href="{{ route('properties.post') }}" class="inline-flex items-center justify-center px-3 py-1.5 rounded-lg bg-amber-500 text-white text-[11px] font-bold uppercase tracking-wider shadow-sm">
+                    + Post Free
+                </a>
                 <button id="mobile-toggle-btn" class="p-2 text-slate-700 hover:text-brand-cyan focus:outline-none">
                     <i class="fa-solid fa-bars text-xl"></i>
                 </button>
@@ -264,13 +272,19 @@
 
         <!-- Mobile Drawer -->
         <div id="mobile-drawer" class="hidden xl:hidden border-t border-slate-100 bg-white px-4 py-4 space-y-2 text-sm font-medium">
+            <div class="p-1 mb-2">
+                <a href="{{ route('properties.post') }}" class="flex items-center justify-center gap-2 w-full py-3 px-4 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs uppercase tracking-wider shadow-sm transition">
+                    <i class="fa-solid fa-circle-plus"></i>
+                    <span>+ Post Free Property (Zero Brokerage)</span>
+                </a>
+            </div>
             <a href="{{ route('home') }}" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50">Home</a>
+            <a href="{{ route('properties.index') }}" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50 font-bold text-brand-navy">Properties, Plots &amp; Commercial</a>
             <a href="{{ route('owners') }}" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50 font-bold text-brand-navy">Landlords &amp; Owners</a>
             <a href="{{ route('tenants') }}" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50 font-bold text-brand-navy">Tenants &amp; Renters</a>
             <a href="{{ route('property-managers') }}" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50 font-bold text-brand-navy">Property Managers</a>
             <a href="{{ route('portal-and-technology') }}" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50">Portal &amp; Technology</a>
             <a href="{{ route('services') }}" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50">Services (14 Sub-Services)</a>
-            <a href="{{ route('properties.index') }}" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50">Properties &amp; Rentals</a>
             <a href="{{ route('locations') }}" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50">Locations</a>
             <a href="{{ url('/india') }}" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50 font-semibold text-brand-cyan">All India Cities &amp; States Directory</a>
             <a href="{{ route('pricing') }}" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50">Pricing</a>
@@ -409,6 +423,7 @@
                     <div>
                         <h3 class="mb-4 text-xs font-semibold uppercase tracking-widest text-brand-cyan">Owner Resources</h3>
                         <ul class="space-y-2.5 text-sm text-slate-400">
+                            <li><a href="{{ route('properties.post') }}" class="text-amber-400 hover:text-amber-300 font-bold flex items-center gap-1.5"><i class="fa-solid fa-circle-plus text-xs"></i> Post Free Property</a></li>
                             <li><a href="{{ route('owners') }}" class="hover:text-white transition">Owner Hub</a></li>
                             <li><a href="{{ route('property-managers') }}" class="hover:text-white transition">Property Managers</a></li>
                             <li><a href="{{ route('portal-and-technology') }}" class="hover:text-white transition">Portal &amp; Technology</a></li>
@@ -421,7 +436,7 @@
                         <h3 class="mb-4 text-xs font-semibold uppercase tracking-widest text-brand-cyan">Tenant Resources</h3>
                         <ul class="space-y-2.5 text-sm text-slate-400">
                             <li><a href="{{ route('tenants') }}" class="hover:text-white transition">Tenant Hub</a></li>
-                            <li><a href="{{ route('properties.index') }}" class="hover:text-white transition">Browse Rentals</a></li>
+                            <li><a href="{{ route('properties.index') }}" class="hover:text-white transition">Browse Rentals &amp; Sales</a></li>
                             <li><a href="{{ url('/services/tenant-insurance') }}" class="hover:text-white transition">Tenant Insurance</a></li>
                             <li><a href="{{ url('/services/tenant-guarantor') }}" class="hover:text-white transition">Tenant Guarantor</a></li>
                         </ul>
@@ -452,13 +467,17 @@
     </footer>
 
     <!-- Mobile Sticky Bottom CTA Bar -->
-    <div class="fixed bottom-0 left-0 right-0 z-50 lg:hidden p-3 bg-white/90 backdrop-blur-lg border-t border-slate-200">
-        <div class="flex gap-3">
-            <a href="tel:{{ $settings['contact_phone'] ?? '+916376163263' }}" class="flex items-center justify-center w-12 h-12 rounded-xl bg-white text-brand-cyan ring-1 ring-slate-200" aria-label="Call Housing365">
-                <i class="fa-solid fa-phone text-base"></i>
+    <div class="fixed bottom-0 left-0 right-0 z-50 lg:hidden p-2.5 bg-white/95 backdrop-blur-lg border-t border-slate-200 shadow-xl">
+        <div class="flex items-center gap-2">
+            <a href="tel:{{ $settings['contact_phone'] ?? '+916376163263' }}" class="flex items-center justify-center w-11 h-11 rounded-xl bg-slate-50 text-brand-cyan border border-slate-200 shrink-0" aria-label="Call Housing365">
+                <i class="fa-solid fa-phone text-sm"></i>
             </a>
-            <a href="{{ route('contact') }}" class="flex-1 flex items-center justify-center h-12 rounded-xl bg-brand-cyan text-white font-heading font-semibold text-sm hover:bg-brand-cyan-hover transition">
-                Talk to an Expert
+            <a href="{{ route('properties.post') }}" class="flex-1 flex items-center justify-center gap-1.5 h-11 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs uppercase tracking-wider shadow-sm transition">
+                <i class="fa-solid fa-plus-circle text-xs"></i>
+                <span>Post Free</span>
+            </a>
+            <a href="{{ route('properties.index') }}" class="flex-1 flex items-center justify-center h-11 rounded-xl bg-brand-navy hover:bg-slate-800 text-white font-bold text-xs uppercase tracking-wider transition">
+                Browse
             </a>
         </div>
     </div>
