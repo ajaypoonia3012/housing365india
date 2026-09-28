@@ -6,75 +6,91 @@
 @section('content')
 
 <!-- ── TOP BREADCRUMB ── -->
-<div class="bg-[#FAFBFD] border-b border-slate-200/80 py-3 text-xs sm:text-sm text-slate-500">
-    <div class="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+<div class="bg-white border-b border-slate-100 py-3.5 text-xs sm:text-sm text-slate-500">
+    <div class="mx-auto w-full max-w-[1720px] px-4 sm:px-8 lg:px-12 xl:px-16 flex items-center justify-between">
         <div class="flex items-center space-x-2">
-            <a href="{{ route('home') }}" class="hover:text-[#d8232a] transition font-medium">Home</a>
+            <a href="{{ route('home') }}" class="hover:text-brand-cyan transition font-medium">Home</a>
             <span class="text-slate-300">/</span>
-            <span class="text-slate-700 font-semibold">Post Property Ads</span>
+            <a href="{{ route('properties.index') }}" class="hover:text-brand-cyan transition font-medium">Properties</a>
+            <span class="text-slate-300">/</span>
+            <span class="text-brand-navy font-bold">Post Property Ads</span>
         </div>
-        <div class="hidden sm:flex items-center gap-2 text-xs font-semibold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
-            <span class="size-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        <div class="hidden sm:inline-flex items-center gap-2 rounded-full border border-brand-cyan/20 bg-brand-cyan/5 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-brand-cyan">
+            <span class="h-1.5 w-1.5 rounded-full bg-brand-cyan animate-pulse"></span>
             100% Free Listing &bull; Zero Brokerage &bull; Direct Buyer/Tenant Enquiries
         </div>
     </div>
 </div>
 
 <!-- ══════════════════════════════════════════════════════════════════ -->
-<!-- STAGE 1: LANDING & QUICK STARTER (post.magicbricks.com UI)         -->
+<!-- STAGE 1: LANDING & QUICK STARTER (Matching Home Page Brand Theme)  -->
 <!-- ══════════════════════════════════════════════════════════════════ -->
-<section id="stage-1-container" class="{{ (!empty($errors) && $errors->any()) ? 'hidden' : 'block' }} py-8 sm:py-14 bg-gradient-to-b from-white via-[#FCFDFE] to-[#F5F7FB]">
-    <div class="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+<section id="stage-1-container" class="{{ (!empty($errors) && $errors->any()) ? 'hidden' : 'block' }} relative overflow-hidden bg-gradient-to-b from-[#F7FAFD] via-white to-[#F0F6FC] py-10 sm:py-16 lg:py-20 border-b border-slate-100">
+    <!-- Ambient Glow Effects (identical to home page) -->
+    <div class="pointer-events-none absolute -left-40 top-0 h-[500px] w-[500px] rounded-full opacity-40 blur-3xl" style="background: radial-gradient(circle, rgba(0,174,239,0.18) 0%, transparent 70%)" aria-hidden="true"></div>
+    <div class="pointer-events-none absolute right-0 top-20 h-[600px] w-[600px] rounded-full opacity-30 blur-3xl" style="background: radial-gradient(circle, rgba(3,35,75,0.06) 0%, transparent 70%)" aria-hidden="true"></div>
+
+    <div class="relative mx-auto w-full max-w-[1720px] px-4 sm:px-8 lg:px-12 xl:px-16">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
 
             <!-- LEFT COLUMN: Trust, Hero & How It Works -->
             <div class="lg:col-span-7 space-y-10">
                 <!-- Hero Heading & Trust Badges -->
                 <div class="space-y-4">
-                    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-[1.15]">
+                    <!-- Eyebrow Badge -->
+                    <div class="inline-flex items-center gap-2 rounded-full border border-brand-cyan/20 bg-brand-cyan/5 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-brand-cyan">
+                        <span class="h-1.5 w-1.5 rounded-full bg-brand-cyan"></span>
+                        100% FREE PROPERTY LISTING &bull; ZERO BROKERAGE
+                    </div>
+
+                    <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-normal leading-[1.12] tracking-tight text-brand-navy">
                         Post your property <br>
                         Ad to sell or rent <br>
-                        online for <span class="text-emerald-600 font-extrabold underline decoration-emerald-300 decoration-wavy">Free!</span>
+                        online for <span class="font-display font-medium text-brand-cyan">Free!</span>
                     </h1>
 
-                    <ul class="space-y-3 pt-2 text-sm sm:text-base font-semibold text-slate-700">
+                    <p class="max-w-xl text-base leading-relaxed text-slate-600 sm:text-lg">
+                        List your residential flat, independent villa, commercial office, or plot. Get discovered directly by thousands of verified buyers and tenants.
+                    </p>
+
+                    <ul class="space-y-3 pt-3 text-sm sm:text-base font-semibold text-slate-700">
                         <li class="flex items-center gap-3">
-                            <span class="flex size-6 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 shrink-0">
+                            <span class="flex size-6 items-center justify-center rounded-full bg-brand-cyan/10 text-brand-cyan shrink-0">
                                 <i class="fa-solid fa-check text-xs"></i>
                             </span>
-                            <span>Get Access to <strong class="text-slate-900">4 Lakh+</strong> Genuine Buyers &amp; Tenants</span>
+                            <span>Get Access to <strong class="text-brand-navy">4 Lakh+</strong> Genuine Buyers &amp; Tenants</span>
                         </li>
                         <li class="flex items-center gap-3">
-                            <span class="flex size-6 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 shrink-0">
+                            <span class="flex size-6 items-center justify-center rounded-full bg-brand-cyan/10 text-brand-cyan shrink-0">
                                 <i class="fa-solid fa-check text-xs"></i>
                             </span>
                             <span>Sell &amp; Rent Faster with Verified Prime Visibility</span>
                         </li>
                         <li class="flex items-center gap-3">
-                            <span class="flex size-6 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 shrink-0">
+                            <span class="flex size-6 items-center justify-center rounded-full bg-brand-cyan/10 text-brand-cyan shrink-0">
                                 <i class="fa-solid fa-check text-xs"></i>
                             </span>
-                            <span>Get Expert Advice on Local Market Trends and Valuation</span>
+                            <span>Get Expert Advice on Local Market Trends and Property Valuation</span>
                         </li>
                     </ul>
                 </div>
 
                 <!-- Visual Hero Illustration with House Frame -->
-                <div class="relative bg-gradient-to-tr from-rose-50 via-sky-50 to-amber-50 rounded-3xl p-6 sm:p-8 border border-slate-200/80 overflow-hidden shadow-sm flex items-center justify-between gap-6">
+                <div class="relative bg-white/90 backdrop-blur-md rounded-3xl p-6 sm:p-8 border border-slate-200/80 overflow-hidden shadow-lg shadow-slate-900/5 flex items-center justify-between gap-6">
                     <div class="space-y-3 z-10 max-w-sm">
-                        <span class="inline-block bg-[#d8232a] text-white text-[11px] font-extrabold uppercase px-3 py-1 rounded-full tracking-wider shadow">
+                        <span class="inline-block bg-brand-navy text-white text-[11px] font-extrabold uppercase px-3 py-1 rounded-full tracking-wider shadow">
                             Zero Brokerage Guaranteed
                         </span>
-                        <h3 class="text-xl sm:text-2xl font-black text-slate-900 leading-snug">
+                        <h3 class="font-display text-xl sm:text-2xl font-bold text-brand-navy leading-snug">
                             Over 1,200+ Homes Listed Daily Across India
                         </h3>
-                        <p class="text-xs text-slate-600">
-                            Post once and get connected directly with pre-screened tenants and buyers on WhatsApp &amp; phone.
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Post once and get connected directly with pre-screened tenants and buyers on WhatsApp &amp; direct phone calls.
                         </p>
                     </div>
 
                     <div class="relative shrink-0 hidden sm:block">
-                        <div class="size-44 rounded-2xl overflow-hidden shadow-lg border-4 border-white transform rotate-2 hover:rotate-0 transition duration-300">
+                        <div class="size-40 rounded-2xl overflow-hidden shadow-lg border-4 border-white transform rotate-2 hover:rotate-0 transition duration-300">
                             <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=500&auto=format&fit=crop&q=80" alt="Happy property owner" class="w-full h-full object-cover">
                         </div>
                     </div>
@@ -82,37 +98,37 @@
 
                 <!-- How it works 3 Steps -->
                 <div class="pt-2">
-                    <h2 class="text-xl sm:text-2xl font-black text-slate-900 mb-6">How it works</h2>
+                    <h2 class="font-display text-2xl font-bold text-brand-navy mb-6">How it works</h2>
 
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                         <!-- Step 1 -->
-                        <div class="bg-white rounded-2xl p-5 border border-slate-200/90 shadow-sm hover:shadow-md transition">
-                            <div class="size-10 rounded-xl bg-rose-50 text-[#d8232a] flex items-center justify-center font-black text-base mb-3 border border-rose-100">
-                                1
+                        <div class="bg-white rounded-3xl p-5 border border-slate-200/90 shadow-sm hover:shadow-md transition">
+                            <div class="size-10 rounded-xl bg-brand-cyan/10 text-brand-navy flex items-center justify-center font-bold text-sm mb-3 border border-brand-cyan/20">
+                                01
                             </div>
-                            <h4 class="font-bold text-slate-900 text-sm mb-1.5">Post your Property Ad</h4>
+                            <h4 class="font-bold text-brand-navy text-sm mb-1.5">Post your Property Ad</h4>
                             <p class="text-xs text-slate-500 leading-relaxed">
                                 Enter all details like locality name, configuration, amenities along with uploading photos.
                             </p>
                         </div>
 
                         <!-- Step 2 -->
-                        <div class="bg-white rounded-2xl p-5 border border-slate-200/90 shadow-sm hover:shadow-md transition">
-                            <div class="size-10 rounded-xl bg-sky-50 text-brand-cyan flex items-center justify-center font-black text-base mb-3 border border-sky-100">
-                                2
+                        <div class="bg-white rounded-3xl p-5 border border-slate-200/90 shadow-sm hover:shadow-md transition">
+                            <div class="size-10 rounded-xl bg-brand-cyan/10 text-brand-cyan flex items-center justify-center font-bold text-sm mb-3 border border-brand-cyan/20">
+                                02
                             </div>
-                            <h4 class="font-bold text-slate-900 text-sm mb-1.5">Check Direct Responses</h4>
+                            <h4 class="font-bold text-brand-navy text-sm mb-1.5">Check Direct Responses</h4>
                             <p class="text-xs text-slate-500 leading-relaxed">
                                 Get instant WhatsApp and phone notifications when matching tenants or buyers enquire.
                             </p>
                         </div>
 
                         <!-- Step 3 -->
-                        <div class="bg-white rounded-2xl p-5 border border-slate-200/90 shadow-sm hover:shadow-md transition">
-                            <div class="size-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-black text-base mb-3 border border-emerald-100">
-                                3
+                        <div class="bg-white rounded-3xl p-5 border border-slate-200/90 shadow-sm hover:shadow-md transition">
+                            <div class="size-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-sm mb-3 border border-emerald-100">
+                                03
                             </div>
-                            <h4 class="font-bold text-slate-900 text-sm mb-1.5">Close the Deal</h4>
+                            <h4 class="font-bold text-brand-navy text-sm mb-1.5">Close the Deal</h4>
                             <p class="text-xs text-slate-500 leading-relaxed">
                                 Schedule visit, agree on terms and close deal with zero broker commission fees.
                             </p>
@@ -122,22 +138,22 @@
 
             </div>
 
-            <!-- RIGHT COLUMN: MagicBricks "Let's get you started" Starter Card -->
+            <!-- RIGHT COLUMN: Starter Card ("Let's get you started") -->
             <div class="lg:col-span-5">
-                <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-xl relative sticky top-24">
-                    <h3 class="text-2xl font-black text-slate-900 mb-6">Let's get you started</h3>
+                <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-2xl shadow-slate-900/5 relative sticky top-24">
+                    <h3 class="font-display text-2xl sm:text-3xl font-bold text-brand-navy mb-6">Let's get you started</h3>
 
                     <!-- 1. You are: (Owner / Agent / Builder) -->
                     <div class="mb-6">
                         <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2.5">You are:</label>
                         <div class="grid grid-cols-3 gap-2.5" id="starter-user-type-group">
-                            <button type="button" class="starter-role-chip py-2.5 px-3 rounded-full border border-slate-300 text-slate-700 text-sm font-semibold hover:border-slate-400 text-center transition" data-role="Owner" onclick="selectStarterRole(this)">
+                            <button type="button" class="starter-role-chip py-2.5 px-3 rounded-xl border border-slate-200 bg-slate-50 text-slate-700 text-xs sm:text-sm font-semibold hover:border-brand-cyan hover:bg-white text-center transition" data-role="Owner" onclick="selectStarterRole(this)">
                                 Owner
                             </button>
-                            <button type="button" class="starter-role-chip py-2.5 px-3 rounded-full border border-slate-300 text-slate-700 text-sm font-semibold hover:border-slate-400 text-center transition" data-role="Agent" onclick="selectStarterRole(this)">
+                            <button type="button" class="starter-role-chip py-2.5 px-3 rounded-xl border border-slate-200 bg-slate-50 text-slate-700 text-xs sm:text-sm font-semibold hover:border-brand-cyan hover:bg-white text-center transition" data-role="Agent" onclick="selectStarterRole(this)">
                                 Agent
                             </button>
-                            <button type="button" class="starter-role-chip py-2.5 px-3 rounded-full border border-slate-300 text-slate-700 text-sm font-semibold hover:border-slate-400 text-center transition" data-role="Builder" onclick="selectStarterRole(this)">
+                            <button type="button" class="starter-role-chip py-2.5 px-3 rounded-xl border border-slate-200 bg-slate-50 text-slate-700 text-xs sm:text-sm font-semibold hover:border-brand-cyan hover:bg-white text-center transition" data-role="Builder" onclick="selectStarterRole(this)">
                                 Builder
                             </button>
                         </div>
@@ -151,13 +167,13 @@
                     <div class="mb-6">
                         <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2.5">You are here to:</label>
                         <div class="grid grid-cols-3 gap-2.5" id="starter-purpose-group">
-                            <button type="button" class="starter-purpose-chip py-2.5 px-3 rounded-full border border-slate-300 text-slate-700 text-sm font-semibold hover:border-slate-400 text-center transition" data-purpose="sale" onclick="selectStarterPurpose(this)">
+                            <button type="button" class="starter-purpose-chip py-2.5 px-3 rounded-xl border border-slate-200 bg-slate-50 text-slate-700 text-xs sm:text-sm font-semibold hover:border-brand-cyan hover:bg-white text-center transition" data-purpose="sale" onclick="selectStarterPurpose(this)">
                                 Sell
                             </button>
-                            <button type="button" class="starter-purpose-chip py-2.5 px-3 rounded-full border border-slate-300 text-slate-700 text-sm font-semibold hover:border-slate-400 text-center transition" data-purpose="rent" onclick="selectStarterPurpose(this)">
+                            <button type="button" class="starter-purpose-chip py-2.5 px-3 rounded-xl border border-slate-200 bg-slate-50 text-slate-700 text-xs sm:text-sm font-semibold hover:border-brand-cyan hover:bg-white text-center transition" data-purpose="rent" onclick="selectStarterPurpose(this)">
                                 Rent/lease
                             </button>
-                            <button type="button" class="starter-purpose-chip py-2.5 px-3 rounded-full border border-slate-300 text-slate-700 text-sm font-semibold hover:border-slate-400 text-center transition" data-purpose="pg" onclick="selectStarterPurpose(this)">
+                            <button type="button" class="starter-purpose-chip py-2.5 px-3 rounded-xl border border-slate-200 bg-slate-50 text-slate-700 text-xs sm:text-sm font-semibold hover:border-brand-cyan hover:bg-white text-center transition" data-purpose="pg" onclick="selectStarterPurpose(this)">
                                 List as PG
                             </button>
                         </div>
@@ -170,10 +186,10 @@
                     <!-- 3. Your contact number -->
                     <div class="mb-5">
                         <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Your contact number</label>
-                        <div class="flex items-center rounded-xl border border-slate-300 bg-slate-50/50 overflow-hidden focus-within:border-[#d8232a] focus-within:ring-1 focus-within:ring-[#d8232a] transition">
-                            <div class="px-3.5 py-3 border-r border-slate-200 text-slate-700 font-bold text-sm bg-slate-100 flex items-center gap-1.5 shrink-0">
+                        <div class="flex items-center rounded-xl border border-slate-200 bg-slate-50/80 overflow-hidden focus-within:border-brand-cyan focus-within:ring-2 focus-within:ring-brand-cyan/20 transition">
+                            <div class="px-3.5 py-3 border-r border-slate-200 text-brand-navy font-bold text-sm bg-slate-100 flex items-center gap-1.5 shrink-0">
                                 <span>IND +91</span>
-                                <i class="fa-solid fa-chevron-down text-[10px] text-slate-400"></i>
+                                <i class="fa-solid fa-chevron-down text-[9px] text-slate-400"></i>
                             </div>
                             <input type="tel" id="starter-phone-input" value="6376163263" placeholder="WhatsApp Number" class="w-full bg-transparent px-3.5 py-3 text-sm font-bold text-slate-800 placeholder-slate-400 focus:outline-none">
                         </div>
@@ -184,23 +200,23 @@
                     </div>
 
                     <!-- 4. WhatsApp Callout Reassurance -->
-                    <div class="mb-6 p-3.5 rounded-xl border border-amber-300/80 bg-amber-50/80 flex items-center gap-2.5 text-xs text-slate-700 font-medium">
+                    <div class="mb-6 p-3.5 rounded-xl border border-emerald-200 bg-emerald-50/70 flex items-center gap-2.5 text-xs text-slate-700 font-medium">
                         <i class="fa-brands fa-whatsapp text-emerald-600 text-lg shrink-0"></i>
                         <span>Enter your WhatsApp No. to get enquiries from Buyer/Tenant</span>
                     </div>
 
-                    <!-- 5. Red Action Button -->
-                    <button type="button" onclick="startListingWizard()" class="w-full py-4 px-6 rounded-xl bg-[#d8232a] hover:bg-[#b81d23] text-white font-bold text-base shadow-lg shadow-rose-600/20 transition-all duration-200 transform hover:-translate-y-0.5 flex items-center justify-center gap-2">
+                    <!-- 5. Primary Action Button -->
+                    <button type="button" onclick="startListingWizard()" class="w-full py-4 px-6 rounded-xl bg-brand-cyan hover:bg-brand-cyan-hover text-white font-bold text-base shadow-lg shadow-brand-cyan/25 transition-all duration-200 hover:-translate-y-0.5 flex items-center justify-center gap-2">
                         <span>Start Now</span>
                         <i class="fa-solid fa-arrow-right text-xs"></i>
                     </button>
 
                     <!-- Trust Footer in Card -->
-                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
+                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
                         <span class="flex items-center gap-1.5 text-emerald-700 font-semibold">
                             <i class="fa-solid fa-shield-check text-emerald-500"></i> 100% Free Listing
                         </span>
-                        <a href="javascript:void(0)" onclick="openAssistanceModal()" class="text-[#d8232a] font-bold hover:underline">
+                        <a href="javascript:void(0)" onclick="openAssistanceModal()" class="text-brand-cyan font-bold hover:underline">
                             Need help?
                         </a>
                     </div>
@@ -214,27 +230,27 @@
 <!-- ══════════════════════════════════════════════════════════════════ -->
 <!-- STAGE 2: FULL PROPERTY WIZARD ("Sell or Rent your Property")        -->
 <!-- ══════════════════════════════════════════════════════════════════ -->
-<section id="stage-2-container" class="{{ (!empty($errors) && $errors->any()) ? 'block' : 'hidden' }} py-8 sm:py-12 bg-[#F6F8FB]">
-    <div class="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+<section id="stage-2-container" class="{{ (!empty($errors) && $errors->any()) ? 'block' : 'hidden' }} py-10 sm:py-16 bg-[#F8FAFD]">
+    <div class="mx-auto w-full max-w-[1720px] px-4 sm:px-8 lg:px-12 xl:px-16">
 
         <!-- Top Header & Free Tag -->
         <div class="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-5">
             <div>
-                <button type="button" onclick="backToStarter()" class="inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-[#d8232a] mb-2 transition">
+                <button type="button" onclick="backToStarter()" class="inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-brand-cyan mb-2 transition">
                     <i class="fa-solid fa-arrow-left"></i>
                     <span>Change basic choices</span>
                 </button>
-                <h1 class="text-2xl sm:text-3xl font-black text-slate-900">
+                <h1 class="font-display text-3xl sm:text-4xl font-extrabold text-brand-navy tracking-tight">
                     Sell or Rent your Property
                 </h1>
                 <p class="text-xs sm:text-sm text-slate-600 mt-1">
-                    You are posting this property for <span class="bg-amber-300 text-slate-950 font-black px-2 py-0.5 rounded text-xs tracking-wider uppercase">FREE!</span>
+                    You are posting this property for <span class="bg-brand-cyan/15 text-brand-navy font-black px-2.5 py-0.5 rounded text-xs tracking-wider uppercase border border-brand-cyan/30">FREE!</span>
                 </p>
             </div>
 
             <div class="flex items-center gap-3">
-                <button type="button" onclick="openAssistanceModal()" class="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-xl border border-slate-300 text-xs font-bold text-slate-700 hover:border-slate-400 shadow-sm transition">
-                    <i class="fa-solid fa-headset text-[#d8232a]"></i>
+                <button type="button" onclick="openAssistanceModal()" class="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-xl border border-slate-200 text-xs font-bold text-brand-navy hover:border-brand-cyan shadow-sm transition">
+                    <i class="fa-solid fa-headset text-brand-cyan"></i>
                     <span>Need Help? Call Property Expert</span>
                 </button>
             </div>
@@ -255,7 +271,7 @@
         @endif
 
         <!-- Two Column Main Layout: 70% Form + 30% Sticky Helper Sidebar -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
 
             <!-- LEFT FORM COLUMN (Wizard) -->
             <div class="lg:col-span-8">
@@ -274,9 +290,10 @@
                     <input type="hidden" name="bathrooms" id="hidden_bathrooms" value="{{ old('bathrooms', '2') }}">
 
                     <!-- 1. PERSONAL DETAILS -->
-                    <div class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200/90 shadow-sm">
-                        <h3 class="text-base sm:text-lg font-black text-slate-900 border-b border-slate-100 pb-3 mb-5">
-                            Personal Details
+                    <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-sm">
+                        <h3 class="font-display text-lg sm:text-xl font-bold text-brand-navy border-b border-slate-100 pb-3 mb-5 flex items-center gap-2.5">
+                            <span class="flex size-7 items-center justify-center rounded-lg bg-brand-cyan/10 text-brand-cyan text-xs font-bold">1</span>
+                            <span>Personal Details</span>
                         </h3>
 
                         <div class="space-y-4">
@@ -285,15 +302,15 @@
                                 <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">I am</label>
                                 <div class="flex items-center gap-6 text-sm font-semibold text-slate-800">
                                     <label class="inline-flex items-center gap-2 cursor-pointer">
-                                        <input type="radio" name="posted_by" value="Owner" class="size-4 text-[#d8232a] focus:ring-[#d8232a]" {{ old('posted_by', 'Owner') === 'Owner' ? 'checked' : '' }}>
+                                        <input type="radio" name="posted_by" value="Owner" class="size-4 text-brand-cyan focus:ring-brand-cyan" {{ old('posted_by', 'Owner') === 'Owner' ? 'checked' : '' }}>
                                         <span>Owner</span>
                                     </label>
                                     <label class="inline-flex items-center gap-2 cursor-pointer">
-                                        <input type="radio" name="posted_by" value="Agent" class="size-4 text-[#d8232a] focus:ring-[#d8232a]" {{ old('posted_by') === 'Agent' ? 'checked' : '' }}>
+                                        <input type="radio" name="posted_by" value="Agent" class="size-4 text-brand-cyan focus:ring-brand-cyan" {{ old('posted_by') === 'Agent' ? 'checked' : '' }}>
                                         <span>Agent</span>
                                     </label>
                                     <label class="inline-flex items-center gap-2 cursor-pointer">
-                                        <input type="radio" name="posted_by" value="Builder" class="size-4 text-[#d8232a] focus:ring-[#d8232a]" {{ old('posted_by') === 'Builder' ? 'checked' : '' }}>
+                                        <input type="radio" name="posted_by" value="Builder" class="size-4 text-brand-cyan focus:ring-brand-cyan" {{ old('posted_by') === 'Builder' ? 'checked' : '' }}>
                                         <span>Builder</span>
                                     </label>
                                 </div>
@@ -302,23 +319,23 @@
                             <!-- Name -->
                             <div>
                                 <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Name *</label>
-                                <input type="text" name="seller_name" id="wizard_name" required value="{{ old('seller_name', 'Ajay Poonia') }}" placeholder="Enter Your Name" class="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#d8232a] transition font-medium">
+                                <input type="text" name="seller_name" id="wizard_name" required value="{{ old('seller_name', 'Ajay Poonia') }}" placeholder="Enter Your Name" class="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-cyan/20 focus:border-brand-cyan transition font-medium">
                             </div>
 
                             <!-- Mobile with IND +91 -->
                             <div>
                                 <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Mobile *</label>
-                                <div class="flex items-center rounded-xl border border-slate-200 bg-slate-50 overflow-hidden focus-within:border-[#d8232a] focus-within:ring-2 focus-within:ring-[#d8232a] transition">
-                                    <div class="px-3.5 py-3 border-r border-slate-200 text-slate-700 font-bold text-sm bg-slate-100/80 flex items-center gap-1.5 shrink-0">
+                                <div class="flex items-center rounded-xl border border-slate-200 bg-slate-50 overflow-hidden focus-within:border-brand-cyan focus-within:ring-2 focus-within:ring-brand-cyan/20 transition">
+                                    <div class="px-3.5 py-3 border-r border-slate-200 text-brand-navy font-bold text-sm bg-slate-100 flex items-center gap-1.5 shrink-0">
                                         <span>IND +91</span>
-                                        <i class="fa-solid fa-chevron-down text-[10px] text-slate-400"></i>
+                                        <i class="fa-solid fa-chevron-down text-[9px] text-slate-400"></i>
                                     </div>
                                     <input type="tel" name="seller_phone" id="wizard_phone" required value="{{ old('seller_phone', '6376163263') }}" placeholder="Mobile Number" class="w-full bg-transparent px-4 py-3 text-sm font-bold text-slate-900 focus:outline-none">
                                 </div>
                             </div>
 
-                            <!-- Amber WhatsApp Banner -->
-                            <div class="p-3.5 rounded-xl border border-amber-300 bg-amber-50/90 flex items-center gap-2.5 text-xs text-slate-800 font-medium">
+                            <!-- WhatsApp Callout Banner -->
+                            <div class="p-3.5 rounded-xl border border-emerald-200 bg-emerald-50/70 flex items-center gap-2.5 text-xs text-slate-800 font-medium">
                                 <i class="fa-brands fa-whatsapp text-emerald-600 text-xl shrink-0"></i>
                                 <span>Enter your WhatsApp No. to get enquiries from Buyer/Tenant</span>
                             </div>
@@ -326,15 +343,16 @@
                             <!-- Email -->
                             <div>
                                 <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Email</label>
-                                <input type="email" name="seller_email" id="wizard_email" value="{{ old('seller_email') }}" placeholder="Enter Your Email" class="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#d8232a] transition">
+                                <input type="email" name="seller_email" id="wizard_email" value="{{ old('seller_email') }}" placeholder="Enter Your Email" class="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-cyan/20 focus:border-brand-cyan transition">
                             </div>
                         </div>
                     </div>
 
                     <!-- 2. PROPERTY DETAILS -->
-                    <div class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200/90 shadow-sm">
-                        <h3 class="text-base sm:text-lg font-black text-slate-900 border-b border-slate-100 pb-3 mb-5">
-                            Property Details
+                    <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-sm">
+                        <h3 class="font-display text-lg sm:text-xl font-bold text-brand-navy border-b border-slate-100 pb-3 mb-5 flex items-center gap-2.5">
+                            <span class="flex size-7 items-center justify-center rounded-lg bg-brand-cyan/10 text-brand-cyan text-xs font-bold">2</span>
+                            <span>Property Details</span>
                         </h3>
 
                         <div class="space-y-5">
@@ -343,15 +361,15 @@
                                 <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">For</label>
                                 <div class="flex items-center gap-6 text-sm font-semibold text-slate-800">
                                     <label class="inline-flex items-center gap-2 cursor-pointer">
-                                        <input type="radio" name="purpose" value="sale" class="size-4 text-[#d8232a] focus:ring-[#d8232a]" onchange="syncPurposeChange('sale')" {{ old('purpose') === 'sale' ? 'checked' : '' }}>
+                                        <input type="radio" name="purpose" value="sale" class="size-4 text-brand-cyan focus:ring-brand-cyan" onchange="syncPurposeChange('sale')" {{ old('purpose') === 'sale' ? 'checked' : '' }}>
                                         <span>Sale</span>
                                     </label>
                                     <label class="inline-flex items-center gap-2 cursor-pointer">
-                                        <input type="radio" name="purpose" value="rent" class="size-4 text-[#d8232a] focus:ring-[#d8232a]" onchange="syncPurposeChange('rent')" {{ old('purpose', 'rent') === 'rent' ? 'checked' : '' }}>
+                                        <input type="radio" name="purpose" value="rent" class="size-4 text-brand-cyan focus:ring-brand-cyan" onchange="syncPurposeChange('rent')" {{ old('purpose', 'rent') === 'rent' ? 'checked' : '' }}>
                                         <span>Rent/ Lease</span>
                                     </label>
                                     <label class="inline-flex items-center gap-2 cursor-pointer">
-                                        <input type="radio" name="purpose" value="lease" class="size-4 text-[#d8232a] focus:ring-[#d8232a]" onchange="syncPurposeChange('lease')" {{ old('purpose') === 'lease' ? 'checked' : '' }}>
+                                        <input type="radio" name="purpose" value="lease" class="size-4 text-brand-cyan focus:ring-brand-cyan" onchange="syncPurposeChange('lease')" {{ old('purpose') === 'lease' ? 'checked' : '' }}>
                                         <span>PG / Hostel</span>
                                     </label>
                                 </div>
@@ -360,7 +378,7 @@
                             <!-- Property Type Dropdown -->
                             <div>
                                 <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Property Type *</label>
-                                <select name="property_type" id="wizard_property_type" required onchange="handlePropertyTypeSelect(this.value)" class="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#d8232a] transition font-semibold">
+                                <select name="property_type" id="wizard_property_type" required onchange="handlePropertyTypeSelect(this.value)" class="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-cyan/20 focus:border-brand-cyan transition font-semibold">
                                     <optgroup label="Residential">
                                         <option value="Flat / Apartment" {{ old('property_type', 'Flat / Apartment') === 'Flat / Apartment' ? 'selected' : '' }}>Flat / Apartment</option>
                                         <option value="House / Villa" {{ old('property_type') === 'House / Villa' ? 'selected' : '' }}>House / Villa</option>
@@ -389,11 +407,11 @@
                                     <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">You are posting as</label>
                                     <div class="flex items-center gap-6 text-sm font-semibold text-slate-800">
                                         <label class="inline-flex items-center gap-2 cursor-pointer">
-                                            <input type="radio" name="posting_as_radio" value="Full House" checked onchange="setHiddenField('hidden_posting_as', this.value)" class="size-4 text-[#d8232a] focus:ring-[#d8232a]">
+                                            <input type="radio" name="posting_as_radio" value="Full House" checked onchange="setHiddenField('hidden_posting_as', this.value)" class="size-4 text-brand-cyan focus:ring-brand-cyan">
                                             <span>Full House</span>
                                         </label>
                                         <label class="inline-flex items-center gap-2 cursor-pointer">
-                                            <input type="radio" name="posting_as_radio" value="On sharing basis" onchange="setHiddenField('hidden_posting_as', this.value)" class="size-4 text-[#d8232a] focus:ring-[#d8232a]">
+                                            <input type="radio" name="posting_as_radio" value="On sharing basis" onchange="setHiddenField('hidden_posting_as', this.value)" class="size-4 text-brand-cyan focus:ring-brand-cyan">
                                             <span>On sharing basis</span>
                                         </label>
                                     </div>
@@ -403,13 +421,13 @@
                                 <div>
                                     <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Total No. of Flats in Your Society</label>
                                     <div class="flex items-center gap-2.5 max-w-sm">
-                                        <button type="button" class="society-flats-chip flex-1 py-2 rounded-xl border border-slate-300 text-xs font-bold text-slate-700 hover:border-slate-400 text-center transition" onclick="selectSocietyFlats(this, '<50')">
+                                        <button type="button" class="society-flats-chip flex-1 py-2 rounded-xl border border-slate-200 bg-white text-xs font-semibold text-slate-700 hover:border-brand-cyan text-center transition" onclick="selectSocietyFlats(this, '<50')">
                                             &lt;50
                                         </button>
-                                        <button type="button" class="society-flats-chip flex-1 py-2 rounded-xl border-2 border-emerald-600 bg-emerald-50 text-xs font-bold text-emerald-800 text-center transition" onclick="selectSocietyFlats(this, '50-100')">
+                                        <button type="button" class="society-flats-chip flex-1 py-2 rounded-xl border-2 border-brand-cyan bg-brand-cyan/10 text-xs font-bold text-brand-navy text-center transition shadow-sm" onclick="selectSocietyFlats(this, '50-100')">
                                             50-100
                                         </button>
-                                        <button type="button" class="society-flats-chip flex-1 py-2 rounded-xl border border-slate-300 text-xs font-bold text-slate-700 hover:border-slate-400 text-center transition" onclick="selectSocietyFlats(this, '>100')">
+                                        <button type="button" class="society-flats-chip flex-1 py-2 rounded-xl border border-slate-200 bg-white text-xs font-semibold text-slate-700 hover:border-brand-cyan text-center transition" onclick="selectSocietyFlats(this, '>100')">
                                             &gt;100
                                         </button>
                                     </div>
@@ -420,19 +438,20 @@
                     </div>
 
                     <!-- 3. PROPERTY LOCATION -->
-                    <div class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200/90 shadow-sm">
-                        <h3 class="text-base sm:text-lg font-black text-slate-900 border-b border-slate-100 pb-3 mb-5">
-                            Property Location
+                    <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-sm">
+                        <h3 class="font-display text-lg sm:text-xl font-bold text-brand-navy border-b border-slate-100 pb-3 mb-5 flex items-center gap-2.5">
+                            <span class="flex size-7 items-center justify-center rounded-lg bg-brand-cyan/10 text-brand-cyan text-xs font-bold">3</span>
+                            <span>Property Location</span>
                         </h3>
 
                         <div class="space-y-4">
                             <!-- City Autocomplete -->
                             <div class="relative">
                                 <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">City *</label>
-                                <input type="text" name="city" id="city_autocomplete_input" required value="{{ old('city', 'Jaipur') }}" placeholder="Type City (e.g. Jaipur, Mumbai, Delhi, Bengaluru)" autocomplete="off" oninput="handleCitySearch(this.value)" class="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#d8232a] transition font-bold">
+                                <input type="text" name="city" id="city_autocomplete_input" required value="{{ old('city', 'Jaipur') }}" placeholder="Type City (e.g. Jaipur, Mumbai, Delhi, Bengaluru)" autocomplete="off" oninput="handleCitySearch(this.value)" class="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-cyan/20 focus:border-brand-cyan transition font-bold">
                                 
                                 <!-- Suggestions Dropdown List -->
-                                <div id="city-suggestions-dropdown" class="hidden absolute left-0 right-0 top-full mt-1 bg-white border border-slate-200 rounded-xl shadow-2xl z-30 max-h-56 overflow-y-auto divide-y divide-slate-100">
+                                <div id="city-suggestions-dropdown" class="hidden absolute left-0 right-0 top-full mt-1 bg-white border border-slate-200 rounded-2xl shadow-2xl z-30 max-h-56 overflow-y-auto divide-y divide-slate-100">
                                     <!-- Populated via JS -->
                                 </div>
                             </div>
@@ -440,22 +459,23 @@
                             <!-- Locality / Society / Project -->
                             <div>
                                 <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Locality / Society / Project Name *</label>
-                                <input type="text" name="locality" id="locality_input" required value="{{ old('locality') }}" placeholder="e.g. Mansarovar, Jagatpura, Vaishali Nagar, Bandra West, HSR Layout" class="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#d8232a] transition font-medium">
+                                <input type="text" name="locality" id="locality_input" required value="{{ old('locality') }}" placeholder="e.g. Mansarovar, Jagatpura, Vaishali Nagar, Bandra West, HSR Layout" class="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-cyan/20 focus:border-brand-cyan transition font-medium">
                                 <span class="text-[11px] text-slate-400 mt-1 block">Mention the exact sub-locality, colony or apartment complex name.</span>
                             </div>
 
                             <!-- Street Address / Landmark -->
                             <div>
                                 <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Street Address / Landmark (Optional)</label>
-                                <input type="text" name="address" value="{{ old('address') }}" placeholder="e.g. Flat 302, Block A, Near Metro Station" class="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#d8232a] transition">
+                                <input type="text" name="address" value="{{ old('address') }}" placeholder="e.g. Flat 302, Block A, Near Metro Station" class="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-cyan/20 focus:border-brand-cyan transition">
                             </div>
                         </div>
                     </div>
 
                     <!-- 4. PROPERTY FEATURES (Interactive Chips) -->
-                    <div class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200/90 shadow-sm" id="property-features-section">
-                        <h3 class="text-base sm:text-lg font-black text-slate-900 border-b border-slate-100 pb-3 mb-5">
-                            Property Features
+                    <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-sm" id="property-features-section">
+                        <h3 class="font-display text-lg sm:text-xl font-bold text-brand-navy border-b border-slate-100 pb-3 mb-5 flex items-center gap-2.5">
+                            <span class="flex size-7 items-center justify-center rounded-lg bg-brand-cyan/10 text-brand-cyan text-xs font-bold">4</span>
+                            <span>Property Features</span>
                         </h3>
 
                         <div class="space-y-6">
@@ -463,11 +483,11 @@
                             <div>
                                 <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Bedrooms</label>
                                 <div class="flex flex-wrap items-center gap-2" id="bedrooms-chips">
-                                    <button type="button" class="feature-chip py-2 px-4 rounded-xl border border-slate-300 text-sm font-semibold hover:border-slate-400 transition" onclick="selectChip(this, 'hidden_bedrooms', '1')">1</button>
-                                    <button type="button" class="feature-chip py-2 px-4 rounded-xl border-2 border-emerald-600 bg-emerald-50 text-emerald-800 text-sm font-bold transition" onclick="selectChip(this, 'hidden_bedrooms', '2')">2</button>
-                                    <button type="button" class="feature-chip py-2 px-4 rounded-xl border border-slate-300 text-sm font-semibold hover:border-slate-400 transition" onclick="selectChip(this, 'hidden_bedrooms', '3')">3</button>
-                                    <button type="button" class="feature-chip py-2 px-4 rounded-xl border border-slate-300 text-sm font-semibold hover:border-slate-400 transition" onclick="selectChip(this, 'hidden_bedrooms', '4')">4</button>
-                                    <button type="button" class="feature-chip py-2 px-4 rounded-xl border border-slate-300 text-sm font-semibold hover:border-slate-400 transition" onclick="selectChip(this, 'hidden_bedrooms', '5')">5+ &blacktriangledown;</button>
+                                    <button type="button" class="feature-chip py-2 px-4 rounded-xl border border-slate-200 bg-white text-xs sm:text-sm font-semibold text-slate-700 hover:border-brand-cyan transition" onclick="selectChip(this, 'hidden_bedrooms', '1')">1</button>
+                                    <button type="button" class="feature-chip py-2 px-4 rounded-xl border-2 border-brand-cyan bg-brand-cyan/10 text-brand-navy text-xs sm:text-sm font-bold shadow-sm transition" onclick="selectChip(this, 'hidden_bedrooms', '2')">2</button>
+                                    <button type="button" class="feature-chip py-2 px-4 rounded-xl border border-slate-200 bg-white text-xs sm:text-sm font-semibold text-slate-700 hover:border-brand-cyan transition" onclick="selectChip(this, 'hidden_bedrooms', '3')">3</button>
+                                    <button type="button" class="feature-chip py-2 px-4 rounded-xl border border-slate-200 bg-white text-xs sm:text-sm font-semibold text-slate-700 hover:border-brand-cyan transition" onclick="selectChip(this, 'hidden_bedrooms', '4')">4</button>
+                                    <button type="button" class="feature-chip py-2 px-4 rounded-xl border border-slate-200 bg-white text-xs sm:text-sm font-semibold text-slate-700 hover:border-brand-cyan transition" onclick="selectChip(this, 'hidden_bedrooms', '5')">5+ &blacktriangledown;</button>
                                 </div>
                             </div>
 
@@ -475,11 +495,11 @@
                             <div>
                                 <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Balconies</label>
                                 <div class="flex flex-wrap items-center gap-2" id="balconies-chips">
-                                    <button type="button" class="feature-chip py-2 px-4 rounded-xl border border-slate-300 text-sm font-semibold hover:border-slate-400 transition" onclick="selectChip(this, 'hidden_balconies', '0')">0</button>
-                                    <button type="button" class="feature-chip py-2 px-4 rounded-xl border-2 border-emerald-600 bg-emerald-50 text-emerald-800 text-sm font-bold transition" onclick="selectChip(this, 'hidden_balconies', '1')">1</button>
-                                    <button type="button" class="feature-chip py-2 px-4 rounded-xl border border-slate-300 text-sm font-semibold hover:border-slate-400 transition" onclick="selectChip(this, 'hidden_balconies', '2')">2</button>
-                                    <button type="button" class="feature-chip py-2 px-4 rounded-xl border border-slate-300 text-sm font-semibold hover:border-slate-400 transition" onclick="selectChip(this, 'hidden_balconies', '3')">3</button>
-                                    <button type="button" class="feature-chip py-2 px-4 rounded-xl border border-slate-300 text-sm font-semibold hover:border-slate-400 transition" onclick="selectChip(this, 'hidden_balconies', '4')">3+ &blacktriangledown;</button>
+                                    <button type="button" class="feature-chip py-2 px-4 rounded-xl border border-slate-200 bg-white text-xs sm:text-sm font-semibold text-slate-700 hover:border-brand-cyan transition" onclick="selectChip(this, 'hidden_balconies', '0')">0</button>
+                                    <button type="button" class="feature-chip py-2 px-4 rounded-xl border-2 border-brand-cyan bg-brand-cyan/10 text-brand-navy text-xs sm:text-sm font-bold shadow-sm transition" onclick="selectChip(this, 'hidden_balconies', '1')">1</button>
+                                    <button type="button" class="feature-chip py-2 px-4 rounded-xl border border-slate-200 bg-white text-xs sm:text-sm font-semibold text-slate-700 hover:border-brand-cyan transition" onclick="selectChip(this, 'hidden_balconies', '2')">2</button>
+                                    <button type="button" class="feature-chip py-2 px-4 rounded-xl border border-slate-200 bg-white text-xs sm:text-sm font-semibold text-slate-700 hover:border-brand-cyan transition" onclick="selectChip(this, 'hidden_balconies', '3')">3</button>
+                                    <button type="button" class="feature-chip py-2 px-4 rounded-xl border border-slate-200 bg-white text-xs sm:text-sm font-semibold text-slate-700 hover:border-brand-cyan transition" onclick="selectChip(this, 'hidden_balconies', '4')">3+ &blacktriangledown;</button>
                                 </div>
                             </div>
 
@@ -487,15 +507,15 @@
                             <div>
                                 <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Floor No</label>
                                 <div class="flex flex-wrap items-center gap-2" id="floor-no-chips">
-                                    <button type="button" class="feature-chip py-2 px-3 rounded-xl border border-slate-300 text-xs font-semibold hover:border-slate-400 transition" onclick="selectChip(this, 'hidden_floor_no', 'Lower Basement')">Lower Basement</button>
-                                    <button type="button" class="feature-chip py-2 px-3 rounded-xl border border-slate-300 text-xs font-semibold hover:border-slate-400 transition" onclick="selectChip(this, 'hidden_floor_no', 'Upper Basement')">Upper Basement</button>
-                                    <button type="button" class="feature-chip py-2 px-3 rounded-xl border-2 border-emerald-600 bg-emerald-50 text-emerald-800 text-xs font-bold transition" onclick="selectChip(this, 'hidden_floor_no', 'Ground')">Ground</button>
-                                    <button type="button" class="feature-chip py-2 px-3.5 rounded-xl border border-slate-300 text-xs font-semibold hover:border-slate-400 transition" onclick="selectChip(this, 'hidden_floor_no', '1')">1</button>
-                                    <button type="button" class="feature-chip py-2 px-3.5 rounded-xl border border-slate-300 text-xs font-semibold hover:border-slate-400 transition" onclick="selectChip(this, 'hidden_floor_no', '2')">2</button>
-                                    <button type="button" class="feature-chip py-2 px-3.5 rounded-xl border border-slate-300 text-xs font-semibold hover:border-slate-400 transition" onclick="selectChip(this, 'hidden_floor_no', '3')">3</button>
-                                    <button type="button" class="feature-chip py-2 px-3.5 rounded-xl border border-slate-300 text-xs font-semibold hover:border-slate-400 transition" onclick="selectChip(this, 'hidden_floor_no', '4')">4</button>
-                                    <button type="button" class="feature-chip py-2 px-3.5 rounded-xl border border-slate-300 text-xs font-semibold hover:border-slate-400 transition" onclick="selectChip(this, 'hidden_floor_no', '5')">5</button>
-                                    <button type="button" class="feature-chip py-2 px-3.5 rounded-xl border border-slate-300 text-xs font-semibold hover:border-slate-400 transition" onclick="selectChip(this, 'hidden_floor_no', '5+')">5+ &blacktriangledown;</button>
+                                    <button type="button" class="feature-chip py-2 px-3 rounded-xl border border-slate-200 bg-white text-xs font-semibold text-slate-700 hover:border-brand-cyan transition" onclick="selectChip(this, 'hidden_floor_no', 'Lower Basement')">Lower Basement</button>
+                                    <button type="button" class="feature-chip py-2 px-3 rounded-xl border border-slate-200 bg-white text-xs font-semibold text-slate-700 hover:border-brand-cyan transition" onclick="selectChip(this, 'hidden_floor_no', 'Upper Basement')">Upper Basement</button>
+                                    <button type="button" class="feature-chip py-2 px-3 rounded-xl border-2 border-brand-cyan bg-brand-cyan/10 text-brand-navy text-xs font-bold shadow-sm transition" onclick="selectChip(this, 'hidden_floor_no', 'Ground')">Ground</button>
+                                    <button type="button" class="feature-chip py-2 px-3.5 rounded-xl border border-slate-200 bg-white text-xs font-semibold text-slate-700 hover:border-brand-cyan transition" onclick="selectChip(this, 'hidden_floor_no', '1')">1</button>
+                                    <button type="button" class="feature-chip py-2 px-3.5 rounded-xl border border-slate-200 bg-white text-xs font-semibold text-slate-700 hover:border-brand-cyan transition" onclick="selectChip(this, 'hidden_floor_no', '2')">2</button>
+                                    <button type="button" class="feature-chip py-2 px-3.5 rounded-xl border border-slate-200 bg-white text-xs font-semibold text-slate-700 hover:border-brand-cyan transition" onclick="selectChip(this, 'hidden_floor_no', '3')">3</button>
+                                    <button type="button" class="feature-chip py-2 px-3.5 rounded-xl border border-slate-200 bg-white text-xs font-semibold text-slate-700 hover:border-brand-cyan transition" onclick="selectChip(this, 'hidden_floor_no', '4')">4</button>
+                                    <button type="button" class="feature-chip py-2 px-3.5 rounded-xl border border-slate-200 bg-white text-xs font-semibold text-slate-700 hover:border-brand-cyan transition" onclick="selectChip(this, 'hidden_floor_no', '5')">5</button>
+                                    <button type="button" class="feature-chip py-2 px-3.5 rounded-xl border border-slate-200 bg-white text-xs font-semibold text-slate-700 hover:border-brand-cyan transition" onclick="selectChip(this, 'hidden_floor_no', '5+')">5+ &blacktriangledown;</button>
                                 </div>
                             </div>
 
@@ -504,11 +524,11 @@
                                 <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Total Floors</label>
                                 <div class="flex flex-wrap items-center gap-1.5" id="total-floors-chips">
                                     @for($f = 1; $f <= 13; $f++)
-                                        <button type="button" class="feature-chip py-2 px-3 rounded-xl border {{ $f == 4 ? 'border-2 border-emerald-600 bg-emerald-50 text-emerald-800 font-bold' : 'border-slate-300 text-slate-700' }} text-xs hover:border-slate-400 transition" onclick="selectChip(this, 'hidden_total_floors', '{{ $f }}')">
+                                        <button type="button" class="feature-chip py-2 px-3 rounded-xl border {{ $f == 4 ? 'border-2 border-brand-cyan bg-brand-cyan/10 text-brand-navy font-bold shadow-sm' : 'border-slate-200 bg-white text-slate-700' }} text-xs hover:border-brand-cyan transition" onclick="selectChip(this, 'hidden_total_floors', '{{ $f }}')">
                                             {{ $f }}
                                         </button>
                                     @endfor
-                                    <button type="button" class="feature-chip py-2 px-3 rounded-xl border border-slate-300 text-xs text-slate-700 hover:border-slate-400 transition" onclick="selectChip(this, 'hidden_total_floors', '13+')">
+                                    <button type="button" class="feature-chip py-2 px-3 rounded-xl border border-slate-200 bg-white text-xs text-slate-700 hover:border-brand-cyan transition" onclick="selectChip(this, 'hidden_total_floors', '13+')">
                                         13+ &blacktriangledown;
                                     </button>
                                 </div>
@@ -518,13 +538,13 @@
                             <div>
                                 <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Furnished Status</label>
                                 <div class="flex flex-wrap items-center gap-2.5" id="furnishing-chips">
-                                    <button type="button" class="feature-chip py-2.5 px-4 rounded-xl border border-slate-300 text-xs font-bold text-slate-700 hover:border-slate-400 transition" onclick="selectChip(this, 'hidden_furnishing', 'Fully Furnished')">
+                                    <button type="button" class="feature-chip py-2.5 px-4 rounded-xl border border-slate-200 bg-white text-xs font-semibold text-slate-700 hover:border-brand-cyan transition" onclick="selectChip(this, 'hidden_furnishing', 'Fully Furnished')">
                                         Fully Furnished
                                     </button>
-                                    <button type="button" class="feature-chip py-2.5 px-4 rounded-xl border-2 border-emerald-600 bg-emerald-50 text-emerald-800 text-xs font-bold transition" onclick="selectChip(this, 'hidden_furnishing', 'Semi-Furnished')">
+                                    <button type="button" class="feature-chip py-2.5 px-4 rounded-xl border-2 border-brand-cyan bg-brand-cyan/10 text-brand-navy text-xs font-bold shadow-sm transition" onclick="selectChip(this, 'hidden_furnishing', 'Semi-Furnished')">
                                         Semi-Furnished
                                     </button>
-                                    <button type="button" class="feature-chip py-2.5 px-4 rounded-xl border border-slate-300 text-xs font-bold text-slate-700 hover:border-slate-400 transition" onclick="selectChip(this, 'hidden_furnishing', 'Unfurnished')">
+                                    <button type="button" class="feature-chip py-2.5 px-4 rounded-xl border border-slate-200 bg-white text-xs font-semibold text-slate-700 hover:border-brand-cyan transition" onclick="selectChip(this, 'hidden_furnishing', 'Unfurnished')">
                                         Unfurnished
                                     </button>
                                 </div>
@@ -535,16 +555,16 @@
                                 <div>
                                     <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Bathrooms</label>
                                     <div class="flex items-center gap-2">
-                                        <button type="button" class="feature-chip py-2 px-4 rounded-xl border border-slate-300 text-xs font-semibold hover:border-slate-400 transition" onclick="selectChip(this, 'hidden_bathrooms', '1')">1</button>
-                                        <button type="button" class="feature-chip py-2 px-4 rounded-xl border-2 border-emerald-600 bg-emerald-50 text-emerald-800 text-xs font-bold transition" onclick="selectChip(this, 'hidden_bathrooms', '2')">2</button>
-                                        <button type="button" class="feature-chip py-2 px-4 rounded-xl border border-slate-300 text-xs font-semibold hover:border-slate-400 transition" onclick="selectChip(this, 'hidden_bathrooms', '3')">3</button>
-                                        <button type="button" class="feature-chip py-2 px-4 rounded-xl border border-slate-300 text-xs font-semibold hover:border-slate-400 transition" onclick="selectChip(this, 'hidden_bathrooms', '4')">4+</button>
+                                        <button type="button" class="feature-chip py-2 px-4 rounded-xl border border-slate-200 bg-white text-xs font-semibold hover:border-brand-cyan transition" onclick="selectChip(this, 'hidden_bathrooms', '1')">1</button>
+                                        <button type="button" class="feature-chip py-2 px-4 rounded-xl border-2 border-brand-cyan bg-brand-cyan/10 text-brand-navy text-xs font-bold shadow-sm transition" onclick="selectChip(this, 'hidden_bathrooms', '2')">2</button>
+                                        <button type="button" class="feature-chip py-2 px-4 rounded-xl border border-slate-200 bg-white text-xs font-semibold hover:border-brand-cyan transition" onclick="selectChip(this, 'hidden_bathrooms', '3')">3</button>
+                                        <button type="button" class="feature-chip py-2 px-4 rounded-xl border border-slate-200 bg-white text-xs font-semibold hover:border-brand-cyan transition" onclick="selectChip(this, 'hidden_bathrooms', '4')">4+</button>
                                     </div>
                                 </div>
 
                                 <div>
                                     <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Carpet / Built-up Area *</label>
-                                    <div class="flex items-center rounded-xl border border-slate-200 bg-slate-50 overflow-hidden focus-within:border-[#d8232a] focus-within:ring-2 focus-within:ring-[#d8232a] transition">
+                                    <div class="flex items-center rounded-xl border border-slate-200 bg-slate-50 overflow-hidden focus-within:border-brand-cyan focus-within:ring-2 focus-within:ring-brand-cyan/20 transition">
                                         <input type="number" name="sqft" required value="{{ old('sqft', '1250') }}" placeholder="e.g. 1250" class="w-full bg-transparent px-4 py-2.5 text-sm font-bold text-slate-900 focus:outline-none">
                                         <select name="area_unit" class="bg-slate-100 border-l border-slate-200 px-3 py-2.5 text-xs font-bold text-slate-700 focus:outline-none">
                                             <option value="sqft">Sq. Ft</option>
@@ -560,9 +580,10 @@
                     </div>
 
                     <!-- 5. PRICING & CHARGES -->
-                    <div class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200/90 shadow-sm">
-                        <h3 class="text-base sm:text-lg font-black text-slate-900 border-b border-slate-100 pb-3 mb-5">
-                            Pricing &amp; Charges
+                    <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-sm">
+                        <h3 class="font-display text-lg sm:text-xl font-bold text-brand-navy border-b border-slate-100 pb-3 mb-5 flex items-center gap-2.5">
+                            <span class="flex size-7 items-center justify-center rounded-lg bg-brand-cyan/10 text-brand-cyan text-xs font-bold">5</span>
+                            <span>Pricing &amp; Charges</span>
                         </h3>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
@@ -573,10 +594,10 @@
                                 </label>
                                 <div class="relative">
                                     <span class="absolute left-3.5 top-3 text-slate-400 font-bold text-base">₹</span>
-                                    <input type="number" name="price" id="wizard_price_input" required value="{{ old('price', '25000') }}" placeholder="e.g. 25000" oninput="updateLivePriceText(this.value)" class="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-xl pl-8 pr-4 py-3 text-base font-black focus:outline-none focus:ring-2 focus:ring-[#d8232a] transition">
+                                    <input type="number" name="price" id="wizard_price_input" required value="{{ old('price', '25000') }}" placeholder="e.g. 25000" oninput="updateLivePriceText(this.value)" class="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-xl pl-8 pr-4 py-3 text-base font-black focus:outline-none focus:ring-2 focus:ring-brand-cyan/20 focus:border-brand-cyan transition">
                                 </div>
                                 <div class="mt-1.5 flex items-center justify-between text-xs">
-                                    <span id="wizard-price-words" class="font-bold text-emerald-700">₹ 25,000 / month</span>
+                                    <span id="wizard-price-words" class="font-bold text-brand-cyan">₹ 25,000 / month</span>
                                     <span class="text-[11px] text-slate-400">All prices in INR</span>
                                 </div>
                             </div>
@@ -586,16 +607,17 @@
                                 <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
                                     Maintenance (Monthly)
                                 </label>
-                                <input type="text" name="maintenance" value="{{ old('maintenance', 'Included in rent') }}" placeholder="e.g. ₹ 2,000 / month or Included" class="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#d8232a] transition font-medium">
+                                <input type="text" name="maintenance" value="{{ old('maintenance', 'Included in rent') }}" placeholder="e.g. ₹ 2,000 / month or Included" class="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-cyan/20 focus:border-brand-cyan transition font-medium">
                                 <span class="text-[11px] text-slate-400 mt-1 block">Specify if society maintenance is included or extra.</span>
                             </div>
                         </div>
                     </div>
 
                     <!-- 6. PHOTOS, TITLE & AMENITIES -->
-                    <div class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200/90 shadow-sm">
-                        <h3 class="text-base sm:text-lg font-black text-slate-900 border-b border-slate-100 pb-3 mb-5">
-                            Photos, Description &amp; Amenities
+                    <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-sm">
+                        <h3 class="font-display text-lg sm:text-xl font-bold text-brand-navy border-b border-slate-100 pb-3 mb-5 flex items-center gap-2.5">
+                            <span class="flex size-7 items-center justify-center rounded-lg bg-brand-cyan/10 text-brand-cyan text-xs font-bold">6</span>
+                            <span>Photos, Description &amp; Amenities</span>
                         </h3>
 
                         <div class="space-y-5">
@@ -605,7 +627,7 @@
                                     <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider">Property Title</label>
                                     <span class="text-[11px] text-slate-400">Auto-generated if left blank</span>
                                 </div>
-                                <input type="text" name="title" value="{{ old('title') }}" placeholder="e.g. Spacious 2 BHK Apartment in Mansarovar with Modular Kitchen" class="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#d8232a] transition">
+                                <input type="text" name="title" value="{{ old('title') }}" placeholder="e.g. Spacious 2 BHK Apartment in Mansarovar with Modular Kitchen" class="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-cyan/20 focus:border-brand-cyan transition">
                             </div>
 
                             <!-- Description -->
@@ -614,7 +636,7 @@
                                     <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider">Description</label>
                                     <span class="text-[11px] text-slate-400">Auto-generated with complete specs if blank</span>
                                 </div>
-                                <textarea name="description" rows="3" placeholder="Highlight property advantages: road connectivity, sunlight, nearby metro/schools, water supply..." class="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-xl p-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#d8232a] transition leading-relaxed">{{ old('description') }}</textarea>
+                                <textarea name="description" rows="3" placeholder="Highlight property advantages: road connectivity, sunlight, nearby metro/schools, water supply..." class="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-xl p-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-cyan/20 focus:border-brand-cyan transition leading-relaxed">{{ old('description') }}</textarea>
                             </div>
 
                             <!-- Amenities Grid -->
@@ -636,8 +658,8 @@
                                     @endphp
                                     @foreach($amenitiesList as $am)
                                         <label class="flex items-center gap-2 p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200/80 cursor-pointer transition">
-                                            <input type="checkbox" name="amenities[]" value="{{ $am[0] }}" checked class="size-4 text-[#d8232a] focus:ring-[#d8232a] rounded">
-                                            <i class="fa-solid {{ $am[1] }} text-slate-500 text-xs"></i>
+                                            <input type="checkbox" name="amenities[]" value="{{ $am[0] }}" checked class="size-4 text-brand-cyan focus:ring-brand-cyan rounded">
+                                            <i class="fa-solid {{ $am[1] }} text-brand-cyan text-xs"></i>
                                             <span>{{ $am[0] }}</span>
                                         </label>
                                     @endforeach
@@ -648,15 +670,15 @@
                             <div class="pt-3 border-t border-slate-100">
                                 <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Upload Property Photos</label>
                                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 items-center">
-                                    <label class="sm:col-span-2 flex flex-col items-center justify-center p-6 border-2 border-dashed border-slate-300 hover:border-[#d8232a] rounded-2xl cursor-pointer bg-slate-50 hover:bg-rose-50/30 transition text-center">
-                                        <i class="fa-solid fa-cloud-arrow-up text-3xl text-[#d8232a] mb-2"></i>
-                                        <span class="text-xs font-bold text-slate-900">Click or Drag &amp; Drop Photos Here</span>
+                                    <label class="sm:col-span-2 flex flex-col items-center justify-center p-6 border-2 border-dashed border-slate-300 hover:border-brand-cyan rounded-2xl cursor-pointer bg-slate-50 hover:bg-brand-cyan/5 transition text-center">
+                                        <i class="fa-solid fa-cloud-arrow-up text-3xl text-brand-cyan mb-2"></i>
+                                        <span class="text-xs font-bold text-brand-navy">Click or Drag &amp; Drop Photos Here</span>
                                         <span class="text-[11px] text-slate-400 mt-1">JPEG, PNG, WebP up to 8MB</span>
                                         <input type="file" name="image_file" accept="image/*" class="sr-only" onchange="previewSelectedPhoto(this)">
                                     </label>
                                     <div class="text-xs text-slate-500 space-y-1.5">
-                                        <span class="font-bold text-slate-700 block">Or Image URL:</span>
-                                        <input type="url" name="image_url" placeholder="https://..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs focus:ring-1 focus:ring-[#d8232a]">
+                                        <span class="font-bold text-brand-navy block">Or Image URL:</span>
+                                        <input type="url" name="image_url" placeholder="https://..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs focus:ring-1 focus:ring-brand-cyan">
                                         <p class="text-[10px] text-slate-400 leading-tight">If none provided, verified architectural photography will be automatically attached.</p>
                                     </div>
                                 </div>
@@ -670,12 +692,12 @@
                     </div>
 
                     <!-- SUBMIT BAR -->
-                    <div class="p-6 bg-white rounded-2xl border border-slate-200/90 shadow-lg flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div class="p-6 bg-white rounded-3xl border border-slate-200/90 shadow-lg flex flex-col sm:flex-row items-center justify-between gap-4">
                         <div class="text-xs text-slate-600">
-                            <span class="font-black text-slate-900 text-sm block">100% Free Live Publication</span>
+                            <span class="font-bold text-brand-navy text-sm block">100% Free Live Publication</span>
                             Your listing will instantly reach thousands of genuine tenants and buyers.
                         </div>
-                        <button type="submit" class="w-full sm:w-auto py-4 px-10 rounded-xl bg-[#d8232a] hover:bg-[#b81d23] text-white font-black text-base shadow-xl shadow-rose-600/25 transition-all duration-200 transform hover:-translate-y-0.5 flex items-center justify-center gap-2">
+                        <button type="submit" class="w-full sm:w-auto py-4 px-10 rounded-xl bg-brand-cyan hover:bg-brand-cyan-hover text-white font-bold text-base shadow-xl shadow-brand-cyan/25 transition-all duration-200 hover:-translate-y-0.5 flex items-center justify-center gap-2">
                             <span>Publish Property Free</span>
                             <i class="fa-solid fa-arrow-right text-xs"></i>
                         </button>
@@ -686,48 +708,48 @@
 
             <!-- RIGHT STICKY HELPER SIDEBAR ("How to find the right Tenant / Buyer?") -->
             <div class="lg:col-span-4 sticky top-24 space-y-6">
-                <!-- Helper Guide Card Matching Screenshot 5 -->
-                <div class="bg-white rounded-2xl p-6 border border-slate-200/90 shadow-sm space-y-5">
-                    <h3 class="text-base font-black text-slate-900">
-                        How to find the right <span id="sidebar-target-role" class="text-emerald-700">Tenant</span>?
+                <!-- Helper Guide Card -->
+                <div class="bg-white rounded-3xl p-6 border border-slate-200/90 shadow-sm space-y-5">
+                    <h3 class="font-display text-base font-bold text-brand-navy">
+                        How to find the right <span id="sidebar-target-role" class="text-brand-cyan">Tenant</span>?
                     </h3>
 
                     <!-- Item 1: Respond to Inquiries -->
                     <div class="flex items-start gap-3.5">
-                        <div class="size-10 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
+                        <div class="size-10 rounded-full bg-brand-cyan/10 border border-brand-cyan/20 text-brand-cyan flex items-center justify-center shrink-0">
                             <i class="fa-solid fa-phone-volume text-sm"></i>
                         </div>
                         <div class="text-xs leading-relaxed text-slate-600">
-                            <h4 class="font-bold text-slate-900 text-sm mb-0.5">Respond to Inquiries</h4>
-                            Connect with verified searchers when they contact on your property. <strong class="text-slate-900">View contact details 100% FREE!</strong>
+                            <h4 class="font-bold text-brand-navy text-sm mb-0.5">Respond to Inquiries</h4>
+                            Connect with verified searchers when they contact on your property. <strong class="text-brand-navy">View contact details 100% FREE!</strong>
                         </div>
                     </div>
 
                     <!-- Item 2: Connect with Matching Leads -->
                     <div class="flex items-start gap-3.5">
-                        <div class="size-10 rounded-full bg-amber-50 border border-amber-100 text-amber-600 flex items-center justify-center shrink-0">
+                        <div class="size-10 rounded-full bg-amber-50 border border-amber-200 text-amber-600 flex items-center justify-center shrink-0">
                             <i class="fa-solid fa-user-check text-sm"></i>
                         </div>
                         <div class="text-xs leading-relaxed text-slate-600">
-                            <h4 class="font-bold text-slate-900 text-sm mb-0.5">Connect with Matching Leads</h4>
+                            <h4 class="font-bold text-brand-navy text-sm mb-0.5">Connect with Matching Leads</h4>
                             Actively check algorithm-matched buyers &amp; tenants looking in your locality.
                         </div>
                     </div>
 
                     <!-- Item 3: Direct WhatsApp Updates -->
                     <div class="flex items-start gap-3.5">
-                        <div class="size-10 rounded-full bg-rose-50 border border-rose-100 text-[#d8232a] flex items-center justify-center shrink-0">
-                            <i class="fa-solid fa-mobile-screen-button text-sm"></i>
+                        <div class="size-10 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-600 flex items-center justify-center shrink-0">
+                            <i class="fa-brands fa-whatsapp text-base"></i>
                         </div>
                         <div class="text-xs leading-relaxed text-slate-600">
-                            <h4 class="font-bold text-slate-900 text-sm mb-0.5">Instant WhatsApp Alerts</h4>
+                            <h4 class="font-bold text-brand-navy text-sm mb-0.5">Instant WhatsApp Alerts</h4>
                             Get notified the moment a new enquiry is received and connect instantly.
                         </div>
                     </div>
                 </div>
 
-                <!-- Concierge / Expert Hotline Card -->
-                <div class="bg-gradient-to-br from-slate-900 to-[#03234B] rounded-2xl p-6 text-white shadow-md space-y-4">
+                <!-- Concierge / Expert Hotline Card (Consistent with brand navy theme) -->
+                <div class="bg-gradient-to-br from-brand-navy to-brand-navy-light rounded-3xl p-6 text-white shadow-xl shadow-brand-navy/15 border border-white/10 space-y-4">
                     <div class="flex items-center gap-3">
                         <span class="flex size-10 items-center justify-center rounded-xl bg-white/10 text-brand-cyan text-lg">
                             <i class="fa-solid fa-headset"></i>
@@ -740,7 +762,7 @@
                     <p class="text-xs text-slate-200 leading-relaxed">
                         Don't have time to fill details? Our executive will list your property for free over a quick phone call.
                     </p>
-                    <a href="tel:+916376163263" class="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-[#d8232a] hover:bg-[#b81d23] text-white text-xs font-bold transition shadow">
+                    <a href="tel:+916376163263" class="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-brand-cyan hover:bg-brand-cyan-hover text-white text-xs font-bold transition shadow-lg shadow-brand-cyan/25">
                         <i class="fa-solid fa-phone"></i>
                         <span>Call +91 63761 63263</span>
                     </a>
@@ -753,7 +775,7 @@
 </section>
 
 <!-- ══════════════════════════════════════════════════════════════════ -->
-<!-- PROACTIVE ASSISTANCE MODAL (post.magicbricks.com Screenshot 1)     -->
+<!-- PROACTIVE ASSISTANCE MODAL (Consistent Brand Theme)                 -->
 <!-- ══════════════════════════════════════════════════════════════════ -->
 <div id="expert-assistance-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
     <div class="relative w-full max-w-md bg-white rounded-3xl p-6 sm:p-8 shadow-2xl transform scale-95 transition-transform duration-300 border border-slate-100" id="assistance-modal-box">
@@ -763,7 +785,7 @@
         </button>
 
         <div class="text-center space-y-2 mb-6">
-            <h3 class="text-xl sm:text-2xl font-black text-slate-900">
+            <h3 class="font-display text-xl sm:text-2xl font-bold text-brand-navy">
                 Need help in posting your property?
             </h3>
             <p class="text-sm text-slate-600">
@@ -774,8 +796,8 @@
         <form id="assistance-form" onsubmit="submitAssistanceRequest(event)" class="space-y-5">
             @csrf
             <div>
-                <div class="flex items-center rounded-xl border border-slate-300 bg-slate-50 overflow-hidden focus-within:border-[#d8232a] focus-within:ring-2 focus-within:ring-[#d8232a] transition">
-                    <span class="px-3.5 py-3 border-r border-slate-200 text-slate-700 font-bold text-sm bg-slate-100">
+                <div class="flex items-center rounded-xl border border-slate-200 bg-slate-50 overflow-hidden focus-within:border-brand-cyan focus-within:ring-2 focus-within:ring-brand-cyan/20 transition">
+                    <span class="px-3.5 py-3 border-r border-slate-200 text-brand-navy font-bold text-sm bg-slate-100">
                         +91
                     </span>
                     <input type="tel" name="phone" id="modal-phone-input" required value="6376163263" class="w-full bg-transparent px-4 py-3 text-base font-bold text-slate-900 focus:outline-none">
@@ -783,10 +805,10 @@
             </div>
 
             <div class="flex items-center gap-3">
-                <button type="button" onclick="closeAssistanceModal()" class="w-1/2 py-3 rounded-full border border-[#d8232a] text-[#d8232a] font-bold text-sm hover:bg-rose-50 transition text-center">
+                <button type="button" onclick="closeAssistanceModal()" class="w-1/2 py-3 rounded-xl border border-slate-300 text-slate-700 font-bold text-sm hover:bg-slate-50 transition text-center">
                     Maybe Later
                 </button>
-                <button type="submit" id="modal-submit-btn" class="w-1/2 py-3 rounded-full bg-[#d8232a] hover:bg-[#b81d23] text-white font-bold text-sm shadow-md transition text-center">
+                <button type="submit" id="modal-submit-btn" class="w-1/2 py-3 rounded-xl bg-brand-cyan hover:bg-brand-cyan-hover text-white font-bold text-sm shadow-lg shadow-brand-cyan/25 transition text-center">
                     Submit
                 </button>
             </div>
@@ -799,15 +821,15 @@
 
         <!-- Footer hotline text -->
         <div class="mt-6 pt-5 border-t border-dashed border-slate-200 text-center text-xs text-slate-500">
-            Need some help? Give us a call at <a href="tel:+916376163263" class="font-bold text-slate-800 hover:text-[#d8232a]">+91 63761 63263</a>
+            Need some help? Give us a call at <a href="tel:+916376163263" class="font-bold text-brand-navy hover:text-brand-cyan">+91 63761 63263</a>
         </div>
     </div>
 </div>
 
-<!-- Floating Floating 'Need Help?' Badge on Bottom-Right -->
+<!-- Floating 'Need Help?' Badge on Bottom-Right (Consistent Brand Theme) -->
 <div class="fixed bottom-6 right-6 z-40">
-    <button type="button" onclick="openAssistanceModal()" class="inline-flex items-center gap-2.5 bg-[#d8232a] hover:bg-[#b81d23] text-white font-bold text-xs py-3 px-4 rounded-full shadow-2xl shadow-rose-900/30 border border-white/20 transition-all duration-200 transform hover:scale-105">
-        <i class="fa-solid fa-headset text-sm"></i>
+    <button type="button" onclick="openAssistanceModal()" class="inline-flex items-center gap-2.5 bg-brand-navy hover:bg-brand-navy-light text-white font-bold text-xs py-3 px-5 rounded-full shadow-2xl shadow-brand-navy/40 border border-brand-cyan/30 transition-all duration-200 transform hover:scale-105">
+        <i class="fa-solid fa-headset text-brand-cyan text-sm"></i>
         <span>Need Help? Free Call</span>
     </button>
 </div>
@@ -828,11 +850,11 @@
     // 1. Starter Role Selection (Chips)
     function selectStarterRole(btn) {
         document.querySelectorAll('.starter-role-chip').forEach(b => {
-            b.classList.remove('border-2', 'border-emerald-600', 'bg-emerald-50', 'text-emerald-800', 'font-bold');
-            b.classList.add('border-slate-300', 'text-slate-700');
+            b.classList.remove('border-2', 'border-brand-cyan', 'bg-brand-cyan/10', 'text-brand-navy', 'font-bold', 'shadow-sm');
+            b.classList.add('border-slate-200', 'bg-slate-50', 'text-slate-700');
         });
-        btn.classList.remove('border-slate-300', 'text-slate-700');
-        btn.classList.add('border-2', 'border-emerald-600', 'bg-emerald-50', 'text-emerald-800', 'font-bold');
+        btn.classList.remove('border-slate-200', 'bg-slate-50', 'text-slate-700');
+        btn.classList.add('border-2', 'border-brand-cyan', 'bg-brand-cyan/10', 'text-brand-navy', 'font-bold', 'shadow-sm');
         selectedStarterRole = btn.getAttribute('data-role');
         document.getElementById('starter-role-error').classList.add('hidden');
     }
@@ -840,11 +862,11 @@
     // 2. Starter Purpose Selection (Chips)
     function selectStarterPurpose(btn) {
         document.querySelectorAll('.starter-purpose-chip').forEach(b => {
-            b.classList.remove('border-2', 'border-emerald-600', 'bg-emerald-50', 'text-emerald-800', 'font-bold');
-            b.classList.add('border-slate-300', 'text-slate-700');
+            b.classList.remove('border-2', 'border-brand-cyan', 'bg-brand-cyan/10', 'text-brand-navy', 'font-bold', 'shadow-sm');
+            b.classList.add('border-slate-200', 'bg-slate-50', 'text-slate-700');
         });
-        btn.classList.remove('border-slate-300', 'text-slate-700');
-        btn.classList.add('border-2', 'border-emerald-600', 'bg-emerald-50', 'text-emerald-800', 'font-bold');
+        btn.classList.remove('border-slate-200', 'bg-slate-50', 'text-slate-700');
+        btn.classList.add('border-2', 'border-brand-cyan', 'bg-brand-cyan/10', 'text-brand-navy', 'font-bold', 'shadow-sm');
         selectedStarterPurpose = btn.getAttribute('data-purpose');
         document.getElementById('starter-purpose-error').classList.add('hidden');
     }
@@ -871,21 +893,17 @@
         if (hasError) return;
 
         // Bridge values to Stage 2
-        // Sync role
         const roleRadio = document.querySelector(`input[name="posted_by"][value="${selectedStarterRole}"]`);
         if (roleRadio) roleRadio.checked = true;
 
-        // Sync purpose
         let mappedPurpose = selectedStarterPurpose === 'pg' ? 'lease' : selectedStarterPurpose;
         const purposeRadio = document.querySelector(`input[name="purpose"][value="${mappedPurpose}"]`);
         if (purposeRadio) purposeRadio.checked = true;
         syncPurposeChange(mappedPurpose);
 
-        // Sync phone
         document.getElementById('wizard_phone').value = phone;
         document.getElementById('modal-phone-input').value = phone;
 
-        // Switch stages smoothly
         document.getElementById('stage-1-container').classList.add('hidden');
         const stage2 = document.getElementById('stage-2-container');
         stage2.classList.remove('hidden');
@@ -941,21 +959,21 @@
     function selectChip(btn, hiddenInputId, value) {
         const parent = btn.parentElement;
         parent.querySelectorAll('.feature-chip').forEach(b => {
-            b.classList.remove('border-2', 'border-emerald-600', 'bg-emerald-50', 'text-emerald-800', 'font-bold');
-            b.classList.add('border-slate-300', 'text-slate-700');
+            b.classList.remove('border-2', 'border-brand-cyan', 'bg-brand-cyan/10', 'text-brand-navy', 'font-bold', 'shadow-sm');
+            b.classList.add('border-slate-200', 'bg-white', 'text-slate-700');
         });
-        btn.classList.remove('border-slate-300', 'text-slate-700');
-        btn.classList.add('border-2', 'border-emerald-600', 'bg-emerald-50', 'text-emerald-800', 'font-bold');
+        btn.classList.remove('border-slate-200', 'bg-white', 'text-slate-700');
+        btn.classList.add('border-2', 'border-brand-cyan', 'bg-brand-cyan/10', 'text-brand-navy', 'font-bold', 'shadow-sm');
         document.getElementById(hiddenInputId).value = value;
     }
 
     function selectSocietyFlats(btn, value) {
         document.querySelectorAll('.society-flats-chip').forEach(b => {
-            b.classList.remove('border-2', 'border-emerald-600', 'bg-emerald-50', 'text-emerald-800', 'font-bold');
-            b.classList.add('border-slate-300', 'text-slate-700');
+            b.classList.remove('border-2', 'border-brand-cyan', 'bg-brand-cyan/10', 'text-brand-navy', 'font-bold', 'shadow-sm');
+            b.classList.add('border-slate-200', 'bg-white', 'text-slate-700');
         });
-        btn.classList.remove('border-slate-300', 'text-slate-700');
-        btn.classList.add('border-2', 'border-emerald-600', 'bg-emerald-50', 'text-emerald-800', 'font-bold');
+        btn.classList.remove('border-slate-200', 'bg-white', 'text-slate-700');
+        btn.classList.add('border-2', 'border-brand-cyan', 'bg-brand-cyan/10', 'text-brand-navy', 'font-bold', 'shadow-sm');
         document.getElementById('hidden_flats_society').value = value;
     }
 
@@ -966,7 +984,6 @@
     // 6. Property Type Select (Flat vs Commercial vs Plot)
     function handlePropertyTypeSelect(type) {
         const flatBox = document.getElementById('flat-specific-box');
-        const featuresSection = document.getElementById('property-features-section');
         const isFlat = type === 'Flat / Apartment' || type === 'Builder Floor';
         const isPlot = type.includes('Plot') || type.includes('Land');
 
@@ -992,7 +1009,6 @@
         const query = val.toLowerCase().trim();
         const matches = CITIES_LIST.filter(c => c.toLowerCase().includes(query));
 
-        // Always show primary matches and suburb match like MagicBricks
         let results = [...matches];
         if (query.startsWith('jaip') || query.startsWith('jai')) {
             if (!results.includes('Jaipur')) results.unshift('Jaipur');
@@ -1006,7 +1022,7 @@
 
         results.slice(0, 6).forEach(city => {
             const item = document.createElement('div');
-            item.className = 'px-4 py-2.5 text-sm text-slate-800 font-semibold hover:bg-rose-50 hover:text-[#d8232a] cursor-pointer flex items-center justify-between transition';
+            item.className = 'px-4 py-2.5 text-sm text-slate-800 font-semibold hover:bg-brand-cyan/10 hover:text-brand-navy cursor-pointer flex items-center justify-between transition';
             item.innerHTML = `<span>${city}</span> <span class="text-[11px] text-slate-400 font-normal">India</span>`;
             item.onclick = function() {
                 document.getElementById('city_autocomplete_input').value = city;
@@ -1082,25 +1098,21 @@
                 btn.innerHTML = 'Submit';
             }, 2500);
         } catch (err) {
-            // Fallback: normal submit if fetch fails
             e.target.submit();
         }
     }
 
     // Initialize Default States on DOM Load
     document.addEventListener('DOMContentLoaded', function() {
-        // Starter defaults: Owner & Rent selected
         const defaultOwnerBtn = document.querySelector('.starter-role-chip[data-role="Owner"]');
         if (defaultOwnerBtn) selectStarterRole(defaultOwnerBtn);
 
         const defaultRentBtn = document.querySelector('.starter-purpose-chip[data-purpose="rent"]');
         if (defaultRentBtn) selectStarterPurpose(defaultRentBtn);
 
-        // Live price init
         const priceInput = document.getElementById('wizard_price_input');
         if (priceInput) updateLivePriceText(priceInput.value);
 
-        // Auto prompt assistance modal after 10s on page if still on Stage 1
         setTimeout(() => {
             const stage1 = document.getElementById('stage-1-container');
             if (stage1 && !stage1.classList.contains('hidden')) {
