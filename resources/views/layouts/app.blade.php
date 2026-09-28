@@ -45,10 +45,10 @@
     <link rel="manifest" href="{{ asset('manifest.webmanifest') }}">
     <meta name="theme-color" content="#03234B">
 
-    <!-- Font: DM Sans -->
+    <!-- Google Fonts: Plus Jakarta Sans & DM Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
 
     <!-- Font Awesome 6 Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -75,21 +75,22 @@
                         }
                     },
                     fontFamily: {
-                        sans: ['"DM Sans"', 'system-ui', '-apple-system', 'sans-serif'],
-                        heading: ['"DM Sans"', 'system-ui', '-apple-system', 'sans-serif'],
-                        display: ['"DM Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+                        sans: ['"Plus Jakarta Sans"', '"DM Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+                        heading: ['"Plus Jakarta Sans"', '"DM Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+                        display: ['"Plus Jakarta Sans"', '"DM Sans"', 'system-ui', '-apple-system', 'sans-serif'],
                     },
                     fontSize: {
-                        xs: ['0.8125rem', { lineHeight: '1.25rem' }],
-                        sm: ['0.9375rem', { lineHeight: '1.4rem' }],
-                        base: ['1rem', { lineHeight: '1.65rem' }],
-                        lg: ['1.125rem', { lineHeight: '1.75rem' }],
-                        xl: ['1.25rem', { lineHeight: '1.75rem' }],
-                        '2xl': ['1.5rem', { lineHeight: '2rem' }],
-                        '3xl': ['1.875rem', { lineHeight: '2.25rem' }],
-                        '4xl': ['2.25rem', { lineHeight: '2.5rem' }],
-                        '5xl': ['3rem', { lineHeight: '1.15' }],
-                        '6xl': ['3.75rem', { lineHeight: '1.1' }],
+                        '2xs': ['0.75rem', { lineHeight: '1.15rem' }],
+                        xs: ['0.875rem', { lineHeight: '1.35rem' }],
+                        sm: ['0.975rem', { lineHeight: '1.5rem' }],
+                        base: ['1.0625rem', { lineHeight: '1.7rem' }],
+                        lg: ['1.1875rem', { lineHeight: '1.8rem' }],
+                        xl: ['1.3125rem', { lineHeight: '1.85rem' }],
+                        '2xl': ['1.625rem', { lineHeight: '2.1rem' }],
+                        '3xl': ['2rem', { lineHeight: '2.35rem' }],
+                        '4xl': ['2.5rem', { lineHeight: '2.75rem' }],
+                        '5xl': ['3.25rem', { lineHeight: '1.15' }],
+                        '6xl': ['4rem', { lineHeight: '1.1' }],
                     }
                 }
             }
@@ -97,27 +98,39 @@
     </script>
     <style>
         html {
-            font-size: 16px;
+            font-size: 16.5px;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+        }
+        @media (min-width: 1280px) {
+            html {
+                font-size: 17px;
+            }
         }
         body {
-            font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
-            font-size: 16px;
-            line-height: 1.6;
-            background-color: #FFFFFF;
-            color: #1E293B;
-        }
-        h1, h2, h3, h4, h5, h6, .font-heading, .font-display {
-            font-family: 'DM Sans', system-ui, -apple-system, sans-serif !important;
-            letter-spacing: -0.02em;
-        }
-        p {
+            font-family: 'Plus Jakarta Sans', 'DM Sans', system-ui, -apple-system, sans-serif;
             font-size: 1rem;
             line-height: 1.65;
+            background-color: #FFFFFF;
+            color: #0F172A;
+            letter-spacing: -0.012em;
+        }
+        h1, h2, h3, h4, h5, h6, .font-heading, .font-display {
+            font-family: 'Plus Jakarta Sans', 'DM Sans', system-ui, -apple-system, sans-serif !important;
+            letter-spacing: -0.028em;
+            font-weight: 700;
+        }
+        p {
+            font-size: 1.05rem;
+            line-height: 1.7;
         }
         a, button, input, select, textarea {
-            font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+            font-family: 'Plus Jakarta Sans', 'DM Sans', system-ui, -apple-system, sans-serif;
+        }
+        /* Global Full Width Layout Override: expand all pages edge-to-edge */
+        .max-w-\[1720px\] {
+            max-width: 100% !important;
         }
     </style>
     @stack('styles')
@@ -126,7 +139,7 @@
 
     <!-- Header (Exact Housing365 Navbar) -->
     <header class="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md border-b border-slate-100 transition-[border-color,box-shadow] duration-300">
-        <div class="mx-auto flex h-16 w-full max-w-[1720px] items-center justify-between px-4 sm:px-8 lg:px-12 xl:h-[72px] xl:px-16">
+        <div class="mx-auto flex h-16 w-full items-center justify-between px-4 sm:px-8 lg:px-12 xl:h-[72px] xl:px-16 2xl:px-20">
             
             <!-- Housing365 Brand Logo SVG -->
             <a href="{{ route('home') }}" class="inline-flex shrink-0 items-center select-none" aria-label="Housing365 - Home">
@@ -408,12 +421,14 @@
 
     <!-- Notification Toast -->
     @if(session('success'))
-        <div class="bg-emerald-50 border-l-4 border-emerald-500 p-4 text-emerald-800 text-sm max-w-7xl mx-auto my-4 rounded-r-lg shadow-sm flex items-center justify-between w-full">
-            <div class="flex items-center">
-                <i class="fa-solid fa-circle-check text-emerald-500 text-lg mr-3"></i>
-                <span>{{ session('success') }}</span>
+        <div class="w-full px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20 my-4">
+            <div class="bg-emerald-50 border-l-4 border-emerald-500 p-4 text-emerald-800 text-sm rounded-r-xl shadow-sm flex items-center justify-between w-full">
+                <div class="flex items-center">
+                    <i class="fa-solid fa-circle-check text-emerald-500 text-lg mr-3"></i>
+                    <span>{{ session('success') }}</span>
+                </div>
+                <button onclick="this.parentElement.remove()" class="text-emerald-700 hover:text-emerald-900 font-bold">&times;</button>
             </div>
-            <button onclick="this.parentElement.remove()" class="text-emerald-700 hover:text-emerald-900 font-bold">&times;</button>
         </div>
     @endif
 
@@ -431,7 +446,7 @@
 
     <!-- Footer (Exact Housing365 Footer) -->
     <footer class="bg-[#0B1D3A] text-white" role="contentinfo">
-        <div class="mx-auto w-full max-w-[1720px] px-4 pb-28 pt-12 sm:px-8 lg:px-12 xl:px-16 lg:pb-8 lg:pt-16">
+        <div class="mx-auto w-full px-4 pb-28 pt-12 sm:px-8 lg:px-12 xl:px-16 2xl:px-20 lg:pb-8 lg:pt-16">
             <div class="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-8">
                 
                 <!-- Brand Column -->

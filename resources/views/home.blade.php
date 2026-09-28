@@ -19,7 +19,7 @@
                 <!-- Eyebrow Badge -->
                 <div class="mb-4 inline-flex items-center gap-2 rounded-full border border-brand-cyan/20 bg-brand-cyan/5 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-brand-cyan">
                     <span class="h-1.5 w-1.5 rounded-full bg-brand-cyan"></span>
-                    {{ $settings['hero_eyebrow'] ?? 'CANADA & UNITED STATES' }}
+                    {{ $settings['hero_eyebrow'] ?? 'VERIFIED OWNERS & ZERO BROKERAGE ACROSS INDIA' }}
                 </div>
 
                 <!-- Headline -->

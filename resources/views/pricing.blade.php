@@ -15,7 +15,7 @@
     <div aria-hidden="true" class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#00AEEF]/50 to-transparent"></div>
 
     <!-- Breadcrumb sits inline at the top -->
-    <div class="relative mx-auto max-w-7xl px-4 pt-8 text-slate-500">
+    <div class="relative mx-auto w-full px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20 pt-8 text-slate-500">
         <nav aria-label="breadcrumb" class="text-xs sm:text-sm">
             <ol class="flex items-center gap-2">
                 <li><a href="{{ url('/') }}" class="hover:text-brand-cyan transition-colors">Home</a></li>
@@ -25,7 +25,7 @@
         </nav>
     </div>
 
-    <div class="relative mx-auto grid w-full max-w-7xl grid-cols-1 items-start gap-10 px-4 py-14 sm:px-6 sm:py-16 lg:grid-cols-12 lg:gap-12 lg:px-8 lg:py-20">
+    <div class="relative mx-auto grid w-full grid-cols-1 items-start gap-10 px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20 py-14 sm:py-16 lg:grid-cols-12 lg:gap-12 lg:py-20">
         <!-- LEFT: kicker, eyebrow, headline, lede, CTAs -->
         <div class="lg:col-span-7">
             <!-- Kicker -->
@@ -133,7 +133,7 @@
         style="background-image: radial-gradient(#03234B 1px, transparent 1px); background-size: 28px 28px;"
     ></div>
 
-    <div class="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+    <div class="relative mx-auto w-full px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20">
         <div>
             <div class="flex items-center gap-3">
                 <span aria-hidden="true" class="h-px w-8 bg-[#00AEEF]/60"></span>
@@ -251,7 +251,7 @@
 
 <!-- ── SECTION 3: EDITORIAL BRIDGE (What Zero-Upfront Actually Covers) ── -->
 <section class="bg-white py-16 sm:py-20">
-    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto w-full px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20">
         <div class="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-14">
             <!-- Left: Modern Living Room Image -->
             <div class="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-lg ring-1 ring-brand-navy/10">
@@ -312,7 +312,7 @@
         style="background: radial-gradient(ellipse at 12% 15%, rgba(0,174,239,0.08) 0%, transparent 55%), radial-gradient(ellipse at 88% 85%, rgba(0,174,239,0.06) 0%, transparent 55%);"
     ></div>
 
-    <div class="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+    <div class="relative mx-auto w-full px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20">
         <div>
             <p class="text-[11px] font-bold uppercase tracking-[0.28em] text-brand-navy/60">
                 &sect; 02 &middot; The fee schedule
@@ -592,7 +592,7 @@
 
 <!-- ── SECTION 5: HOW PRICING COMPARES (Visual 2-Column with Architecture Photo) ── -->
 <section class="bg-white py-20 lg:py-24">
-    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto w-full px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20">
         <div class="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-14">
             <!-- Left: Text block -->
             <div class="lg:col-span-6">
@@ -650,7 +650,7 @@
 
 <!-- ── SECTION 6: OUTCOME GUARANTEE ILLUSTRATION BAND ── -->
 <section class="bg-[#FBFAF6] py-20 lg:py-24">
-    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto w-full px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20">
         <div class="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-14">
             <!-- Left: Supporting Image -->
             <div class="order-2 lg:order-1 lg:col-span-5">
@@ -687,7 +687,7 @@
 
 <!-- ── SECTION 7: § 03 · WHAT THE SUCCESS FEE INCLUDES (Transparency Table) ── -->
 <section class="bg-white py-20 lg:py-28">
-    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto w-full px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20">
         <div>
             <p class="text-[11px] font-bold uppercase tracking-[0.28em] text-brand-navy/60">
                 &sect; 03 &middot; What the success fee includes
@@ -891,7 +891,7 @@
 
 <!-- ── SECTION 8: INTERACTIVE INDIAN METRO RENT CALCULATOR (LIGHT MODERN DESIGN) ── -->
 <section id="rent-calculator" class="py-16 lg:py-24 bg-[#F8FAFD] border-t border-slate-200/80 relative overflow-hidden">
-    <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="relative mx-auto w-full px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             <!-- Left Info Column -->
             <div>
@@ -1013,7 +1013,7 @@
 
 <!-- ── SECTION 9: FULL-WIDTH EDITORIAL BANNER ── -->
 <section class="relative bg-white py-16 sm:py-20">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto w-full px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20">
         <div class="relative aspect-[16/9] w-full overflow-hidden rounded-3xl shadow-xl ring-1 ring-brand-navy/10 sm:aspect-[2/1] lg:aspect-[21/8]">
             <img
                 src="https://images.unsplash.com/photo-1570168007204-dfb528c6958f?auto=format&fit=crop&w=2400&q=80"
@@ -1037,7 +1037,7 @@
 
 <!-- ── SECTION 10: § 06 · MONEY-BACK & GUARANTEES (Vertical Editorial Notes) ── -->
 <section class="bg-[#FBFAF6] py-20 lg:py-28">
-    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto w-full px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20">
         <div>
             <p class="text-[11px] font-bold uppercase tracking-[0.28em] text-brand-navy/60">
                 &sect; 06 &middot; Money-back &amp; guarantees
@@ -1118,7 +1118,7 @@
 
 <!-- ── SECTION 11: § 07 · OWNERS ON OUR PRICING (Testimonials) ── -->
 <section class="bg-white py-16 lg:py-24">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto w-full px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20">
         <div class="mx-auto max-w-2xl text-center">
             <p class="text-[11px] font-bold uppercase tracking-[0.28em] text-brand-navy/60">
                 &sect; 07 &middot; Owners on our pricing
@@ -1197,7 +1197,7 @@
 <section class="relative bg-[#F8FAFD] py-16 sm:py-20 lg:py-24 border-t border-slate-200/80">
     <div aria-hidden="true" class="pointer-events-none absolute inset-0 opacity-[0.03]" style="background-image: radial-gradient(#03234B 1px, transparent 1px); background-size: 28px 28px;"></div>
     
-    <div class="relative mx-auto w-full max-w-[1720px] px-4 sm:px-8 lg:px-12 xl:px-16">
+    <div class="relative mx-auto w-full px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20">
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 pb-6 border-b border-slate-200">
             <div>
                 <p class="mb-3 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.22em] text-brand-cyan">

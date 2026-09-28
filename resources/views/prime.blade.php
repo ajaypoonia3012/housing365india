@@ -74,8 +74,8 @@
             </p>
         </div>
 
-        <!-- 3-Column Plan Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 max-w-5xl mx-auto items-stretch">
+        <!-- 3-Column Plan Grid (Full Width) -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 w-full items-stretch">
             
             <!-- 1. FREE PLAN -->
             <div id="cardFree" onclick="selectCard('free')" class="package-card bg-white rounded-3xl p-7 border border-slate-200/90 shadow-sm flex flex-col justify-between cursor-pointer transition-all duration-200 hover:shadow-md hover:border-slate-300">
@@ -251,7 +251,7 @@
         </div>
 
         <!-- Sticky Bottom Dynamic Continue Action Bar (Matches MagicBricks Bottom Bar) -->
-        <div class="mt-10 max-w-5xl mx-auto bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-lg flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="mt-10 w-full bg-white p-5 sm:p-6 rounded-2xl border border-slate-200 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-4">
             <div class="flex items-center gap-3 text-center sm:text-left">
                 <div class="size-11 rounded-xl bg-amber-400/20 text-amber-600 flex items-center justify-center text-xl shrink-0">
                     <i class="fa-solid fa-crown"></i>
@@ -329,7 +329,7 @@
 
 <!-- ── FAQ SECTION ── -->
 <section class="py-14 sm:py-20 bg-[#F8FAFD]">
-    <div class="mx-auto w-full max-w-4xl px-4 sm:px-8">
+    <div class="mx-auto w-full max-w-5xl px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20">
         <div class="text-center mb-10">
             <h2 class="font-display text-2xl sm:text-3xl font-extrabold text-brand-navy">
                 Frequently Asked Questions
