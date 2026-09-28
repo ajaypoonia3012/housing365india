@@ -94,15 +94,40 @@
             </a>
         </div>
 
+        <!-- Micro-Locality Quick Chips (MagicBricks Jaipur & Indian Metros Style) -->
+        @if(!empty($popularLocalities))
+        <div class="mb-5 flex items-center gap-2 overflow-x-auto pb-2 scrollbar-thin">
+            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider shrink-0 flex items-center gap-1.5 mr-1">
+                <i class="fa-solid fa-location-crosshairs text-brand-cyan"></i>
+                <span>Top Localities{{ request('city') ? ' in ' . request('city') : '' }}:</span>
+            </span>
+            <a href="{{ route('properties.index', array_merge(request()->except('locality'), ['locality' => 'all'])) }}"
+               class="px-3.5 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition {{ !request('locality') || request('locality') === 'all' ? 'bg-brand-navy text-white shadow-sm' : 'bg-white text-slate-600 border border-slate-200 hover:border-brand-cyan hover:text-brand-navy' }}">
+                All Localities
+            </a>
+            @foreach($popularLocalities as $loc)
+                <a href="{{ route('properties.index', array_merge(request()->except('locality'), ['locality' => $loc])) }}"
+                   class="px-3.5 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition {{ request('locality') === $loc ? 'bg-brand-cyan text-white shadow-sm' : 'bg-white text-slate-600 border border-slate-200 hover:border-brand-cyan hover:text-brand-navy' }}">
+                    {{ $loc }}
+                </a>
+            @endforeach
+        </div>
+        @endif
+
         <!-- Filter Bar -->
-        <div class="bg-white p-5 sm:p-7 rounded-3xl border border-slate-200/80 shadow-md mb-8">
+        <div class="bg-white p-5 sm:p-7 rounded-3xl border border-slate-200/80 shadow-md mb-8 space-y-5">
             <form action="{{ route('properties.index') }}" method="GET" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3.5 items-end">
+                <!-- Keep locality if selected from pills -->
+                @if(request('locality') && request('locality') !== 'all')
+                    <input type="hidden" name="locality" value="{{ request('locality') }}">
+                @endif
+
                 <!-- Keyword / Locality Search -->
                 <div class="lg:col-span-2">
-                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Search Locality / Project</label>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Search Locality / Project / Builder</label>
                     <div class="relative">
                         <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-slate-400 text-xs"></i>
-                        <input type="text" name="q" value="{{ request('q') }}" placeholder="e.g. Bandra, HSR, DLF Cyber City, Plot" class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl pl-9 pr-3 py-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-brand-cyan focus:border-brand-cyan transition">
+                        <input type="text" name="q" value="{{ request('q') }}" placeholder="e.g. Vaishali Nagar, Jagatpura, Bandra, Plot" class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl pl-9 pr-3 py-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-brand-cyan focus:border-brand-cyan transition">
                     </div>
                 </div>
 
@@ -142,13 +167,69 @@
                 <!-- Action Buttons -->
                 <div class="flex gap-2">
                     <button type="submit" class="flex-1 bg-brand-cyan hover:bg-brand-cyan-hover text-white font-bold py-2.5 px-3 rounded-xl text-xs uppercase tracking-wider transition shadow-sm">
-                        Filter
+                        Apply
                     </button>
                     <a href="{{ route('properties.index') }}" class="py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold text-xs uppercase tracking-wider transition flex items-center justify-center">
                         Reset
                     </a>
                 </div>
             </form>
+
+            <!-- Secondary Quick-Filter Row: BHK & Budget & Zero Brokerage (MagicBricks Inspired) -->
+            <div class="pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-4">
+                <!-- BHK Buttons -->
+                <div class="flex items-center gap-1.5 flex-wrap">
+                    <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 mr-1">BHK:</span>
+                    <a href="{{ route('properties.index', array_merge(request()->except('bhk'), ['bhk' => 'all'])) }}"
+                       class="px-2.5 py-1 rounded-lg text-xs font-bold transition {{ !request('bhk') || request('bhk') === 'all' ? 'bg-brand-navy text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200' }}">All</a>
+                    <a href="{{ route('properties.index', array_merge(request()->except('bhk'), ['bhk' => 1])) }}"
+                       class="px-2.5 py-1 rounded-lg text-xs font-bold transition {{ request('bhk') == '1' ? 'bg-brand-cyan text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200' }}">1 BHK</a>
+                    <a href="{{ route('properties.index', array_merge(request()->except('bhk'), ['bhk' => 2])) }}"
+                       class="px-2.5 py-1 rounded-lg text-xs font-bold transition {{ request('bhk') == '2' ? 'bg-brand-cyan text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200' }}">2 BHK</a>
+                    <a href="{{ route('properties.index', array_merge(request()->except('bhk'), ['bhk' => 3])) }}"
+                       class="px-2.5 py-1 rounded-lg text-xs font-bold transition {{ request('bhk') == '3' ? 'bg-brand-cyan text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200' }}">3 BHK</a>
+                    <a href="{{ route('properties.index', array_merge(request()->except('bhk'), ['bhk' => 4])) }}"
+                       class="px-2.5 py-1 rounded-lg text-xs font-bold transition {{ request('bhk') == '4' ? 'bg-brand-cyan text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200' }}">4+ BHK</a>
+                </div>
+
+                <!-- Indian Budget Presets -->
+                <div class="flex items-center gap-1.5 flex-wrap">
+                    <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 mr-1">Budget:</span>
+                    @if(request('purpose') === 'rent')
+                        <a href="{{ route('properties.index', array_merge(request()->except(['min_price', 'max_price']), ['max_price' => 15000])) }}"
+                           class="px-2.5 py-1 rounded-lg text-xs font-bold transition {{ request('max_price') == 15000 && !request('min_price') ? 'bg-brand-cyan text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200' }}">&lt; ₹15k</a>
+                        <a href="{{ route('properties.index', array_merge(request()->except(['min_price', 'max_price']), ['min_price' => 15000, 'max_price' => 25000])) }}"
+                           class="px-2.5 py-1 rounded-lg text-xs font-bold transition {{ request('min_price') == 15000 && request('max_price') == 25000 ? 'bg-brand-cyan text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200' }}">₹15k-25k</a>
+                        <a href="{{ route('properties.index', array_merge(request()->except(['min_price', 'max_price']), ['min_price' => 25000, 'max_price' => 50000])) }}"
+                           class="px-2.5 py-1 rounded-lg text-xs font-bold transition {{ request('min_price') == 25000 && request('max_price') == 50000 ? 'bg-brand-cyan text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200' }}">₹25k-50k</a>
+                        <a href="{{ route('properties.index', array_merge(request()->except(['min_price', 'max_price']), ['min_price' => 50000])) }}"
+                           class="px-2.5 py-1 rounded-lg text-xs font-bold transition {{ request('min_price') == 50000 && !request('max_price') ? 'bg-brand-cyan text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200' }}">₹50k+</a>
+                    @else
+                        <a href="{{ route('properties.index', array_merge(request()->except(['min_price', 'max_price']), ['max_price' => 3000000])) }}"
+                           class="px-2.5 py-1 rounded-lg text-xs font-bold transition {{ request('max_price') == 3000000 && !request('min_price') ? 'bg-brand-cyan text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200' }}">&lt; ₹30 Lac</a>
+                        <a href="{{ route('properties.index', array_merge(request()->except(['min_price', 'max_price']), ['min_price' => 3000000, 'max_price' => 6000000])) }}"
+                           class="px-2.5 py-1 rounded-lg text-xs font-bold transition {{ request('min_price') == 3000000 && request('max_price') == 6000000 ? 'bg-brand-cyan text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200' }}">₹30L - 60L</a>
+                        <a href="{{ route('properties.index', array_merge(request()->except(['min_price', 'max_price']), ['min_price' => 6000000, 'max_price' => 10000000])) }}"
+                           class="px-2.5 py-1 rounded-lg text-xs font-bold transition {{ request('min_price') == 6000000 && request('max_price') == 10000000 ? 'bg-brand-cyan text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200' }}">₹60L - 1 Cr</a>
+                        <a href="{{ route('properties.index', array_merge(request()->except(['min_price', 'max_price']), ['min_price' => 10000000])) }}"
+                           class="px-2.5 py-1 rounded-lg text-xs font-bold transition {{ request('min_price') == 10000000 && !request('max_price') ? 'bg-brand-cyan text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200' }}">₹1 Cr+</a>
+                    @endif
+                </div>
+
+                <!-- Owner / Zero Brokerage & Verified Toggles -->
+                <div class="flex items-center gap-2">
+                    <a href="{{ route('properties.index', array_merge(request()->all(), ['posted_by' => request('posted_by') === 'Owner' ? 'all' : 'Owner'])) }}"
+                       class="px-3 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1.5 {{ request('posted_by') === 'Owner' ? 'bg-teal-600 text-white shadow-sm' : 'bg-slate-100 text-slate-700 hover:bg-slate-200' }}">
+                        <i class="fa-solid fa-user-check text-[11px]"></i>
+                        <span>Zero Brokerage (Owners)</span>
+                    </a>
+                    <a href="{{ route('properties.index', array_merge(request()->all(), ['verified' => request('verified') == '1' ? '0' : '1'])) }}"
+                       class="px-3 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1.5 {{ request('verified') == '1' ? 'bg-emerald-600 text-white shadow-sm' : 'bg-slate-100 text-slate-700 hover:bg-slate-200' }}">
+                        <i class="fa-solid fa-circle-check text-[11px]"></i>
+                        <span>Verified Only</span>
+                    </a>
+                </div>
+            </div>
         </div>
 
         <!-- Listings Header & View Switcher -->

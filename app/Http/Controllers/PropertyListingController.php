@@ -31,6 +31,11 @@ class PropertyListingController extends Controller
             $query->where('city', $request->city);
         }
 
+        // 3b. Locality filter
+        if ($request->filled('locality') && $request->locality !== 'all') {
+            $query->where('locality', 'like', '%' . trim($request->locality) . '%');
+        }
+
         // 4. Keyword search (locality, title, description, address)
         if ($request->filled('q')) {
             $term = '%' . trim($request->q) . '%';
@@ -49,12 +54,33 @@ class PropertyListingController extends Controller
             $query->where('property_type', $request->property_type);
         }
 
-        // 6. Bedrooms filter (only for residential)
-        if ($request->filled('bedrooms') && (int)$request->bedrooms > 0) {
+        // 6. Bedrooms / BHK filter (Exact or >= for 4+)
+        if ($request->filled('bhk') && $request->bhk !== 'all') {
+            if ((int)$request->bhk >= 4) {
+                $query->where('bedrooms', '>=', 4);
+            } else {
+                $query->where('bedrooms', (int)$request->bhk);
+            }
+        } elseif ($request->filled('bedrooms') && (int)$request->bedrooms > 0) {
             $query->where('bedrooms', '>=', (int)$request->bedrooms);
         }
 
-        // 7. Budget filter
+        // 7. Furnishing filter
+        if ($request->filled('furnishing') && $request->furnishing !== 'all') {
+            $query->where('furnishing', $request->furnishing);
+        }
+
+        // 8. Ownership / Posted By filter (Owner, Builder)
+        if ($request->filled('posted_by') && $request->posted_by !== 'all') {
+            $query->where('posted_by', $request->posted_by);
+        }
+
+        // 9. Verified listings only
+        if ($request->filled('verified') && $request->verified == '1') {
+            $query->where('is_verified', 1);
+        }
+
+        // 10. Budget filter
         if ($request->filled('max_price') && (float)$request->max_price > 0) {
             $query->where('price', '<=', (float)$request->max_price);
         }
@@ -78,7 +104,7 @@ class PropertyListingController extends Controller
             $query->latest();
         }
 
-        $allProperties = (clone $query)->get(['id', 'title', 'slug', 'price', 'price_display', 'bedrooms', 'bathrooms', 'sqft', 'area_unit', 'address', 'locality', 'city', 'state', 'image', 'property_type', 'category', 'purpose']);
+        $allProperties = (clone $query)->get(['id', 'title', 'slug', 'price', 'price_display', 'bedrooms', 'bathrooms', 'sqft', 'area_unit', 'address', 'locality', 'city', 'state', 'image', 'property_type', 'category', 'purpose', 'posted_by', 'is_verified']);
         $properties = $query->paginate(9)->withQueryString();
         
         $cities = CityLocation::orderBy('name')->pluck('name');
@@ -95,7 +121,32 @@ class PropertyListingController extends Controller
             'plot_land' => Property::where('status', 'Available')->where('category', 'plot_land')->count(),
         ];
 
-        return view('properties.index', compact('properties', 'allProperties', 'cities', 'types', 'counts'));
+        // Micro-market localities map for top Indian cities (inspired by MagicBricks)
+        $cityTopLocalitiesMap = [
+            'Jaipur' => ['Vaishali Nagar', 'Jagatpura', 'Mansarovar', 'Malviya Nagar', 'Tonk Road', 'Ajmer Road', 'C-Scheme', 'Raja Park', 'Kalwar Road', 'Sirsi Road', 'Chitrakoot'],
+            'Mumbai' => ['Bandra West', 'Andheri West', 'Juhu', 'Worli', 'Powai', 'BKC', 'Lower Parel', 'Malad West', 'Thane West'],
+            'Delhi' => ['Connaught Place', 'Vasant Kunj', 'Greater Kailash', 'Hauz Khas', 'Dwarka', 'Rohini', 'Saket'],
+            'Bengaluru' => ['Indiranagar', 'Koramangala', 'HSR Layout', 'Whitefield', 'Electronic City', 'Bellandur', 'Hebbal'],
+            'Hyderabad' => ['Hitec City', 'Gachibowli', 'Banjara Hills', 'Jubilee Hills', 'Kondapur', 'Madhapur'],
+            'Pune' => ['Koregaon Park', 'Kalyani Nagar', 'Baner', 'Hinjewadi', 'Viman Nagar', 'Wakad'],
+            'Gurugram' => ['DLF Phase 5', 'Golf Course Road', 'Sohna Road', 'Cyber City', 'Sector 57'],
+        ];
+
+        $selectedCity = $request->get('city', '');
+        if (!empty($selectedCity) && isset($cityTopLocalitiesMap[$selectedCity])) {
+            $popularLocalities = $cityTopLocalitiesMap[$selectedCity];
+        } else {
+            $dbLocalities = Property::whereNotNull('locality')
+                ->when(!empty($selectedCity), fn($q) => $q->where('city', $selectedCity))
+                ->distinct()
+                ->pluck('locality')
+                ->filter()
+                ->values()
+                ->toArray();
+            $popularLocalities = !empty($dbLocalities) ? $dbLocalities : $cityTopLocalitiesMap['Jaipur'];
+        }
+
+        return view('properties.index', compact('properties', 'allProperties', 'cities', 'types', 'counts', 'popularLocalities'));
     }
 
     public function show(string $slug)

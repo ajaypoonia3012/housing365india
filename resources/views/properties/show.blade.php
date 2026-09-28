@@ -196,23 +196,231 @@
                 </div>
                 @endif
 
-                <!-- Lease Terms & Policy -->
+                <!-- Lease & Legal Assurance -->
                 <div class="bg-white p-8 sm:p-10 rounded-3xl border border-slate-200/80 shadow-sm">
-                    <h3 class="font-display text-2xl font-normal text-brand-navy mb-4 pb-4 border-b border-slate-100">Housing 365 Resident Assurance</h3>
+                    <h3 class="font-display text-2xl font-normal text-brand-navy mb-4 pb-4 border-b border-slate-100 flex items-center justify-between">
+                        <span>Housing 365 Resident &amp; Buyer Assurance</span>
+                        <span class="text-xs font-bold uppercase tracking-wider text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full"><i class="fa-solid fa-shield-halved mr-1"></i> 100% Verified</span>
+                    </h3>
                     <ul class="space-y-3.5 text-xs sm:text-sm text-slate-600">
                         <li class="flex items-start gap-3">
                             <i class="fa-solid fa-circle-check text-brand-cyan text-sm mt-0.5"></i>
-                            <span><strong>Standard Legal Tenancy Lease:</strong> Fully compliant with provincial and state residential tenancy boards.</span>
+                            <span><strong>Standard Model Tenancy Lease:</strong> Fully compliant with Model Tenancy Act &amp; State Rent Control guidelines with registered 11-month agreement and digital e-stamping.</span>
                         </li>
                         <li class="flex items-start gap-3">
                             <i class="fa-solid fa-circle-check text-brand-cyan text-sm mt-0.5"></i>
-                            <span><strong>Rapid Digital Verification:</strong> Fast application approval within 24-48 business hours with verified credit checks.</span>
+                            <span><strong>Rapid Digital Verification:</strong> Fast application approval within 24-48 business hours with verified CIBIL and employer background checks.</span>
                         </li>
                         <li class="flex items-start gap-3">
                             <i class="fa-solid fa-circle-check text-brand-cyan text-sm mt-0.5"></i>
-                            <span><strong>24/7 Concierge & Maintenance Portal:</strong> Direct emergency support and ticket tracking throughout your tenancy.</span>
+                            <span><strong>Direct Owner Deal (Zero Brokerage):</strong> No hidden broker commissions or middleman markups. Connect directly with verified landlords and builders.</span>
                         </li>
                     </ul>
+                </div>
+
+                <!-- ── INTERACTIVE HOME LOAN EMI CALCULATOR (MagicBricks Style) ── -->
+                <div class="bg-white p-8 sm:p-10 rounded-3xl border border-slate-200/80 shadow-md">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 pb-5 border-b border-slate-100">
+                        <div>
+                            <div class="inline-flex items-center gap-2 text-[11px] font-extrabold uppercase tracking-wider text-brand-cyan mb-1">
+                                <i class="fa-solid fa-calculator"></i>
+                                <span>FINANCIAL AFFORDABILITY TOOL</span>
+                            </div>
+                            <h3 class="font-display text-2xl font-bold text-brand-navy">Home Loan EMI Calculator</h3>
+                            <p class="text-xs text-slate-500 mt-0.5">Estimate your monthly mortgage payments with prevailing Indian bank rates (SBI, HDFC, ICICI).</p>
+                        </div>
+                        <div class="bg-emerald-50 px-3.5 py-2 rounded-2xl border border-emerald-100 text-left sm:text-right shrink-0">
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-700 block">Bank Rates From</span>
+                            <span class="text-base font-extrabold text-emerald-700">8.40% p.a.</span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                        <!-- Sliders Left (7 cols) -->
+                        <div class="lg:col-span-7 space-y-6">
+                            <!-- Loan Amount -->
+                            <div>
+                                <div class="flex items-center justify-between mb-2">
+                                    <label class="text-xs font-bold uppercase tracking-wider text-slate-700">Loan Amount (₹)</label>
+                                    <span id="loanAmountDisplay" class="text-sm font-extrabold text-brand-navy bg-slate-50 px-3 py-1 rounded-xl border border-slate-200">₹{{ number_format(($property->price > 100000 ? $property->price * 0.8 : 4500000), 0) }}</span>
+                                </div>
+                                <input type="range" id="loanAmountSlider" 
+                                       min="500000" 
+                                       max="{{ max(20000000, (int)($property->price > 100000 ? $property->price : 10000000)) }}" 
+                                       step="50000" 
+                                       value="{{ (int)($property->price > 100000 ? $property->price * 0.8 : 4500000) }}" 
+                                       class="w-full accent-brand-cyan h-2 bg-slate-100 rounded-lg cursor-pointer">
+                                <div class="flex justify-between text-[10px] text-slate-400 font-semibold mt-1">
+                                    <span>₹5 Lakh</span>
+                                    <span>₹1 Crore</span>
+                                    <span>₹2 Crore+</span>
+                                </div>
+                            </div>
+
+                            <!-- Interest Rate -->
+                            <div>
+                                <div class="flex items-center justify-between mb-2">
+                                    <label class="text-xs font-bold uppercase tracking-wider text-slate-700">Interest Rate (% p.a.)</label>
+                                    <span id="interestRateDisplay" class="text-sm font-extrabold text-brand-cyan bg-sky-50 px-3 py-1 rounded-xl border border-sky-100">8.50%</span>
+                                </div>
+                                <input type="range" id="interestRateSlider" min="7.0" max="13.0" step="0.1" value="8.5" class="w-full accent-brand-cyan h-2 bg-slate-100 rounded-lg cursor-pointer">
+                                <div class="flex justify-between text-[10px] text-slate-400 font-semibold mt-1">
+                                    <span>7.0%</span>
+                                    <span>8.5% (Typical Bank)</span>
+                                    <span>13.0%</span>
+                                </div>
+                            </div>
+
+                            <!-- Loan Tenure -->
+                            <div>
+                                <div class="flex items-center justify-between mb-2">
+                                    <label class="text-xs font-bold uppercase tracking-wider text-slate-700">Loan Tenure</label>
+                                    <span id="tenureDisplay" class="text-sm font-extrabold text-brand-navy bg-slate-50 px-3 py-1 rounded-xl border border-slate-200">20 Years</span>
+                                </div>
+                                <div class="grid grid-cols-5 gap-1.5 mb-2">
+                                    <button type="button" onclick="setTenure(5, this)" class="tenure-btn py-1.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:border-brand-cyan transition">5Y</button>
+                                    <button type="button" onclick="setTenure(10, this)" class="tenure-btn py-1.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:border-brand-cyan transition">10Y</button>
+                                    <button type="button" onclick="setTenure(15, this)" class="tenure-btn py-1.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:border-brand-cyan transition">15Y</button>
+                                    <button type="button" onclick="setTenure(20, this)" class="tenure-btn py-1.5 rounded-xl border-2 border-brand-cyan bg-brand-cyan/5 text-xs font-bold text-brand-navy transition">20Y</button>
+                                    <button type="button" onclick="setTenure(30, this)" class="tenure-btn py-1.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:border-brand-cyan transition">30Y</button>
+                                </div>
+                                <input type="range" id="tenureSlider" min="5" max="30" step="1" value="20" class="w-full accent-brand-cyan h-2 bg-slate-100 rounded-lg cursor-pointer">
+                            </div>
+                        </div>
+
+                        <!-- Results Card Right (5 cols) -->
+                        <div class="lg:col-span-5 bg-gradient-to-br from-slate-900 to-brand-navy p-6 rounded-3xl text-white shadow-xl flex flex-col justify-between">
+                            <div>
+                                <span class="text-xs font-bold uppercase tracking-wider text-brand-cyan block mb-1">Your Monthly EMI</span>
+                                <div class="font-display text-3xl sm:text-4xl font-extrabold text-white" id="monthlyEmiOutput">
+                                    ₹39,088<span class="text-sm font-semibold text-slate-300">/mo</span>
+                                </div>
+
+                                <div class="mt-6 pt-5 border-t border-white/10 space-y-2.5 text-xs">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-slate-300 flex items-center gap-1.5">
+                                            <span class="size-2.5 rounded-full bg-brand-cyan"></span> Principal Loan
+                                        </span>
+                                        <strong id="principalBreakdown" class="text-white font-bold">₹45,00,000</strong>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-slate-300 flex items-center gap-1.5">
+                                            <span class="size-2.5 rounded-full bg-amber-400"></span> Total Interest
+                                        </span>
+                                        <strong id="interestBreakdown" class="text-amber-300 font-bold">₹48,81,180</strong>
+                                    </div>
+                                    <div class="flex justify-between items-center pt-2 border-t border-white/10">
+                                        <span class="text-slate-200 font-bold">Total Payable</span>
+                                        <strong id="totalPayableBreakdown" class="text-white font-bold text-sm">₹93,81,180</strong>
+                                    </div>
+                                </div>
+
+                                <!-- Progress Distribution Bar -->
+                                <div class="mt-4 h-2 w-full bg-white/20 rounded-full overflow-hidden flex">
+                                    <div id="principalBar" class="bg-brand-cyan h-full transition-all duration-300" style="width: 48%"></div>
+                                    <div id="interestBar" class="bg-amber-400 h-full transition-all duration-300" style="width: 52%"></div>
+                                </div>
+                            </div>
+
+                            <a href="https://wa.me/916376163263?text=Hi,%20I%20would%20like%20to%20apply%20for%20a%20Home%20Loan%20for%20property:%20{{ urlencode($property->title) }}%20(Price:%20{{ urlencode($property->price_display ?? '₹' . number_format($property->price)) }})" 
+                               target="_blank" 
+                               class="mt-6 block text-center py-3 px-4 rounded-xl bg-brand-cyan hover:bg-brand-cyan-hover text-white font-bold text-xs uppercase tracking-wider shadow-lg shadow-brand-cyan/25 transition">
+                                <i class="fa-solid fa-building-columns mr-1.5"></i> Check Bank Eligibility &amp; Apply
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ── LOCALITY INSIGHTS & NEIGHBORHOOD BENCHMARKS (MagicBricks Style) ── -->
+                <div class="bg-white p-8 sm:p-10 rounded-3xl border border-slate-200/80 shadow-sm">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 pb-5 border-b border-slate-100">
+                        <div>
+                            <div class="inline-flex items-center gap-2 text-[11px] font-extrabold uppercase tracking-wider text-brand-cyan mb-1">
+                                <i class="fa-solid fa-map-location-dot"></i>
+                                <span>MICRO-MARKET INTELLIGENCE</span>
+                            </div>
+                            <h3 class="font-display text-2xl font-bold text-brand-navy">{{ $property->locality ?? $property->city }} Locality Rating</h3>
+                            <p class="text-xs text-slate-500 mt-0.5">Live neighborhood livability, infrastructure connectivity, and social amenities overview.</p>
+                        </div>
+                        <div class="flex items-center gap-2 bg-amber-50 px-4 py-2 rounded-2xl border border-amber-200/60 shrink-0">
+                            <span class="font-display text-2xl font-black text-amber-600">4.8</span>
+                            <div>
+                                <div class="text-[10px] text-amber-500 flex">
+                                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
+                                </div>
+                                <span class="text-[10px] font-bold text-slate-600 uppercase tracking-wider">Top Rated Area</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4-Pillar Scorecard Grid -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
+                        <div class="p-4 rounded-2xl bg-[#F8FAFD] border border-slate-100 text-center">
+                            <span class="text-xs font-bold text-slate-500 block mb-1">Connectivity</span>
+                            <span class="text-xl font-extrabold text-brand-navy block">4.9 / 5</span>
+                            <span class="text-[10px] text-emerald-600 font-bold">Metro &amp; Highways</span>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-[#F8FAFD] border border-slate-100 text-center">
+                            <span class="text-xs font-bold text-slate-500 block mb-1">Safety &amp; Security</span>
+                            <span class="text-xl font-extrabold text-brand-navy block">4.8 / 5</span>
+                            <span class="text-[10px] text-emerald-600 font-bold">Gated Societies</span>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-[#F8FAFD] border border-slate-100 text-center">
+                            <span class="text-xs font-bold text-slate-500 block mb-1">Schools &amp; Edu</span>
+                            <span class="text-xl font-extrabold text-brand-navy block">4.7 / 5</span>
+                            <span class="text-[10px] text-emerald-600 font-bold">Top CBSE &amp; IB</span>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-[#F8FAFD] border border-slate-100 text-center">
+                            <span class="text-xs font-bold text-slate-500 block mb-1">Healthcare</span>
+                            <span class="text-xl font-extrabold text-brand-navy block">4.9 / 5</span>
+                            <span class="text-[10px] text-emerald-600 font-bold">Super Specialty</span>
+                        </div>
+                    </div>
+
+                    <!-- Landmark Distances -->
+                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200/80">
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-700 mb-3 flex items-center gap-1.5">
+                            <i class="fa-solid fa-compass text-brand-cyan"></i>
+                            <span>Key Commute Distances from Property:</span>
+                        </h4>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 text-xs text-slate-700">
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-train-subway text-brand-cyan"></i>
+                                <span>Nearest Metro / Station: <strong>~700 meters</strong></span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-plane-departure text-brand-cyan"></i>
+                                <span>Airport: <strong>18-25 mins drive</strong></span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-hospital text-rose-500"></i>
+                                <span>Multi-Specialty Hospital: <strong>~1.2 km</strong></span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-graduation-cap text-indigo-500"></i>
+                                <span>Renowned Schools: <strong>~1.5 km</strong></span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-cart-shopping text-emerald-600"></i>
+                                <span>Shopping Mall &amp; Supermarket: <strong>~500m</strong></span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-shield-halved text-brand-cyan"></i>
+                                <span>Local Police Station: <strong>~1.0 km</strong></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ── STAMP DUTY & REGISTRATION ESTIMATE NOTE (Indian Market Standard) ── -->
+                <div class="bg-amber-50/60 p-6 rounded-3xl border border-amber-200/70 text-xs text-slate-700 space-y-2">
+                    <div class="flex items-center gap-2 font-bold text-amber-900 text-sm">
+                        <i class="fa-solid fa-scale-balanced text-amber-600"></i>
+                        <span>Transparent Govt. Stamp Duty &amp; Registration Guidance</span>
+                    </div>
+                    <p class="leading-relaxed text-slate-600">
+                        In India, property purchases attract state stamp duty (typically 5%–6% depending on state and gender concessions) plus a 1% registration charge. For rental agreements, nominal e-stamp duty (~₹100–₹500) and registration apply. Housing 365 offers complete digital document execution support.
+                    </p>
                 </div>
             </div>
 
@@ -401,7 +609,7 @@
                     </div>
                     <div>
                         <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Phone Number *</label>
-                        <input type="tel" id="tourPhone" required class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-3.5 py-2 text-xs focus:ring-2 focus:ring-brand-cyan outline-none" placeholder="+1 (555) 000-0000">
+                        <input type="tel" id="tourPhone" required class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-3.5 py-2 text-xs focus:ring-2 focus:ring-brand-cyan outline-none" placeholder="+91 98765 43210">
                     </div>
                 </div>
 
@@ -601,6 +809,89 @@ async function handleTourSubmit(e) {
         spinner.classList.add('hidden');
     }
 }
+
+// ── EMI CALCULATOR LOGIC (MagicBricks Style) ──
+const loanSlider = document.getElementById('loanAmountSlider');
+const loanDisplay = document.getElementById('loanAmountDisplay');
+const rateSlider = document.getElementById('interestRateSlider');
+const rateDisplay = document.getElementById('interestRateDisplay');
+const tenureSlider = document.getElementById('tenureSlider');
+const tenureDisplay = document.getElementById('tenureDisplay');
+
+const emiOutput = document.getElementById('monthlyEmiOutput');
+const principalBreakdown = document.getElementById('principalBreakdown');
+const interestBreakdown = document.getElementById('interestBreakdown');
+const totalPayableBreakdown = document.getElementById('totalPayableBreakdown');
+const principalBar = document.getElementById('principalBar');
+const interestBar = document.getElementById('interestBar');
+
+function formatInr(val) {
+    return '₹' + Math.round(val).toLocaleString('en-IN');
+}
+
+function calculateEMI() {
+    if (!loanSlider || !rateSlider || !tenureSlider) return;
+    const P = parseFloat(loanSlider.value);
+    const r = (parseFloat(rateSlider.value) / 12) / 100;
+    const n = parseInt(tenureSlider.value) * 12;
+
+    loanDisplay.innerText = formatInr(P);
+    rateDisplay.innerText = parseFloat(rateSlider.value).toFixed(2) + '%';
+    tenureDisplay.innerText = tenureSlider.value + ' Years';
+
+    const emi = (P * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+    const totalPayable = emi * n;
+    const totalInterest = totalPayable - P;
+
+    if (emiOutput) emiOutput.innerHTML = formatInr(emi) + '<span class="text-sm font-semibold text-slate-300">/mo</span>';
+    if (principalBreakdown) principalBreakdown.innerText = formatInr(P);
+    if (interestBreakdown) interestBreakdown.innerText = formatInr(totalInterest);
+    if (totalPayableBreakdown) totalPayableBreakdown.innerText = formatInr(totalPayable);
+
+    const principalPct = Math.round((P / totalPayable) * 100);
+    const interestPct = 100 - principalPct;
+
+    if (principalBar) principalBar.style.width = principalPct + '%';
+    if (interestBar) interestBar.style.width = interestPct + '%';
+}
+
+function setTenure(years, btn) {
+    if (!tenureSlider) return;
+    tenureSlider.value = years;
+    document.querySelectorAll('.tenure-btn').forEach(b => {
+        b.className = 'tenure-btn py-1.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:border-brand-cyan transition';
+    });
+    btn.className = 'tenure-btn py-1.5 rounded-xl border-2 border-brand-cyan bg-brand-cyan/5 text-xs font-bold text-brand-navy transition';
+    calculateEMI();
+}
+
+if (loanSlider) {
+    loanSlider.addEventListener('input', calculateEMI);
+    rateSlider.addEventListener('input', calculateEMI);
+    tenureSlider.addEventListener('input', calculateEMI);
+    calculateEMI();
+}
 </script>
+
+<!-- ── STICKY MOBILE BOTTOM ACTION BAR (MagicBricks Style) ── -->
+<div class="sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 px-4 py-3 flex items-center justify-between shadow-2xl">
+    <div>
+        <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider block">Price</span>
+        <span class="font-display text-base font-bold text-brand-navy">
+            {{ !empty($property->price_display) ? $property->price_display : '₹' . number_format($property->price) . ($property->purpose === 'sale' ? '' : '/mo') }}
+        </span>
+    </div>
+    <div class="flex items-center gap-2">
+        <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $property->seller_phone ?? '916376163263') }}?text=Hi,%20I%20am%20interested%20in:%20{{ urlencode($property->title) }}" 
+           target="_blank" 
+           class="px-4 py-2.5 rounded-xl bg-emerald-600 text-white font-bold text-xs uppercase tracking-wider flex items-center gap-1.5 shadow-md">
+            <i class="fa-brands fa-whatsapp text-sm"></i>
+            <span>WhatsApp</span>
+        </a>
+        <button type="button" onclick="openTourModal()" class="px-4 py-2.5 rounded-xl bg-brand-cyan text-white font-bold text-xs uppercase tracking-wider shadow-md">
+            Book Visit
+        </button>
+    </div>
+</div>
 
 @endsection
