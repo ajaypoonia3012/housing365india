@@ -282,12 +282,21 @@ class FrontendController extends Controller
     }
 
     /**
-     * Housing365 Prime Membership (inspired by MB Prime for Tenants and Buyers).
+     * Housing365 Prime Membership (matches MB Prime for Tenants and Buyers).
      */
     public function prime(Request $request)
     {
-        $defaultType = $request->get('type', 'tenant'); // 'tenant' or 'buyer'
+        $categoryParam = strtoupper($request->get('category', ''));
+        $typeParam = strtolower($request->get('type', ''));
+        
+        $category = 'R'; // Default Rent
+        if ($categoryParam === 'B' || $typeParam === 'buyer' || $typeParam === 'buy') {
+            $category = 'B';
+        }
+
+        $nri = strtoupper($request->get('nri', 'N')) === 'Y' ? 'Y' : 'N';
         $city = $request->get('city', 'Jaipur');
-        return view('prime', compact('defaultType', 'city'));
+
+        return view('prime', compact('category', 'nri', 'city'));
     }
 }

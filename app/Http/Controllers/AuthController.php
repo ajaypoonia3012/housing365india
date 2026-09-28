@@ -139,27 +139,40 @@ class AuthController extends Controller
             'localities' => 'nullable|string|max:255',
             'bhk' => 'nullable|string|max:50',
             'email' => 'nullable|email|max:150',
+            'user_type' => 'nullable|string|max:50',
+            'otp' => 'nullable|string|max:6',
         ]);
 
         $planLimits = [
-            'Prime Basic' => ['contacts' => 25, 'days' => 45, 'price' => '₹999'],
-            'Prime Pro' => ['contacts' => 50, 'days' => 90, 'price' => '₹1,999'],
-            'Prime VIP' => ['contacts' => 999, 'days' => 180, 'price' => '₹3,999'],
+            // MagicBricks Rent tiers
+            'Prime Basic (Rent)' => ['contacts' => 10, 'days' => 90, 'price' => '₹1,199'],
+            'Prime Pro (Rent)'   => ['contacts' => 30, 'days' => 90, 'price' => '₹1,599'],
+            'Prime Basic'        => ['contacts' => 10, 'days' => 90, 'price' => '₹1,199'],
+            'Prime Pro'          => ['contacts' => 30, 'days' => 90, 'price' => '₹1,599'],
+            'Prime VIP'          => ['contacts' => 999, 'days' => 180, 'price' => '₹2,999'],
+            // MagicBricks Buy tiers
+            'Prime Basic (Buy)'  => ['contacts' => 10, 'days' => 180, 'price' => '₹1,599'],
+            'Prime Pro (Buy)'    => ['contacts' => 30, 'days' => 180, 'price' => '₹2,199'],
+            'Prime VIP (Buy)'    => ['contacts' => 999, 'days' => 365, 'price' => '₹4,999'],
+            'Free'               => ['contacts' => 2, 'days' => 30, 'price' => '₹0'],
         ];
 
         $plan = $request->plan;
-        $config = $planLimits[$plan] ?? ['contacts' => 50, 'days' => 90, 'price' => '₹1,999'];
+        $config = $planLimits[$plan] ?? ['contacts' => 30, 'days' => 90, 'price' => '₹1,599'];
+        $userType = $request->user_type ?? (str_contains($plan, 'Buy') ? 'buyer' : 'tenant');
 
         if (Auth::check()) {
             $user = Auth::user();
             $user->phone = $request->phone;
             $user->city = $request->city ?? $user->city;
+            $user->user_type = $userType;
             $user->preferred_localities = $request->localities;
             $user->preferred_bhk = $request->bhk;
             $user->activatePrime($plan, $config['contacts'], $config['days']);
         } else {
             // Find or create user by email or phone
-            $email = $request->email ?: (preg_replace('/[^0-9]/', '', $request->phone) . '@housing365.in');
+            $cleanPhone = preg_replace('/[^0-9]/', '', $request->phone);
+            $email = $request->email ?: ($cleanPhone . '@housing365.in');
             $user = User::where('email', $email)->orWhere('phone', $request->phone)->first();
 
             if (!$user) {
@@ -168,11 +181,15 @@ class AuthController extends Controller
                     'email' => $email,
                     'phone' => $request->phone,
                     'city' => $request->city ?? 'Jaipur',
-                    'user_type' => 'tenant',
+                    'user_type' => $userType,
                     'preferred_localities' => $request->localities,
                     'preferred_bhk' => $request->bhk,
                     'password' => Hash::make(Str::random(12)),
                 ]);
+            } else {
+                $user->name = $request->name;
+                $user->user_type = $userType;
+                $user->save();
             }
 
             $user->activatePrime($plan, $config['contacts'], $config['days']);

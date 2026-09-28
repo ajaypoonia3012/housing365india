@@ -37,6 +37,7 @@ Route::get('/tenants', [FrontendController::class, 'tenants'])->name('tenants');
 Route::get('/property-managers', [FrontendController::class, 'propertyManagers'])->name('property-managers');
 Route::get('/portal-and-technology', [FrontendController::class, 'portalTechnology'])->name('portal-and-technology');
 Route::get('/prime', [FrontendController::class, 'prime'])->name('prime');
+Route::get('/mbprime/primePackages', [FrontendController::class, 'prime']);
 Route::redirect('/mbprime', '/prime', 301);
 Route::redirect('/prime-packages', '/prime', 301);
 
