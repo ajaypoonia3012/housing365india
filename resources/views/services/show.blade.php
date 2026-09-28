@@ -58,7 +58,7 @@
         <!-- 4-Stat Proof Strip (Light Modern) -->
         <div class="mt-16 sm:mt-20 grid grid-cols-2 sm:grid-cols-4 gap-4 pt-10 border-t border-slate-200">
             <div class="p-5 rounded-2xl bg-white border border-slate-200/80 shadow-sm">
-                <span class="font-display text-3xl sm:text-4xl font-extrabold text-brand-cyan">$0</span>
+                <span class="font-display text-3xl sm:text-4xl font-extrabold text-brand-cyan">₹0</span>
                 <span class="text-sm font-bold text-brand-navy block mt-1">Upfront Retainers</span>
                 <span class="text-xs text-slate-500">Success-fee only</span>
             </div>
@@ -75,7 +75,7 @@
             <div class="p-5 rounded-2xl bg-white border border-slate-200/80 shadow-sm">
                 <span class="font-display text-3xl sm:text-4xl font-extrabold text-brand-cyan">20+</span>
                 <span class="text-sm font-bold text-brand-navy block mt-1">Active Rental Markets</span>
-                <span class="text-xs text-slate-500">Canada &amp; US coverage</span>
+                <span class="text-xs text-slate-500">Pan-India coverage</span>
             </div>
         </div>
     </div>

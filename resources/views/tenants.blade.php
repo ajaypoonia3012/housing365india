@@ -378,7 +378,7 @@
                         <span>Can I bring my pet? Are pets allowed?</span>
                     </h3>
                     <p class="text-slate-600 text-sm sm:text-base leading-relaxed pl-11">
-                        Under the Ontario Residential Tenancies Act, "no pet" clauses in standard tenancy agreements are generally void, provided condominium corporation bylaws permit the specific animal size and weight. Check the property listing specs or ask our showing coordinator for condominium pet rules.
+                        Under standard Indian tenancy agreements, pet permissions depend on landlord approval and resident welfare association (RWA) / society guidelines. Check the property listing specs or ask our leasing coordinator for society pet bylaws.
                     </p>
                 </div>
             </div>
@@ -387,10 +387,10 @@
                 <div>
                     <h3 class="font-heading font-bold text-brand-navy text-lg mb-3 flex items-start gap-3">
                         <span class="size-8 rounded-xl bg-brand-cyan/10 text-brand-cyan flex items-center justify-center text-sm shrink-0 font-bold mt-0.5">Q</span>
-                        <span>Is tenant contents &amp; liability insurance mandatory?</span>
+                        <span>Is tenant contents &amp; liability insurance recommended?</span>
                     </h3>
                     <p class="text-slate-600 text-sm sm:text-base leading-relaxed pl-11">
-                        Yes. All approved residents are required to maintain a valid tenant insurance policy (typically $1M or $2M personal liability coverage). Tenant insurance protects your personal belongings in case of fire, water damage, or theft and usually costs only $15 to $25 per month.
+                        Yes. While optional in some agreements, residents are strongly encouraged to maintain renter insurance (typically ₹25 Lakhs to ₹50 Lakhs personal contents/liability coverage). Renter insurance protects your personal electronics and belongings against fire or water damage and usually costs only ₹299 to ₹499 per month.
                     </p>
                 </div>
             </div>

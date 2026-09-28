@@ -63,7 +63,7 @@
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             <div class="p-4 border-r border-slate-100 last:border-0">
                 <div class="text-xs uppercase font-bold tracking-wider text-slate-400 mb-1">Average Rent</div>
-                <div class="font-display text-2xl sm:text-3xl font-bold text-brand-navy">${{ number_format($avgRent) }}<span class="text-xs font-semibold text-slate-400">/mo</span></div>
+                <div class="font-display text-2xl sm:text-3xl font-bold text-brand-navy">₹{{ number_format($avgRent) }}<span class="text-xs font-semibold text-slate-400">/mo</span></div>
                 <div class="text-[11px] text-slate-500 mt-1">Metro Market Benchmark</div>
             </div>
             <div class="p-4 border-r border-slate-100 last:border-0">
@@ -74,11 +74,11 @@
             <div class="p-4 border-r border-slate-100 last:border-0">
                 <div class="text-xs uppercase font-bold tracking-wider text-slate-400 mb-1">Tenant Screening</div>
                 <div class="font-display text-2xl sm:text-3xl font-bold text-brand-navy">75-Point</div>
-                <div class="text-[11px] text-emerald-600 font-bold mt-1">Tri-bureau credit & checks</div>
+                <div class="text-[11px] text-emerald-600 font-bold mt-1">CIBIL, identity & background verification</div>
             </div>
             <div class="p-4">
                 <div class="text-xs uppercase font-bold tracking-wider text-slate-400 mb-1">Upfront Fee</div>
-                <div class="font-display text-2xl sm:text-3xl font-bold text-brand-navy">$0</div>
+                <div class="font-display text-2xl sm:text-3xl font-bold text-brand-navy">₹0</div>
                 <div class="text-[11px] text-emerald-600 font-bold mt-1">Success fee on placement only</div>
             </div>
         </div>
@@ -115,7 +115,7 @@
                     </div>
                     <div class="absolute bottom-4 left-4 right-4 flex justify-between items-end text-white">
                         <div>
-                            <span class="font-display text-2xl font-bold">${{ number_format($property->price, 0) }}</span>
+                            <span class="font-display text-2xl font-bold">₹{{ number_format($property->price, 0) }}</span>
                             <span class="text-xs">/{{ $property->price_frequency }}</span>
                         </div>
                     </div>

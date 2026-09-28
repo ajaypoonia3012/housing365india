@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', $page->meta_title ?? 'Leasing Platform Pricing Canada | Transparent Success-Fee Leasing | Housing365')
-@section('meta_description', $page->meta_description ?? 'Transparent leasing platform pricing. Performance-based success fee with no monthly retainers. Pay our success fee only when a qualified tenant signs the lease. Custom pricing for institutional lease-up.')
+@section('title', $page->meta_title ?? 'Leasing Platform Pricing India | Transparent Success-Fee Leasing | Housing365 India')
+@section('meta_description', $page->meta_description ?? 'Transparent leasing platform pricing across India. Performance-based success fee with no monthly retainers. Pay our success fee only when a qualified tenant signs the lease. Custom pricing for institutional lease-up.')
 
 @section('content')
 
@@ -72,7 +72,7 @@
             </div>
         </div>
 
-        <!-- RIGHT: $0 / One-time spec sheet on glass -->
+        <!-- RIGHT: ₹0 / One-time spec sheet on glass -->
         <aside class="relative lg:col-span-5 lg:pl-8">
             <!-- Vertical gold rule on desktop -->
             <span
@@ -84,10 +84,10 @@
                 At a glance &middot; 2026 schedule
             </p>
 
-            <!-- $0 callout -->
+            <!-- ₹0 callout -->
             <div class="relative mt-4 inline-block font-display text-[3.5rem] font-extrabold leading-[0.95] text-brand-cyan sm:text-[4.5rem]">
                 <span class="relative inline-block">
-                    $0
+                    ₹0
                 </span>
                 <span class="text-[#00AEEF]">.</span>
             </div>
@@ -104,7 +104,7 @@
 
             <!-- Inline fact chips -->
             <div class="mt-6 flex flex-wrap gap-x-4 gap-y-2 text-xs font-bold uppercase tracking-[0.16em] text-slate-600">
-                <span>$0 retainer</span>
+                <span>₹0 retainer</span>
                 <span aria-hidden="true" class="text-[#00AEEF]">/</span>
                 <span>No monthly fee</span>
                 <span aria-hidden="true" class="text-[#00AEEF]">/</span>
@@ -341,9 +341,9 @@
                         Due upfront to engage Housing365
                     </p>
                     <div class="relative mt-3 inline-block font-display font-normal leading-[0.85] text-white text-[5rem] sm:text-[8rem] lg:text-[11rem] xl:text-[13rem]">
-                        <!-- Pulsing glow behind $0 -->
+                        <!-- Pulsing glow behind ₹0 -->
                         <span aria-hidden="true" class="pointer-events-none absolute -inset-8 -z-10 rounded-full bg-brand-cyan/25 blur-3xl animate-pulse"></span>
-                        $0<span class="text-[#00AEEF]">.</span>
+                        ₹0<span class="text-[#00AEEF]">.</span>
                     </div>
                 </div>
                 <div class="col-span-12 lg:col-span-5">
@@ -371,7 +371,7 @@
                     Full schedule of fees
                 </p>
                 <p class="text-[10px] font-bold uppercase tracking-[0.22em] text-brand-navy/55">
-                    Effective 2026 &middot; CAD
+                    Effective 2026 &middot; INR (₹)
                 </p>
             </div>
 

@@ -202,12 +202,12 @@
             <div class="bg-white rounded-3xl p-8 sm:p-10 border border-slate-200/80 shadow-sm flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between mb-4">
-                        <span class="px-3 py-1 rounded-full text-xs font-bold bg-sky-50 text-brand-cyan">Downtown Toronto Condo</span>
+                        <span class="px-3 py-1 rounded-full text-xs font-bold bg-sky-50 text-brand-cyan">Bandra West Luxury Flat</span>
                         <span class="text-xs text-slate-400 font-semibold">David K. &bull; Landlord of 3 Units</span>
                     </div>
-                    <h3 class="font-display text-2xl font-bold text-brand-navy mb-3">Saved $5,200 in Vacancy Loss After Previous Realtor Failed</h3>
+                    <h3 class="font-display text-2xl font-bold text-brand-navy mb-3">Saved ₹1.5 Lakhs in Vacancy Loss After Previous Broker Failed</h3>
                     <p class="text-slate-600 text-sm leading-relaxed mb-6">
-                        "My previous broker had my 2-bedroom King West condo listed on MLS for 45 days with zero signed offers. Housing 365 reshot the unit with HDR photography, launched syndicated ads, and placed a vetted tech executive with a 790 credit score in just 9 days at $3,100/mo."
+                        "My previous broker had my 2-bedroom Bandra West apartment listed for 45 days with zero signed offers. Housing 365 reshot the unit with HDR photography, launched syndicated ads, and placed a vetted corporate tenant with an 810 CIBIL score in just 9 days at ₹85,000/mo."
                     </p>
                 </div>
                 <div class="pt-6 border-t border-slate-100 grid grid-cols-3 gap-4 text-center">
@@ -216,12 +216,12 @@
                         <span class="text-xs text-slate-500">Lease Velocity</span>
                     </div>
                     <div>
-                        <span class="text-xl font-bold text-brand-cyan block">$3,100/mo</span>
+                        <span class="text-xl font-bold text-brand-cyan block">₹85,000/mo</span>
                         <span class="text-xs text-slate-500">Achieved Rent</span>
                     </div>
                     <div>
-                        <span class="text-xl font-bold text-emerald-600 block">790</span>
-                        <span class="text-xs text-slate-500">Equifax Score</span>
+                        <span class="text-xl font-bold text-emerald-600 block">810</span>
+                        <span class="text-xs text-slate-500">CIBIL Score</span>
                     </div>
                 </div>
             </div>

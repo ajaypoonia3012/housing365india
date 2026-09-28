@@ -144,7 +144,7 @@
                 <p class="text-xs text-slate-500 mt-0.5">Rapid tenant placement</p>
             </div>
             <div class="p-5 rounded-2xl bg-white border border-slate-200/80 shadow-sm text-center">
-                <span class="font-display text-3xl sm:text-4xl font-extrabold text-brand-cyan">$0</span>
+                <span class="font-display text-3xl sm:text-4xl font-extrabold text-brand-cyan">₹0</span>
                 <p class="text-sm font-bold text-brand-navy mt-1">Fixed Payroll Overhead</p>
                 <p class="text-xs text-slate-500 mt-0.5">Pure variable success fee</p>
             </div>
@@ -200,7 +200,7 @@
                     </p>
                 </div>
                 <div class="mt-6 pt-4 border-t border-indigo-100 text-xs font-bold text-indigo-700">
-                    Save $65,000+ per internal leasing agent
+                    Save ₹8,00,000+ in leasing overheads
                 </div>
             </div>
 
@@ -467,16 +467,16 @@
                 <div>
                     <div class="flex items-center justify-between mb-4">
                         <span class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700">Scattered Single-Family PMC</span>
-                        <span class="text-xs text-slate-400 font-semibold">Greater Golden Horseshoe, ON</span>
+                        <span class="text-xs text-slate-400 font-semibold">Delhi NCR, India</span>
                     </div>
-                    <h3 class="font-display text-2xl font-bold text-brand-navy mb-3">Eliminating $80k in Leasing Payroll Liability</h3>
+                    <h3 class="font-display text-2xl font-bold text-brand-navy mb-3">Eliminating ₹10 Lakhs in Leasing Payroll Liability</h3>
                     <p class="text-slate-600 text-sm sm:text-base leading-relaxed mb-6">
                         Managing 65 single-family homes and townhouses scattered across 5 municipalities required endless driving. By delegating all leasing and photography to Housing 365, the PMC eliminated full-time leasing agent payroll and improved landlord retention to 99.4%.
                     </p>
                 </div>
                 <div class="pt-6 border-t border-slate-100 grid grid-cols-3 gap-4 text-center">
                     <div>
-                        <span class="text-xl font-bold text-brand-navy block">$82,000</span>
+                        <span class="text-xl font-bold text-brand-navy block">₹12,50,000</span>
                         <span class="text-xs text-slate-500">Annual Payroll Saved</span>
                     </div>
                     <div>

@@ -110,7 +110,7 @@
                                 <span class="text-xs text-emerald-600">Satisfaction</span>
                             </div>
                             <div class="rounded-xl bg-sky-50 p-2.5 text-brand-cyan">
-                                <span class="text-sm font-bold block">{{ $stats['volume'] ?? '$120M+' }}</span>
+                                <span class="text-sm font-bold block">{{ $stats['volume'] ?? '₹1,000+ Cr' }}</span>
                                 <span class="text-xs text-slate-500">Annual GMV</span>
                             </div>
                         </div>
@@ -155,7 +155,7 @@
 
             <div class="rounded-3xl border border-slate-100 bg-[#F8FAFD] p-6 text-center shadow-sm">
                 <span class="font-display text-4xl lg:text-5xl font-extrabold text-brand-cyan block tracking-tight">
-                    {{ $stats['volume'] ?? '$120M+' }}
+                    {{ $stats['volume'] ?? '₹1,000+ Cr' }}
                 </span>
                 <span class="mt-2 text-xs font-bold uppercase tracking-wider text-slate-500 block">
                     Annual Leased Volume

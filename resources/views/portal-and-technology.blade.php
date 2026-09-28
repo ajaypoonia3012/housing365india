@@ -95,7 +95,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                         <div class="p-5 rounded-2xl bg-[#F8FAFD] border border-slate-200/80">
                             <span class="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-1">Total Monthly Rent Collected</span>
-                            <span class="font-display text-2xl sm:text-3xl font-extrabold text-emerald-600">$18,450.00</span>
+                            <span class="font-display text-2xl sm:text-3xl font-extrabold text-emerald-600">₹1,85,000</span>
                             <span class="text-xs text-emerald-600 font-bold block mt-1"><i class="fa-solid fa-arrow-trend-up mr-1"></i> 100% on-time collection</span>
                         </div>
                         <div class="p-5 rounded-2xl bg-[#F8FAFD] border border-slate-200/80">
@@ -116,7 +116,7 @@
                             <div class="flex items-center justify-between pb-3 border-b border-slate-200">
                                 <div class="flex items-center gap-3">
                                     <span class="size-2 rounded-full bg-emerald-500"></span>
-                                    <span class="font-medium text-slate-800">Deposit confirmed for Unit 2204 ($2,750.00)</span>
+                                    <span class="font-medium text-slate-800">Deposit confirmed for Unit 2204 (₹45,000)</span>
                                 </div>
                                 <span class="text-slate-400 text-xs font-mono">10 mins ago</span>
                             </div>
@@ -130,7 +130,7 @@
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center gap-3">
                                     <span class="size-2 rounded-full bg-blue-500"></span>
-                                    <span class="font-medium text-slate-800">MLS listing refreshed across Realtor.ca and Rentals.ca</span>
+                                    <span class="font-medium text-slate-800">Listing syndication active across 40+ Indian property portals</span>
                                 </div>
                                 <span class="text-slate-400 text-xs font-mono">4 hours ago</span>
                             </div>
@@ -150,8 +150,8 @@
                         </div>
                         <div class="p-4 rounded-xl bg-[#F8FAFD] border border-slate-200 flex items-center justify-between">
                             <div>
-                                <span class="font-bold text-brand-navy block text-base">Unit 805 — Modern Yorkville Loft</span>
-                                <span class="text-slate-500 text-xs">Formal Tenancy Offer: $2,450/mo &bull; Move-in: 1st of Next Month</span>
+                                <span class="font-bold text-brand-navy block text-base">Unit 805 — Modern Bandra Loft</span>
+                                <span class="text-slate-500 text-xs">Formal Tenancy Offer: ₹35,000/mo &bull; Move-in: 1st of Next Month</span>
                             </div>
                             <span class="px-3 py-1 rounded-full bg-sky-100 text-brand-cyan text-xs font-bold">Under Review</span>
                         </div>
@@ -163,7 +163,7 @@
                     <div class="p-8 rounded-2xl bg-[#F8FAFD] border border-slate-200 text-center">
                         <span class="font-display text-4xl sm:text-5xl font-extrabold text-brand-cyan">148</span>
                         <p class="text-sm font-bold text-brand-navy mt-2">Active Prospective Tenant Inquiries This Week</p>
-                        <p class="text-xs text-slate-500 mt-1 max-w-md mx-auto">Broadcasting across Realtor.ca, Rentals.ca, Zillow, PadMapper, and targeted social ad audiences.</p>
+                        <p class="text-xs text-slate-500 mt-1 max-w-md mx-auto">Broadcasting across Housing365, MagicBricks, 99acres, Housing.com, and targeted social ad audiences.</p>
                     </div>
                 </div>
 
@@ -172,10 +172,10 @@
                     <div class="p-6 rounded-2xl bg-[#F8FAFD] border border-slate-200">
                         <span class="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-2">Automated Payout Schedule</span>
                         <p class="text-sm text-slate-700 leading-relaxed mb-4">
-                            Pre-authorized ACH / EFT direct deposits sent directly to your institutional bank account on the 1st of each month with automated year-end tax reconciliations and itemized deductible repair logs.
+                            Pre-authorized UPI / NetBanking / IMPS direct deposits sent directly to your bank account on the 1st of each month with automated year-end tax reconciliations and itemized deductible repair logs.
                         </p>
                         <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-emerald-50 text-emerald-700 text-xs font-bold">
-                            <i class="fa-solid fa-circle-check"></i> Next Direct Deposit: 1st of Next Month ($18,450.00)
+                            <i class="fa-solid fa-circle-check"></i> Next Direct Deposit: 1st of Next Month (₹1,85,000)
                         </div>
                     </div>
                 </div>

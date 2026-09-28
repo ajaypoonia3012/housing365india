@@ -85,7 +85,7 @@
         <!-- 4-Stat Strip (Light Modern) -->
         <div class="mt-16 grid grid-cols-2 sm:grid-cols-4 gap-6 pt-10 border-t border-slate-200">
             <div class="p-5 rounded-2xl bg-white border border-slate-200/80 shadow-sm text-center">
-                <span class="font-display text-3xl sm:text-4xl font-extrabold text-brand-cyan">$0</span>
+                <span class="font-display text-3xl sm:text-4xl font-extrabold text-brand-cyan">₹0</span>
                 <p class="text-sm font-bold text-brand-navy mt-1">Upfront Fees</p>
                 <p class="text-xs text-slate-500 mt-0.5">Success-fee only</p>
             </div>
@@ -305,15 +305,15 @@
                 <tbody class="divide-y divide-slate-100 text-slate-700">
                     <tr>
                         <td class="p-6 font-bold text-brand-navy">Upfront Fees &amp; Retainers</td>
-                        <td class="p-6 bg-sky-50/30 border-x border-brand-cyan/20 font-bold text-emerald-600"><i class="fa-solid fa-check mr-2"></i> $0 Upfront</td>
+                        <td class="p-6 bg-sky-50/30 border-x border-brand-cyan/20 font-bold text-emerald-600"><i class="fa-solid fa-check mr-2"></i> ₹0 Upfront</td>
                         <td class="p-6 text-slate-500">Free, but 40+ hours lost</td>
                         <td class="p-6 text-slate-500">Retainer or listing fee</td>
                     </tr>
                     <tr>
                         <td class="p-6 font-bold text-brand-navy">Listing Syndication Reach</td>
-                        <td class="p-6 bg-sky-50/30 border-x border-brand-cyan/20 font-bold text-emerald-600"><i class="fa-solid fa-check mr-2"></i> 40+ Portals &amp; MLS</td>
-                        <td class="p-6 text-slate-500">Kijiji &amp; FB Marketplace</td>
-                        <td class="p-6 text-slate-500">Realtor.ca MLS only</td>
+                        <td class="p-6 bg-sky-50/30 border-x border-brand-cyan/20 font-bold text-emerald-600"><i class="fa-solid fa-check mr-2"></i> 40+ Portals &amp; Social</td>
+                        <td class="p-6 text-slate-500">OLX &amp; FB Marketplace</td>
+                        <td class="p-6 text-slate-500">Single portal only</td>
                     </tr>
                     <tr>
                         <td class="p-6 font-bold text-brand-navy">Screening &amp; Fraud Vetting</td>
