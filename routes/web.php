@@ -5,6 +5,7 @@ use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\PropertyListingController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\PostPropertyController;
+use App\Http\Controllers\AuthController;
 
 // Public Dynamic Frontend Routes
 Route::get('/', [FrontendController::class, 'home'])->name('home');
@@ -17,6 +18,18 @@ Route::get('/pricing', [FrontendController::class, 'pricing'])->name('pricing');
 Route::get('/reviews', [FrontendController::class, 'reviews'])->name('reviews');
 Route::get('/contact', [FrontendController::class, 'contact'])->name('contact');
 Route::post('/inquiry', [FrontendController::class, 'storeInquiry'])->name('inquiry.store')->middleware('throttle:5,1');
+
+// Authentication & Housing365 Prime Registration
+Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+Route::post('/register', [AuthController::class, 'register']);
+Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+// Prime Activation, Member Dashboard & Contact Unlocking
+Route::post('/prime/activate', [AuthController::class, 'activatePrime'])->name('prime.activate');
+Route::get('/my-prime', [AuthController::class, 'myPrime'])->name('my.prime')->middleware('auth');
+Route::post('/properties/{id}/unlock-contact', [AuthController::class, 'unlockOwnerContact'])->name('properties.unlock-contact');
 
 // Role-Based Silo Hubs
 Route::get('/owners', [FrontendController::class, 'owners'])->name('owners');

@@ -524,10 +524,16 @@
             <p class="text-xs sm:text-sm text-slate-600 max-w-sm mx-auto mb-6">
                 Thank you! Your Prime membership onboarding has been initiated. A dedicated Housing365 Relationship Manager is reaching out to you on WhatsApp right now.
             </p>
-            <a id="primeWhatsappLink" href="#" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider shadow-md">
-                <i class="fa-brands fa-whatsapp text-lg"></i>
-                <span>Open WhatsApp Now</span>
-            </a>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+                <a id="primeWhatsappLink" href="#" target="_blank" class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider shadow-md w-full sm:w-auto">
+                    <i class="fa-brands fa-whatsapp text-lg"></i>
+                    <span>Open WhatsApp Concierge</span>
+                </a>
+                <a id="primeDashboardLink" href="{{ route('my.prime') }}" class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl bg-brand-navy hover:bg-slate-800 text-white font-bold text-xs uppercase tracking-wider shadow-md w-full sm:w-auto">
+                    <i class="fa-solid fa-crown text-amber-400"></i>
+                    <span>Go to My Dashboard &rarr;</span>
+                </a>
+            </div>
         </div>
     </div>
 </div>
@@ -559,8 +565,13 @@ function closePrimeModal() {
     document.getElementById('primeModal').classList.remove('flex');
 }
 
-function handlePrimeSubmit(e) {
+async function handlePrimeSubmit(e) {
     e.preventDefault();
+    const btn = e.target.querySelector('button[type="submit"]');
+    const originalContent = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Activating Housing365 Prime...';
+
     const name = document.getElementById('primeName').value;
     const phone = document.getElementById('primePhone').value;
     const city = document.getElementById('primeCity').value;
@@ -569,16 +580,47 @@ function handlePrimeSubmit(e) {
     const plan = document.getElementById('selectedPlanInput').value;
     const price = document.getElementById('selectedPriceInput').value;
 
-    const message = `Hi Housing365,%20I%20want%20to%20activate%20${encodeURIComponent(plan)}%20(${encodeURIComponent(price)}).%0AName:%20${encodeURIComponent(name)}%0APhone:%20${encodeURIComponent(phone)}%0ACity:%20${encodeURIComponent(city)}%0ALocalities:%20${encodeURIComponent(loc)}%0AConfiguration:%20${encodeURIComponent(bhk)}`;
+    try {
+        const response = await fetch("{{ route('prime.activate') }}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({
+                name: name,
+                phone: phone,
+                city: city,
+                localities: loc,
+                bhk: bhk,
+                plan: plan
+            })
+        });
 
-    const waUrl = `https://wa.me/916376163263?text=${message}`;
+        const data = await response.json();
 
-    document.getElementById('primeFormContainer').classList.add('hidden');
-    document.getElementById('primeSuccessContainer').classList.remove('hidden');
-    document.getElementById('primeWhatsappLink').href = waUrl;
+        document.getElementById('primeFormContainer').classList.add('hidden');
+        document.getElementById('primeSuccessContainer').classList.remove('hidden');
+        
+        const waUrl = data.whatsapp_url || `https://wa.me/916376163263?text=Hi%20Housing365,%20I%20have%20activated%20${encodeURIComponent(plan)}`;
+        document.getElementById('primeWhatsappLink').href = waUrl;
 
-    // Open WhatsApp directly in new window
-    window.open(waUrl, '_blank');
+        // Auto open WhatsApp concierge
+        window.open(waUrl, '_blank');
+
+        if (data.redirect_url) {
+            document.getElementById('primeDashboardLink').href = data.redirect_url;
+        }
+    } catch (err) {
+        console.error(err);
+        const message = `Hi Housing365, I want to activate ${plan} (${price}). Name: ${name}, Phone: ${phone}, City: ${city}.`;
+        const waUrl = `https://wa.me/916376163263?text=${encodeURIComponent(message)}`;
+        window.open(waUrl, '_blank');
+        document.getElementById('primeFormContainer').classList.add('hidden');
+        document.getElementById('primeSuccessContainer').classList.remove('hidden');
+        document.getElementById('primeWhatsappLink').href = waUrl;
+    }
 }
 </script>
 

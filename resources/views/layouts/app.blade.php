@@ -253,19 +253,68 @@
 
             <!-- Right CTAs -->
             <div class="hidden xl:flex items-center space-x-2.5">
-                <a href="{{ route('prime') }}" class="inline-flex items-center justify-center gap-1.5 rounded-xl bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 px-3.5 py-2.5 text-xs font-black uppercase tracking-wider text-slate-950 shadow-md shadow-amber-500/20 transition-all duration-200 hover:-translate-y-0.5 border border-amber-300">
-                    <i class="fa-solid fa-crown text-amber-950 text-xs"></i>
-                    <span>Housing365 Prime</span>
-                </a>
                 <a href="{{ route('properties.post') }}" class="inline-flex items-center justify-center gap-1.5 rounded-xl bg-slate-900 hover:bg-brand-navy px-3.5 py-2.5 text-xs font-bold uppercase tracking-wider text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5">
                     <i class="fa-solid fa-circle-plus text-xs text-amber-400"></i>
                     <span>Post Property</span>
                     <span class="ml-1 bg-amber-400 text-slate-950 text-[10px] px-1.5 py-0.5 rounded font-extrabold uppercase">FREE</span>
                 </a>
-                <a href="{{ route('contact') }}" class="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-cyan px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-white shadow-md shadow-brand-cyan/20 hover:bg-brand-cyan-hover transition">
-                    <span>Expert Advice</span>
-                    <i class="fa-solid fa-arrow-right text-[10px]"></i>
-                </a>
+
+                @auth
+                    <!-- Authenticated User Menu -->
+                    <div class="relative group">
+                        <a href="{{ route('my.prime') }}" class="inline-flex items-center gap-2 rounded-xl border {{ auth()->user()->isPrimeActive() ? 'border-amber-400 bg-amber-50/70 text-amber-950' : 'border-slate-200 bg-slate-50 text-slate-800' }} px-3.5 py-2 text-xs font-bold transition hover:bg-white shadow-sm">
+                            @if(auth()->user()->isPrimeActive())
+                                <i class="fa-solid fa-crown text-amber-500 text-xs"></i>
+                            @else
+                                <i class="fa-solid fa-user text-slate-400 text-xs"></i>
+                            @endif
+                            <span class="max-w-[110px] truncate">{{ auth()->user()->name }}</span>
+                            <i class="fa-solid fa-chevron-down text-[10px] text-slate-400 group-hover:rotate-180 transition-transform"></i>
+                        </a>
+                        <div class="absolute right-0 top-full pt-1.5 hidden group-hover:block z-50">
+                            <div class="min-w-[220px] bg-white rounded-2xl shadow-xl border border-slate-100 p-2 space-y-1">
+                                <div class="px-3 py-2 border-b border-slate-100">
+                                    <span class="text-xs font-bold text-brand-navy block">{{ auth()->user()->name }}</span>
+                                    <span class="text-[11px] text-slate-500 block truncate">{{ auth()->user()->email }}</span>
+                                    @if(auth()->user()->isPrimeActive())
+                                        <span class="inline-flex items-center gap-1 mt-1 px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-amber-400 text-slate-950">
+                                            <i class="fa-solid fa-crown text-[9px]"></i> {{ auth()->user()->prime_plan ?? 'Prime' }}
+                                        </span>
+                                    @endif
+                                </div>
+                                <a href="{{ route('my.prime') }}" class="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold text-slate-700 hover:bg-slate-50 hover:text-brand-navy transition">
+                                    <i class="fa-solid fa-gauge-high text-brand-cyan"></i>
+                                    <span>My Dashboard</span>
+                                </a>
+                                @if(!auth()->user()->isPrimeActive())
+                                    <a href="{{ route('prime') }}" class="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold text-amber-800 hover:bg-amber-50 transition">
+                                        <i class="fa-solid fa-crown text-amber-500"></i>
+                                        <span>Join Housing365 Prime</span>
+                                    </a>
+                                @endif
+                                <form action="{{ route('logout') }}" method="POST" class="pt-1 border-t border-slate-100">
+                                    @csrf
+                                    <button type="submit" class="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold text-rose-600 hover:bg-rose-50 transition text-left">
+                                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                                        <span>Sign Out</span>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                @else
+                    <!-- Guest Links -->
+                    <a href="{{ route('prime') }}" class="inline-flex items-center justify-center gap-1.5 rounded-xl bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 px-3.5 py-2.5 text-xs font-black uppercase tracking-wider text-slate-950 shadow-md shadow-amber-500/20 transition-all duration-200 hover:-translate-y-0.5 border border-amber-300">
+                        <i class="fa-solid fa-crown text-amber-950 text-xs"></i>
+                        <span>Housing365 Prime</span>
+                    </a>
+                    <a href="{{ route('login') }}" class="inline-flex items-center justify-center gap-1 px-3 py-2 text-xs font-bold text-slate-700 hover:text-brand-navy transition">
+                        <span>Sign In</span>
+                    </a>
+                    <a href="{{ route('register') }}" class="inline-flex items-center justify-center gap-1.5 rounded-xl bg-brand-cyan hover:bg-brand-cyan-hover px-3.5 py-2.5 text-xs font-bold uppercase tracking-wider text-white shadow-md shadow-brand-cyan/20 transition">
+                        <span>Register</span>
+                    </a>
+                @endauth
             </div>
 
             <!-- Mobile Hamburger Button -->
@@ -284,6 +333,40 @@
 
         <!-- Mobile Drawer -->
         <div id="mobile-drawer" class="hidden xl:hidden border-t border-slate-100 bg-white px-4 py-4 space-y-2 text-sm font-medium">
+            @auth
+                <div class="p-3 mb-2 rounded-2xl bg-amber-50/80 border border-amber-300 flex items-center justify-between">
+                    <div>
+                        <div class="flex items-center gap-1.5">
+                            @if(auth()->user()->isPrimeActive())
+                                <i class="fa-solid fa-crown text-amber-600 text-xs"></i>
+                            @endif
+                            <span class="text-xs font-bold text-brand-navy">{{ auth()->user()->name }}</span>
+                        </div>
+                        <span class="text-[11px] text-slate-500">{{ auth()->user()->isPrimeActive() ? (auth()->user()->prime_plan ?? 'Prime Member') : 'Standard Account' }}</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <a href="{{ route('my.prime') }}" class="px-2.5 py-1 rounded-lg bg-brand-navy text-white text-[11px] font-bold">
+                            Dashboard
+                        </a>
+                        <form action="{{ route('logout') }}" method="POST" class="inline">
+                            @csrf
+                            <button type="submit" class="p-1 text-rose-600 text-xs">
+                                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            @else
+                <div class="grid grid-cols-2 gap-2 mb-2">
+                    <a href="{{ route('login') }}" class="py-2 px-3 text-center rounded-xl border border-slate-200 text-slate-700 text-xs font-bold hover:bg-slate-50">
+                        Sign In
+                    </a>
+                    <a href="{{ route('register') }}" class="py-2 px-3 text-center rounded-xl bg-brand-cyan text-white text-xs font-bold hover:bg-brand-cyan-hover">
+                        Register Free
+                    </a>
+                </div>
+            @endauth
+
             <div class="p-1 mb-2 space-y-2">
                 <a href="{{ route('prime') }}" class="flex items-center justify-center gap-2 w-full py-3 px-4 rounded-xl bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-500 text-slate-950 font-black text-xs uppercase tracking-wider shadow-md transition">
                     <i class="fa-solid fa-crown"></i>

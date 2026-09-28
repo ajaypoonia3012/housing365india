@@ -443,6 +443,10 @@
                             </div>
                         </div>
 
+                        @php
+                            $isPrime = auth()->check() && auth()->user()->isPrimeActive();
+                        @endphp
+
                         <div class="space-y-2 mb-5">
                             <div class="flex items-center justify-between text-xs bg-white/10 px-3.5 py-2 rounded-xl backdrop-blur-sm">
                                 <span class="text-slate-300">Brokerage</span>
@@ -450,23 +454,52 @@
                             </div>
                             <div class="flex items-center justify-between text-xs bg-white/10 px-3.5 py-2 rounded-xl backdrop-blur-sm">
                                 <span class="text-slate-300">Direct Contact</span>
-                                <span class="font-bold text-white tracking-wider">{{ $property->seller_phone ?? '+91 63761 63263' }}</span>
+                                <span id="ownerPhoneDisplay" class="font-bold text-white tracking-wider">
+                                    @if($isPrime)
+                                        {{ $property->seller_phone ?? '+91 63761 63263' }}
+                                    @else
+                                        +91 63761 •••••
+                                    @endif
+                                </span>
                             </div>
                         </div>
 
                         <!-- Direct Contact Actions -->
-                        <div class="grid grid-cols-2 gap-2.5">
-                            <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $property->seller_phone ?? '916376163263') }}?text=Hi,%20I%20am%20interested%20in%20your%20property%20listing:%20{{ urlencode($property->title) }}%20({{ urlencode(url()->current()) }})" 
-                               target="_blank" 
-                               class="flex items-center justify-center gap-2 py-3 px-3 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs uppercase tracking-wider transition shadow-md shadow-emerald-500/20">
-                                <i class="fa-brands fa-whatsapp text-sm"></i>
-                                <span>WhatsApp</span>
-                            </a>
-                            <a href="tel:{{ $property->seller_phone ?? '+916376163263' }}" 
-                               class="flex items-center justify-center gap-2 py-3 px-3 rounded-xl bg-brand-cyan hover:bg-brand-cyan-hover text-white font-bold text-xs uppercase tracking-wider transition shadow-md shadow-brand-cyan/20">
-                                <i class="fa-solid fa-phone text-xs"></i>
-                                <span>Call Now</span>
-                            </a>
+                        <div id="ownerContactActionContainer">
+                            @if($isPrime)
+                                <div class="grid grid-cols-2 gap-2.5">
+                                    <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $property->seller_phone ?? '916376163263') }}?text=Hi,%20I%20am%20a%20Housing365%20Prime%20member%20interested%20in%20your%20property%20listing:%20{{ urlencode($property->title) }}" 
+                                       target="_blank" 
+                                       class="flex items-center justify-center gap-2 py-3 px-3 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs uppercase tracking-wider transition shadow-md shadow-emerald-500/20">
+                                        <i class="fa-brands fa-whatsapp text-sm"></i>
+                                        <span>WhatsApp</span>
+                                    </a>
+                                    <a href="tel:{{ $property->seller_phone ?? '+916376163263' }}" 
+                                       class="flex items-center justify-center gap-2 py-3 px-3 rounded-xl bg-brand-cyan hover:bg-brand-cyan-hover text-white font-bold text-xs uppercase tracking-wider transition shadow-md shadow-brand-cyan/20">
+                                        <i class="fa-solid fa-phone text-xs"></i>
+                                        <span>Call Now</span>
+                                    </a>
+                                </div>
+                                <div class="mt-2.5 text-center">
+                                    <span class="text-[10px] text-amber-300 font-bold flex items-center justify-center gap-1">
+                                        <i class="fa-solid fa-crown text-[9px]"></i> Prime Active &bull; {{ auth()->user()->remainingContacts() }} Contact Unlocks Left
+                                    </span>
+                                </div>
+                            @elseif(auth()->check())
+                                <button type="button" onclick="unlockContact({{ $property->id }})" class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-slate-950 font-black text-xs uppercase tracking-wider shadow-md transition flex items-center justify-center gap-2">
+                                    <i class="fa-solid fa-crown text-xs"></i>
+                                    <span>Unlock Direct Owner Number</span>
+                                </button>
+                            @else
+                                <a href="{{ route('prime') }}" class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-slate-950 font-black text-xs uppercase tracking-wider shadow-md transition flex items-center justify-center gap-2 text-center">
+                                    <i class="fa-solid fa-crown text-xs"></i>
+                                    <span>Unlock Owner Number with Prime</span>
+                                </a>
+                                <div class="mt-2 flex items-center justify-center gap-1.5 text-[11px] text-slate-300">
+                                    <span>Already Prime Member?</span>
+                                    <a href="{{ route('login') }}" class="text-amber-400 font-bold underline">Sign In</a>
+                                </div>
+                            @endif
                         </div>
                     </div>
 
@@ -870,6 +903,57 @@ if (loanSlider) {
     rateSlider.addEventListener('input', calculateEMI);
     tenureSlider.addEventListener('input', calculateEMI);
     calculateEMI();
+}
+
+async function unlockContact(propertyId) {
+    try {
+        const response = await fetch(`/properties/${propertyId}/unlock-contact`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            }
+        });
+        const data = await response.json();
+        if (data.require_login) {
+            window.location.href = "{{ route('login') }}";
+            return;
+        }
+        if (data.require_prime) {
+            window.location.href = "{{ route('prime') }}";
+            return;
+        }
+        if (data.success) {
+            const phoneEl = document.getElementById('ownerPhoneDisplay');
+            if (phoneEl) phoneEl.innerText = data.owner_phone;
+            const container = document.getElementById('ownerContactActionContainer');
+            if (container) {
+                container.innerHTML = `
+                    <div class="grid grid-cols-2 gap-2.5">
+                        <a href="https://wa.me/${data.owner_phone.replace(/[^0-9]/g, '')}?text=Hi,%20I%20am%20a%20Housing365%20Prime%20member%20interested%20in%20your%20property" 
+                           target="_blank" 
+                           class="flex items-center justify-center gap-2 py-3 px-3 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs uppercase tracking-wider transition shadow-md shadow-emerald-500/20">
+                            <i class="fa-brands fa-whatsapp text-sm"></i>
+                            <span>WhatsApp</span>
+                        </a>
+                        <a href="tel:${data.owner_phone}" 
+                           class="flex items-center justify-center gap-2 py-3 px-3 rounded-xl bg-brand-cyan hover:bg-brand-cyan-hover text-white font-bold text-xs uppercase tracking-wider transition shadow-md shadow-brand-cyan/20">
+                            <i class="fa-solid fa-phone text-xs"></i>
+                            <span>Call Now</span>
+                        </a>
+                    </div>
+                    <div class="mt-2.5 text-center">
+                        <span class="text-[10px] text-amber-300 font-bold flex items-center justify-center gap-1">
+                            <i class="fa-solid fa-crown text-[9px]"></i> Prime Active &bull; ${data.remaining_contacts} Contact Unlocks Left
+                        </span>
+                    </div>
+                `;
+            }
+        }
+    } catch (err) {
+        console.error('Failed to unlock contact:', err);
+    }
 }
 </script>
 

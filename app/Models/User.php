@@ -24,6 +24,17 @@ class User extends Authenticatable implements FilamentUser
         'name',
         'email',
         'password',
+        'phone',
+        'user_type',
+        'city',
+        'is_prime',
+        'prime_plan',
+        'prime_contacts_limit',
+        'unlocked_contacts_count',
+        'prime_expires_at',
+        'preferred_localities',
+        'preferred_bhk',
+        'preferred_budget',
     ];
 
     /**
@@ -46,7 +57,41 @@ class User extends Authenticatable implements FilamentUser
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_prime' => 'boolean',
+            'prime_expires_at' => 'datetime',
         ];
+    }
+
+    /**
+     * Check if user has an active Housing365 Prime membership.
+     */
+    public function isPrimeActive(): bool
+    {
+        return $this->is_prime && ($this->prime_expires_at === null || $this->prime_expires_at->isFuture());
+    }
+
+    /**
+     * Remaining direct owner contacts for this Prime member.
+     */
+    public function remainingContacts(): int
+    {
+        if ($this->prime_contacts_limit >= 999) {
+            return 999; // Unlimited
+        }
+        return max(0, $this->prime_contacts_limit - $this->unlocked_contacts_count);
+    }
+
+    /**
+     * Activate or upgrade Prime membership.
+     */
+    public function activatePrime(string $plan, int $contacts, int $days): void
+    {
+        $this->update([
+            'is_prime' => true,
+            'prime_plan' => $plan,
+            'prime_contacts_limit' => $contacts,
+            'prime_expires_at' => now()->addDays($days),
+        ]);
     }
 
     /**
