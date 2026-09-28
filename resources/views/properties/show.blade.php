@@ -171,6 +171,35 @@
                     @endif
                 </div>
 
+                @if($property->balconies !== null || $property->floor_no || $property->posting_as || $property->maintenance)
+                    <div class="bg-white px-6 py-4 rounded-2xl border border-slate-200/80 shadow-sm flex flex-wrap items-center gap-6 text-xs font-bold text-slate-700">
+                        @if($property->balconies !== null)
+                            <div class="flex items-center gap-2">
+                                <span class="size-7 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center"><i class="fa-solid fa-tree"></i></span>
+                                <span>{{ $property->balconies }} Balcon{{ $property->balconies == 1 ? 'y' : 'ies' }}</span>
+                            </div>
+                        @endif
+                        @if($property->floor_no)
+                            <div class="flex items-center gap-2">
+                                <span class="size-7 rounded-lg bg-sky-50 text-brand-cyan flex items-center justify-center"><i class="fa-solid fa-layer-group"></i></span>
+                                <span>Floor: {{ $property->floor_no }} of {{ $property->total_floors ?? '4' }}</span>
+                            </div>
+                        @endif
+                        @if($property->posting_as)
+                            <div class="flex items-center gap-2">
+                                <span class="size-7 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center"><i class="fa-solid fa-house-user"></i></span>
+                                <span>{{ $property->posting_as }}</span>
+                            </div>
+                        @endif
+                        @if($property->maintenance)
+                            <div class="flex items-center gap-2">
+                                <span class="size-7 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center"><i class="fa-solid fa-receipt"></i></span>
+                                <span>Maintenance: {{ $property->maintenance }}</span>
+                            </div>
+                        @endif
+                    </div>
+                @endif
+
                 <!-- Description Card -->
                 <div class="bg-white p-8 sm:p-10 rounded-3xl border border-slate-200/80 shadow-sm">
                     <h3 class="font-display text-2xl font-normal text-brand-navy mb-4 pb-4 border-b border-slate-100">About This Residence</h3>

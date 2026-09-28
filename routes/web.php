@@ -54,6 +54,7 @@ Route::redirect('/us/{any}', '/india', 301)->where('any', '.*');
 Route::get('/properties', [PropertyListingController::class, 'index'])->name('properties.index');
 Route::get('/post-property', [PostPropertyController::class, 'create'])->name('properties.post');
 Route::post('/post-property', [PostPropertyController::class, 'store'])->name('properties.store');
+Route::post('/post-property/assistance', [PostPropertyController::class, 'requestAssistance'])->name('properties.assistance');
 Route::get('/properties/{slug}', [PropertyListingController::class, 'show'])->name('properties.show');
 
 // Blog & Guides

@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Property;
 use App\Models\CityLocation;
+use App\Models\Inquiry;
 use Illuminate\Support\Str;
 
 class PostPropertyController extends Controller
 {
     /**
-     * Show the Post Property form (like OLX, Quikr, MagicBricks).
+     * Show the Post Property form (matching post.magicbricks.com 2-stage UX).
      */
     public function create()
     {
@@ -20,7 +21,7 @@ class PostPropertyController extends Controller
             'residential' => [
                 'label' => 'Residential',
                 'icon' => 'fa-house',
-                'types' => ['Apartment', 'Independent House', 'Builder Floor', 'Villa', 'Penthouse', 'Studio Apartment']
+                'types' => ['Flat / Apartment', 'House / Villa', 'Builder Floor', 'Penthouse', 'Studio Apartment']
             ],
             'commercial' => [
                 'label' => 'Commercial',
@@ -44,29 +45,44 @@ class PostPropertyController extends Controller
     {
         $validated = $request->validate([
             'purpose' => 'required|in:rent,sale,lease',
-            'category' => 'required|in:residential,commercial,plot_land',
+            'category' => 'nullable|in:residential,commercial,plot_land',
             'property_type' => 'required|string|max:100',
-            'title' => 'required|string|max:180',
+            'posting_as' => 'nullable|string|max:50',
+            'total_flats_in_society' => 'nullable|string|max:50',
+            'title' => 'nullable|string|max:180',
             'city' => 'required|string|max:100',
             'state' => 'nullable|string|max:100',
             'locality' => 'required|string|max:150',
             'address' => 'nullable|string|max:255',
-            'price' => 'required|numeric|min:500',
+            'price' => 'required|numeric|min:100',
+            'maintenance' => 'nullable|string|max:100',
             'price_frequency' => 'nullable|string|max:20',
             'sqft' => 'required|numeric|min:10',
             'area_unit' => 'nullable|in:sqft,sq.yards,acres,bigha',
             'bedrooms' => 'nullable|integer|min:0|max:20',
+            'balconies' => 'nullable|integer|min:0|max:10',
             'bathrooms' => 'nullable|numeric|min:0|max:20',
+            'floor_no' => 'nullable|string|max:50',
+            'total_floors' => 'nullable|string|max:50',
             'furnishing' => 'nullable|string|max:50',
             'posted_by' => 'nullable|in:Owner,Builder,Agent',
             'seller_name' => 'required|string|max:100',
             'seller_phone' => 'required|string|max:25',
             'seller_email' => 'nullable|email|max:150',
-            'description' => 'required|string|min:15|max:5000',
+            'description' => 'nullable|string|max:5000',
             'amenities' => 'nullable|array',
             'image_file' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:8192',
             'image_url' => 'nullable|url|max:500',
         ]);
+
+        // Auto-detect category if not explicitly provided
+        $category = $validated['category'] ?? 'residential';
+        $propType = $validated['property_type'];
+        if (in_array($propType, ['Commercial Office', 'Retail Shop', 'Showroom', 'Warehouse', 'Co-Working Space', 'Industrial Shed'])) {
+            $category = 'commercial';
+        } elseif (in_array($propType, ['Residential Plot', 'Commercial Land', 'Agricultural Farm Land', 'Industrial Land', 'Plot'])) {
+            $category = 'plot_land';
+        }
 
         // 1. Handle Image
         $imageUrl = null;
@@ -77,9 +93,9 @@ class PostPropertyController extends Controller
             $imageUrl = $request->image_url;
         } else {
             // Category-specific high-res default fallback
-            if ($validated['category'] === 'plot_land') {
+            if ($category === 'plot_land') {
                 $imageUrl = 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1200&auto=format&fit=crop&q=80';
-            } elseif ($validated['category'] === 'commercial') {
+            } elseif ($category === 'commercial') {
                 $imageUrl = 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&auto=format&fit=crop&q=80';
             } else {
                 $imageUrl = 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&auto=format&fit=crop&q=80';
@@ -103,17 +119,26 @@ class PostPropertyController extends Controller
             $priceFrequency = 'month';
         }
 
-        // 3. Generate unique slug
-        $baseSlug = Str::slug($validated['title'] . '-' . $validated['city']);
+        // 3. Auto-generate Title if blank
+        $bhk = isset($validated['bedrooms']) && $validated['bedrooms'] > 0 ? $validated['bedrooms'] . ' BHK ' : '';
+        $defaultTitle = $bhk . $propType . ' in ' . $validated['locality'] . ', ' . $validated['city'];
+        $title = !empty($validated['title']) ? strip_tags(trim($validated['title'])) : $defaultTitle;
+
+        // 4. Auto-generate Description if blank
+        $defaultDesc = "Verified {$propType} available for " . ($validated['purpose'] === 'sale' ? 'purchase' : 'rent') . " in {$validated['locality']}, {$validated['city']}. Features {$validated['sqft']} {$validated['area_unit']} area with excellent road access, modern amenities, and prime connectivity. Direct contact with {$validated['posted_by']} - zero brokerage.";
+        $description = !empty($validated['description']) ? strip_tags(trim($validated['description'])) : $defaultDesc;
+
+        // 5. Generate unique slug
+        $baseSlug = Str::slug($title . '-' . $validated['city']);
         $uniqueSlug = $baseSlug . '-' . Str::lower(Str::random(5));
 
-        // 4. Create property
+        // 6. Create property
         $property = Property::create([
-            'title' => strip_tags(trim($validated['title'])),
+            'title' => $title,
             'slug' => $uniqueSlug,
             'purpose' => $validated['purpose'],
-            'category' => $validated['category'],
-            'property_type' => strip_tags(trim($validated['property_type'])),
+            'category' => $category,
+            'property_type' => strip_tags(trim($propType)),
             'city' => strip_tags(trim($validated['city'])),
             'state' => !empty($validated['state']) ? strip_tags(trim($validated['state'])) : 'India',
             'country' => 'IN',
@@ -125,14 +150,20 @@ class PostPropertyController extends Controller
             'sqft' => (int)$validated['sqft'],
             'area_unit' => $validated['area_unit'] ?? 'sqft',
             'bedrooms' => isset($validated['bedrooms']) ? (int)$validated['bedrooms'] : 0,
-            'bathrooms' => isset($validated['bathrooms']) ? (float)$validated['bathrooms'] : 0,
+            'balconies' => isset($validated['balconies']) ? (int)$validated['balconies'] : 1,
+            'bathrooms' => isset($validated['bathrooms']) ? (float)$validated['bathrooms'] : 1,
+            'floor_no' => $validated['floor_no'] ?? 'Ground',
+            'total_floors' => $validated['total_floors'] ?? '4',
             'furnishing' => $validated['furnishing'] ?? 'Unfurnished',
+            'posting_as' => $validated['posting_as'] ?? 'Full House',
+            'total_flats_in_society' => $validated['total_flats_in_society'] ?? null,
+            'maintenance' => $validated['maintenance'] ?? null,
             'posted_by' => $validated['posted_by'] ?? 'Owner',
             'seller_name' => strip_tags(trim($validated['seller_name'])),
             'seller_phone' => strip_tags(trim($validated['seller_phone'])),
             'seller_email' => !empty($validated['seller_email']) ? filter_var(trim($validated['seller_email']), FILTER_SANITIZE_EMAIL) : 'contact@housing365.in',
-            'description' => strip_tags(trim($validated['description'])),
-            'amenities' => $validated['amenities'] ?? ['Verified Listing', 'Water Supply', 'Road Access'],
+            'description' => $description,
+            'amenities' => $validated['amenities'] ?? ['Verified Listing', 'Water Supply', 'Road Access', '24/7 Security'],
             'image' => $imageUrl,
             'status' => 'Available',
             'featured' => false,
@@ -141,5 +172,34 @@ class PostPropertyController extends Controller
 
         return redirect()->route('properties.show', $property->slug)
             ->with('success', '🎉 Congratulations! Your property has been listed live on Housing 365 India. Potential buyers & tenants can now view your listing and contact you directly.');
+    }
+
+    /**
+     * Handle "Need help in posting your property?" expert callback modal.
+     */
+    public function requestAssistance(Request $request)
+    {
+        $validated = $request->validate([
+            'phone' => 'required|string|max:25',
+        ]);
+
+        Inquiry::create([
+            'name' => 'Free Listing Assistance Request',
+            'email' => 'expert-post@housing365.in',
+            'phone' => strip_tags(trim($validated['phone'])),
+            'service_type' => 'Post Property Assistance',
+            'subject' => 'Listing Callback Request',
+            'message' => 'User requested dedicated Property Expert callback on phone: ' . $validated['phone'],
+            'status' => 'new',
+        ]);
+
+        if ($request->expectsJson() || $request->ajax()) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Thank you! Our property expert will call you shortly at +91 ' . $validated['phone'] . ' to help you list your property for free.',
+            ]);
+        }
+
+        return back()->with('success', 'Thank you! Our property expert will call you shortly at +91 ' . $validated['phone'] . ' to help you list your property for free.');
     }
 }
