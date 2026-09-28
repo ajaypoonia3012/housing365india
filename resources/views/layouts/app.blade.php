@@ -240,6 +240,11 @@
                 </div>
 
                 <a href="{{ route('properties.index') }}" class="px-3 py-2 rounded-lg text-brand-navy/75 hover:text-brand-navy hover:bg-slate-100 transition">Properties</a>
+                <a href="{{ route('prime') }}" class="px-3 py-2 rounded-lg text-amber-700 font-bold hover:text-amber-800 hover:bg-amber-50 transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-crown text-amber-500 text-xs"></i>
+                    <span>Prime</span>
+                    <span class="bg-amber-100 text-amber-800 text-[9px] px-1.5 py-0.5 rounded-full font-black uppercase">Zero Brokerage</span>
+                </a>
                 <a href="{{ route('locations') }}" class="px-3 py-2 rounded-lg text-brand-navy/75 hover:text-brand-navy hover:bg-slate-100 transition">Locations</a>
                 <a href="{{ route('pricing') }}" class="px-3 py-2 rounded-lg text-brand-navy/75 hover:text-brand-navy hover:bg-slate-100 transition">Pricing</a>
                 <a href="{{ route('about') }}" class="px-3 py-2 rounded-lg text-brand-navy/75 hover:text-brand-navy hover:bg-slate-100 transition">About</a>
@@ -247,21 +252,28 @@
             </nav>
 
             <!-- Right CTAs -->
-            <div class="hidden xl:flex items-center space-x-3">
-                <a href="{{ route('properties.post') }}" class="inline-flex items-center justify-center gap-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-white shadow-md shadow-amber-500/20 transition-all duration-200 hover:-translate-y-0.5">
-                    <i class="fa-solid fa-circle-plus text-xs"></i>
-                    <span>Post Free Property</span>
-                    <span class="ml-1 bg-white/25 text-[10px] px-1.5 py-0.5 rounded-md font-extrabold uppercase">FREE</span>
+            <div class="hidden xl:flex items-center space-x-2.5">
+                <a href="{{ route('prime') }}" class="inline-flex items-center justify-center gap-1.5 rounded-xl bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 px-3.5 py-2.5 text-xs font-black uppercase tracking-wider text-slate-950 shadow-md shadow-amber-500/20 transition-all duration-200 hover:-translate-y-0.5 border border-amber-300">
+                    <i class="fa-solid fa-crown text-amber-950 text-xs"></i>
+                    <span>Housing365 Prime</span>
                 </a>
-                <a href="{{ route('contact') }}" class="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-cyan px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-white shadow-md shadow-brand-cyan/20 hover:bg-brand-cyan-hover transition">
-                    <span>Talk to an Expert</span>
+                <a href="{{ route('properties.post') }}" class="inline-flex items-center justify-center gap-1.5 rounded-xl bg-slate-900 hover:bg-brand-navy px-3.5 py-2.5 text-xs font-bold uppercase tracking-wider text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5">
+                    <i class="fa-solid fa-circle-plus text-xs text-amber-400"></i>
+                    <span>Post Property</span>
+                    <span class="ml-1 bg-amber-400 text-slate-950 text-[10px] px-1.5 py-0.5 rounded font-extrabold uppercase">FREE</span>
+                </a>
+                <a href="{{ route('contact') }}" class="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-cyan px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-white shadow-md shadow-brand-cyan/20 hover:bg-brand-cyan-hover transition">
+                    <span>Expert Advice</span>
                     <i class="fa-solid fa-arrow-right text-[10px]"></i>
                 </a>
             </div>
 
             <!-- Mobile Hamburger Button -->
             <div class="xl:hidden flex items-center space-x-2">
-                <a href="{{ route('properties.post') }}" class="inline-flex items-center justify-center px-3 py-1.5 rounded-lg bg-amber-500 text-white text-[11px] font-bold uppercase tracking-wider shadow-sm">
+                <a href="{{ route('prime') }}" class="inline-flex items-center justify-center px-2.5 py-1.5 rounded-lg bg-gradient-to-r from-amber-500 to-yellow-500 text-slate-950 text-[11px] font-black uppercase tracking-wider shadow-sm gap-1">
+                    <i class="fa-solid fa-crown text-[10px]"></i> Prime
+                </a>
+                <a href="{{ route('properties.post') }}" class="inline-flex items-center justify-center px-2.5 py-1.5 rounded-lg bg-slate-900 text-white text-[11px] font-bold uppercase tracking-wider shadow-sm">
                     + Post Free
                 </a>
                 <button id="mobile-toggle-btn" class="p-2 text-slate-700 hover:text-brand-cyan focus:outline-none">
@@ -272,13 +284,18 @@
 
         <!-- Mobile Drawer -->
         <div id="mobile-drawer" class="hidden xl:hidden border-t border-slate-100 bg-white px-4 py-4 space-y-2 text-sm font-medium">
-            <div class="p-1 mb-2">
-                <a href="{{ route('properties.post') }}" class="flex items-center justify-center gap-2 w-full py-3 px-4 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs uppercase tracking-wider shadow-sm transition">
-                    <i class="fa-solid fa-circle-plus"></i>
-                    <span>+ Post Free Property (Zero Brokerage)</span>
+            <div class="p-1 mb-2 space-y-2">
+                <a href="{{ route('prime') }}" class="flex items-center justify-center gap-2 w-full py-3 px-4 rounded-xl bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-500 text-slate-950 font-black text-xs uppercase tracking-wider shadow-md transition">
+                    <i class="fa-solid fa-crown"></i>
+                    <span>Housing365 Prime (Zero Brokerage Membership)</span>
+                </a>
+                <a href="{{ route('properties.post') }}" class="flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-xl bg-slate-900 text-white font-bold text-xs uppercase tracking-wider shadow-sm transition">
+                    <i class="fa-solid fa-circle-plus text-amber-400"></i>
+                    <span>+ Post Free Property</span>
                 </a>
             </div>
             <a href="{{ route('home') }}" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50">Home</a>
+            <a href="{{ route('prime') }}" class="block px-3 py-2 rounded-lg text-amber-800 font-bold bg-amber-50/70">👑 Housing365 Prime Packages</a>
             <a href="{{ route('properties.index') }}" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50 font-bold text-brand-navy">Properties, Plots &amp; Commercial</a>
             <a href="{{ route('owners') }}" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50 font-bold text-brand-navy">Landlords &amp; Owners</a>
             <a href="{{ route('tenants') }}" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50 font-bold text-brand-navy">Tenants &amp; Renters</a>

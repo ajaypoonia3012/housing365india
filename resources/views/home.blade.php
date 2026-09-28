@@ -30,7 +30,7 @@
 
                 <!-- Subheadline -->
                 <p class="mt-5 max-w-xl text-base leading-relaxed text-slate-600 sm:text-lg">
-                    {{ $settings['hero_subtitle'] ?? 'Full-service leasing and property management company delivering end-to-end leasing execution for landlords, property managers, and institutional rental operators across Canada and the United States.' }}
+                    {{ $settings['hero_subtitle'] ?? 'Full-service leasing and property management platform delivering end-to-end leasing execution for landlords, tenants, and property owners across India.' }}
                 </p>
 
                 <!-- CTA Buttons -->
@@ -214,12 +214,18 @@
                     </button>
                 </div>
 
-                <!-- Post Free Property CTA -->
-                <a href="{{ route('properties.post') }}" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs uppercase tracking-wider shadow-md shadow-amber-500/20 transition-all duration-200 hover:-translate-y-0.5">
-                    <i class="fa-solid fa-circle-plus"></i>
-                    <span>Post Free Property</span>
-                    <span class="bg-white/20 text-[10px] px-2 py-0.5 rounded-full uppercase font-extrabold">Zero Brokerage</span>
-                </a>
+                <!-- Post Free Property & Prime CTAs -->
+                <div class="flex items-center gap-2.5 flex-wrap">
+                    <a href="{{ route('prime') }}" class="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-500 hover:from-amber-600 text-slate-950 font-black text-xs uppercase tracking-wider shadow-md shadow-amber-500/20 transition-all duration-200 hover:-translate-y-0.5 border border-amber-300">
+                        <i class="fa-solid fa-crown text-amber-950"></i>
+                        <span>Housing365 Prime</span>
+                        <span class="bg-black/20 text-white text-[9px] px-1.5 py-0.5 rounded font-black">ZERO BROKERAGE</span>
+                    </a>
+                    <a href="{{ route('properties.post') }}" class="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-brand-navy text-white font-bold text-xs uppercase tracking-wider shadow-sm transition-all duration-200 hover:-translate-y-0.5">
+                        <i class="fa-solid fa-circle-plus text-amber-400"></i>
+                        <span>Post Free Property</span>
+                    </a>
+                </div>
             </div>
 
             <!-- Search Form -->
@@ -289,6 +295,31 @@
                 btn.classList.add('bg-brand-navy', 'text-white', 'shadow-sm');
             }
         </script>
+
+        <!-- ── HOUSING365 PRIME SHOWCASE BANNER (MagicBricks MB Prime Style) ── -->
+        <div class="mt-8 relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#03234B] via-[#0B1D3A] to-[#021630] p-6 sm:p-8 text-white shadow-2xl border border-amber-400/30">
+            <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="max-w-2xl text-left">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-400/20 border border-amber-400/40 text-amber-300 text-[11px] font-black uppercase tracking-wider mb-2.5">
+                        <i class="fa-solid fa-crown text-amber-400"></i>
+                        <span>HOUSING365 PRIME &bull; ZERO BROKERAGE MEMBERSHIP</span>
+                    </div>
+                    <h3 class="font-display text-2xl sm:text-3xl font-extrabold text-white">
+                        Looking to Rent or Buy? <span class="bg-gradient-to-r from-amber-300 via-yellow-200 to-amber-400 bg-clip-text text-transparent">Contact 100% Direct Owners</span>
+                    </h3>
+                    <p class="text-slate-300 text-xs sm:text-sm mt-1.5 leading-relaxed">
+                        Unlock verified landlord phone numbers &bull; Personal Relationship Manager to shortlist and schedule showings &bull; Zero broker fees guaranteed.
+                    </p>
+                </div>
+                <div class="flex items-center gap-3 shrink-0">
+                    <a href="{{ route('prime') }}" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-500 hover:from-amber-600 text-slate-950 font-black text-xs uppercase tracking-wider shadow-lg shadow-amber-500/25 transition-all duration-200 hover:-translate-y-0.5">
+                        <i class="fa-solid fa-crown"></i>
+                        <span>Explore Prime Packages</span>
+                        <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
 
         <!-- 5-Metric Stats Strip -->
         <div class="mt-12 rounded-2xl border border-slate-100 bg-white p-6 shadow-sm shadow-slate-200/50 sm:mt-16 sm:p-8">

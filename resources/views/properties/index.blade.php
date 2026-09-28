@@ -87,11 +87,17 @@
                 <span class="ml-1 px-1.5 py-0.5 rounded-full text-[10px] {{ request('category') === 'plot_land' ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-600' }}">{{ $counts['plot_land'] ?? 0 }}</span>
             </a>
 
-            <!-- Post Property Button right on tab strip -->
-            <a href="{{ route('properties.post') }}" class="ml-auto inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider shadow-sm transition">
-                <i class="fa-solid fa-plus text-xs"></i>
-                <span>List Your Property Free</span>
-            </a>
+            <!-- Right CTAs on tab strip: Prime & Post Property -->
+            <div class="ml-auto flex items-center gap-2">
+                <a href="{{ route('prime') }}" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-500 hover:from-amber-600 text-slate-950 font-black text-xs uppercase tracking-wider shadow-sm transition">
+                    <i class="fa-solid fa-crown text-amber-950 text-xs"></i>
+                    <span>Housing365 Prime</span>
+                </a>
+                <a href="{{ route('properties.post') }}" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider shadow-sm transition">
+                    <i class="fa-solid fa-plus text-xs"></i>
+                    <span>List Free</span>
+                </a>
+            </div>
         </div>
 
         <!-- Micro-Locality Quick Chips (MagicBricks Jaipur & Indian Metros Style) -->

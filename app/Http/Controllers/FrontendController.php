@@ -280,4 +280,14 @@ class FrontendController extends Controller
             'properties' => $properties,
         ]);
     }
+
+    /**
+     * Housing365 Prime Membership (inspired by MB Prime for Tenants and Buyers).
+     */
+    public function prime(Request $request)
+    {
+        $defaultType = $request->get('type', 'tenant'); // 'tenant' or 'buyer'
+        $city = $request->get('city', 'Jaipur');
+        return view('prime', compact('defaultType', 'city'));
+    }
 }

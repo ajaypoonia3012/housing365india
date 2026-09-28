@@ -23,6 +23,9 @@ Route::get('/owners', [FrontendController::class, 'owners'])->name('owners');
 Route::get('/tenants', [FrontendController::class, 'tenants'])->name('tenants');
 Route::get('/property-managers', [FrontendController::class, 'propertyManagers'])->name('property-managers');
 Route::get('/portal-and-technology', [FrontendController::class, 'portalTechnology'])->name('portal-and-technology');
+Route::get('/prime', [FrontendController::class, 'prime'])->name('prime');
+Route::redirect('/mbprime', '/prime', 301);
+Route::redirect('/prime-packages', '/prime', 301);
 
 // Programmatic SEO Indian State & City Directory
 Route::get('/india', [FrontendController::class, 'indiaIndex'])->name('india.index');
