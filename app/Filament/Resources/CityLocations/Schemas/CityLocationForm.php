@@ -15,19 +15,27 @@ class CityLocationForm
         return $schema
             ->components([
                 TextInput::make('name')
+                    ->label('City Name')
                     ->required(),
                 TextInput::make('slug')
+                    ->label('URL Slug')
                     ->required(),
                 TextInput::make('province_or_state')
+                    ->label('Indian State / Union Territory')
+                    ->placeholder('e.g. Rajasthan, Maharashtra, Karnataka')
                     ->required(),
                 TextInput::make('country')
+                    ->label('Country Code')
                     ->required()
-                    ->default('CA'),
+                    ->default('IN'),
                 TextInput::make('tier')
+                    ->label('City Tier (1, 2, or 3)')
                     ->required()
                     ->numeric()
                     ->default(1),
                 TextInput::make('avg_rent')
+                    ->label('Average Monthly Rent')
+                    ->placeholder('e.g. ₹38,000')
                     ->default(null),
                 TextInput::make('available_units_count')
                     ->required()

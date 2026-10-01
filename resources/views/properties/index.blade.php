@@ -317,6 +317,25 @@
                             </span>
                         </div>
 
+                        <!-- Bottom Left: Photos Count & Video Indicator -->
+                        <div class="absolute bottom-4 left-4 flex items-center gap-1.5">
+                            @php
+                                $cardPhotosCount = is_array($prop->gallery) && count($prop->gallery) > 0 ? count($prop->gallery) : (!empty($prop->image) ? 1 : 0);
+                            @endphp
+                            @if($cardPhotosCount > 0)
+                                <span class="px-2.5 py-1 rounded-xl text-[10px] font-bold bg-slate-950/75 text-white backdrop-blur-md flex items-center gap-1 shadow-sm">
+                                    <i class="fa-solid fa-camera text-brand-cyan text-[9px]"></i>
+                                    <span>{{ $cardPhotosCount }} {{ $cardPhotosCount === 1 ? 'Photo' : 'Photos' }}</span>
+                                </span>
+                            @endif
+                            @if(!empty($prop->video_url))
+                                <span class="px-2.5 py-1 rounded-xl text-[10px] font-bold bg-purple-600/90 text-white backdrop-blur-md flex items-center gap-1 shadow-sm" title="Video Tour Available">
+                                    <i class="fa-solid fa-play text-[8px]"></i>
+                                    <span>Video</span>
+                                </span>
+                            @endif
+                        </div>
+
                         <!-- Bottom Right: Price Badge -->
                         <div class="absolute bottom-4 right-4 bg-white/95 backdrop-blur-md px-3.5 py-1.5 rounded-xl shadow-lg border border-white/60">
                             @if(!empty($prop->price_display))

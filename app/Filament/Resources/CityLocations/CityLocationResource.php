@@ -18,7 +18,13 @@ class CityLocationResource extends Resource
 {
     protected static ?string $model = CityLocation::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::MapPin;
+
+    protected static \UnitEnum|string|null $navigationGroup = 'Content & CMS';
+
+    protected static ?string $navigationLabel = 'Cities & Locations';
+
+    protected static ?int $navigationSort = 3;
 
     public static function form(Schema $schema): Schema
     {

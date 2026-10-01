@@ -71,8 +71,22 @@ class PostPropertyController extends Controller
             'seller_email' => 'nullable|email|max:150',
             'description' => 'nullable|string|max:5000',
             'amenities' => 'nullable|array',
-            'image_file' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:8192',
+            'photos' => 'required|array|min:5|max:12',
+            'photos.*' => 'image|mimes:jpeg,png,jpg,webp|max:15360',
+            'image_file' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:15360',
             'image_url' => 'nullable|url|max:500',
+            'video_file' => 'nullable|file|mimes:mp4,webm,mov,mkv,avi|max:102400',
+            'video_url' => 'nullable|string|max:500',
+        ], [
+            'photos.required' => 'कम से कम 5 फोटो अपलोड करना अनिवार्य है (Please upload at least 5 property photos).',
+            'photos.array' => 'फोटो अपलोड सूची सही नहीं है।',
+            'photos.min' => 'कम से कम 5 फोटो अपलोड करना अनिवार्य है (Minimum 5 photos are required).',
+            'photos.max' => 'अधिकतम 12 फोटो ही अपलोड कर सकते हैं (Maximum 12 photos limit).',
+            'photos.*.image' => 'प्रत्येक फ़ाइल एक वैध फोटो होनी चाहिए।',
+            'photos.*.mimes' => 'फोटो केवल JPG, JPEG, PNG या WebP प्रारूप में होनी चाहिए।',
+            'photos.*.max' => 'प्रत्येक फोटो का साइज 15MB से कम होना चाहिए।',
+            'video_file.mimes' => 'वीडियो केवल MP4, WebM या MOV प्रारूप में होना चाहिए।',
+            'video_file.max' => 'वीडियो का साइज 100MB से कम होना चाहिए।',
         ]);
 
         // Auto-detect category if not explicitly provided
@@ -84,13 +98,30 @@ class PostPropertyController extends Controller
             $category = 'plot_land';
         }
 
-        // 1. Handle Image
-        $imageUrl = null;
-        if ($request->hasFile('image_file')) {
+        // 1. Handle Multiple Photos (All 5-12 photos saved to gallery)
+        $gallery = [];
+        if ($request->hasFile('photos')) {
+            $files = $request->file('photos');
+            // Enforce max 12
+            $files = array_slice($files, 0, 12);
+            foreach ($files as $file) {
+                $path = $file->store('property-uploads', 'public');
+                $gallery[] = '/storage/' . $path;
+            }
+        }
+
+        // Support fallback single image if provided
+        if (empty($gallery) && $request->hasFile('image_file')) {
             $path = $request->file('image_file')->store('property-uploads', 'public');
-            $imageUrl = '/storage/' . $path;
-        } elseif ($request->filled('image_url')) {
-            $imageUrl = $request->image_url;
+            $gallery[] = '/storage/' . $path;
+        }
+
+        if ($request->filled('image_url')) {
+            $gallery[] = $request->image_url;
+        }
+
+        if (!empty($gallery)) {
+            $imageUrl = $gallery[0];
         } else {
             // Category-specific high-res default fallback
             if ($category === 'plot_land') {
@@ -100,6 +131,16 @@ class PostPropertyController extends Controller
             } else {
                 $imageUrl = 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&auto=format&fit=crop&q=80';
             }
+            $gallery = [$imageUrl];
+        }
+
+        // 1b. Handle Video (Optional 1 Video upload or URL)
+        $videoUrl = null;
+        if ($request->hasFile('video_file')) {
+            $vPath = $request->file('video_file')->store('property-videos', 'public');
+            $videoUrl = '/storage/' . $vPath;
+        } elseif ($request->filled('video_url')) {
+            $videoUrl = strip_tags(trim($request->video_url));
         }
 
         // 2. Format Price Display
@@ -165,6 +206,8 @@ class PostPropertyController extends Controller
             'description' => $description,
             'amenities' => $validated['amenities'] ?? ['Verified Listing', 'Water Supply', 'Road Access', '24/7 Security'],
             'image' => $imageUrl,
+            'gallery' => $gallery,
+            'video_url' => $videoUrl,
             'status' => 'Available',
             'featured' => false,
             'is_verified' => true,

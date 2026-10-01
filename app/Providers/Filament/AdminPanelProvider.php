@@ -49,10 +49,13 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([
+                \App\Filament\Widgets\DashboardQuickActionsWidget::class,
                 \App\Filament\Widgets\StatsOverviewWidget::class,
-                \App\Filament\Widgets\AnalyticsStatusWidget::class,
                 \App\Filament\Widgets\RecentInquiriesWidget::class,
+                \App\Filament\Widgets\RecentPropertiesWidget::class,
                 \App\Filament\Widgets\InquiriesChartWidget::class,
+                \App\Filament\Widgets\PropertyDistributionChartWidget::class,
+                \App\Filament\Widgets\AnalyticsStatusWidget::class,
                 AccountWidget::class,
             ])
             ->middleware([

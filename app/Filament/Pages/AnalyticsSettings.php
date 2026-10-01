@@ -16,9 +16,11 @@ class AnalyticsSettings extends Page
 
     protected static ?string $navigationLabel = 'Analytics & Search Console';
 
+    protected static \UnitEnum|string|null $navigationGroup = 'Settings & System';
+
     protected static ?string $title = 'Google Analytics & Search Console Settings';
 
-    protected static ?int $navigationSort = 99;
+    protected static ?int $navigationSort = 2;
 
     public ?string $google_analytics_id = '';
     public ?string $google_search_console_code = '';

@@ -9,7 +9,7 @@ class AnalyticsStatusWidget extends Widget
 {
     protected string $view = 'filament.widgets.analytics-status-widget';
 
-    protected static ?int $sort = 2;
+    protected static ?int $sort = 6;
 
     protected int | string | array $columnSpan = 'full';
 

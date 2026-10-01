@@ -18,7 +18,13 @@ class PropertyResource extends Resource
 {
     protected static ?string $model = Property::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::BuildingOffice2;
+
+    protected static \UnitEnum|string|null $navigationGroup = 'Core Operations';
+
+    protected static ?string $navigationLabel = 'Properties & Marketplace';
+
+    protected static ?int $navigationSort = 1;
 
     public static function form(Schema $schema): Schema
     {

@@ -22,7 +22,7 @@
     body, .fi-body {
         font-family: var(--font-sans) !important;
         background-color: #F8FAFC !important;
-        color: #1E293B !important;
+        color: #1E293B;
     }
 
     /* Headings */
@@ -57,47 +57,105 @@
         letter-spacing: -0.03em !important;
     }
 
-    /* Sidebar Navigation Items */
+    /* ── SIDEBAR NAVIGATION ITEMS (PURE WHITE TEXT & CRISP CONTRAST) ── */
+    .fi-sidebar,
+    aside.fi-sidebar {
+        color: #FFFFFF !important;
+    }
+
+    .fi-sidebar-nav,
+    .fi-sidebar-nav * {
+        -webkit-font-smoothing: antialiased;
+    }
+
     .fi-sidebar-item-btn,
     .fi-sidebar-item a,
-    .fi-sidebar-item button {
-        color: #94A3B8 !important;
-        font-size: 0.825rem !important;
+    .fi-sidebar-item button,
+    .fi-sidebar-item-label,
+    .fi-sidebar-item span,
+    .fi-sidebar-item-grouped-btn {
+        color: #FFFFFF !important;
+        font-size: 0.85rem !important;
         font-weight: 500 !important;
         border-radius: 0.625rem !important;
         transition: all 0.15s ease-in-out !important;
     }
 
-    .fi-sidebar-item-btn:hover,
-    .fi-sidebar-item a:hover {
-        background-color: rgba(255, 255, 255, 0.06) !important;
+    /* Sidebar Item Icons */
+    .fi-sidebar-item svg,
+    .fi-sidebar-item .fi-icon,
+    .fi-sidebar-item-icon {
         color: #FFFFFF !important;
     }
 
-    /* Active Navigation Item */
+    /* Hover effect */
+    .fi-sidebar-item-btn:hover,
+    .fi-sidebar-item a:hover,
+    .fi-sidebar-item button:hover {
+        background-color: rgba(255, 255, 255, 0.12) !important;
+        color: #FFFFFF !important;
+    }
+
+    .fi-sidebar-item-btn:hover svg,
+    .fi-sidebar-item a:hover svg,
+    .fi-sidebar-item button:hover svg {
+        color: #00AEEF !important;
+    }
+
+    /* Active Navigation Item (Glowing Cyan Accent Pill with White Text) */
+    .fi-sidebar-item-active,
     .fi-sidebar-item-active .fi-sidebar-item-btn,
     .fi-sidebar-item-active a,
-    .fi-sidebar-item-active button {
-        background: linear-gradient(90deg, rgba(0, 174, 239, 0.18) 0%, rgba(0, 174, 239, 0.05) 100%) !important;
-        color: #00AEEF !important;
+    .fi-sidebar-item-active button,
+    .fi-sidebar [aria-current="page"],
+    .fi-sidebar [aria-current="page"] > * {
+        background: linear-gradient(90deg, #00AEEF 0%, #0096C7 100%) !important;
+        color: #FFFFFF !important;
         font-weight: 700 !important;
-        border-left: 3px solid #00AEEF !important;
-        border-radius: 0.25rem 0.625rem 0.625rem 0.25rem !important;
+        box-shadow: 0 4px 14px rgba(0, 174, 239, 0.4) !important;
+        border-radius: 0.5rem !important;
+    }
+
+    .fi-sidebar-item-active *,
+    .fi-sidebar [aria-current="page"] * {
+        color: #FFFFFF !important;
     }
 
     .fi-sidebar-item-active svg,
-    .fi-sidebar-item-active .fi-icon {
-        color: #00AEEF !important;
+    .fi-sidebar-item-active .fi-icon,
+    .fi-sidebar [aria-current="page"] svg {
+        color: #FFFFFF !important;
+        stroke: #FFFFFF !important;
     }
 
-    /* Sidebar Group Labels */
+    /* Sidebar Group Labels (CONTENT & CMS, CORE OPERATIONS, SETTINGS & SYSTEM) */
     .fi-sidebar-group-label,
-    .fi-sidebar-group-btn span {
-        color: #64748B !important;
-        font-size: 0.68rem !important;
-        font-weight: 700 !important;
+    .fi-sidebar-group-label span,
+    .fi-sidebar-group-btn,
+    .fi-sidebar-group-btn span,
+    .fi-sidebar-group-title,
+    .fi-sidebar-group-header span {
+        color: #FFFFFF !important;
+        font-size: 0.72rem !important;
+        font-weight: 800 !important;
         text-transform: uppercase !important;
         letter-spacing: 0.08em !important;
+        opacity: 0.95 !important;
+    }
+
+    /* Group collapse / expand chevron arrows */
+    .fi-sidebar-group-collapse-btn,
+    .fi-sidebar-group-collapse-btn svg,
+    .fi-sidebar-group-btn svg,
+    .fi-sidebar-group-header svg {
+        color: #FFFFFF !important;
+    }
+
+    /* Force all text inside sidebar to pure white regardless of Tailwind utility classes */
+    .fi-sidebar [class*="text-gray-"],
+    .fi-sidebar [class*="text-slate-"],
+    .fi-sidebar [class*="text-zinc-"] {
+        color: #FFFFFF !important;
     }
 
     /* ── TOPBAR STYLING ── */

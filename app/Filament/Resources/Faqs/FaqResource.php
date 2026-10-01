@@ -18,7 +18,13 @@ class FaqResource extends Resource
 {
     protected static ?string $model = Faq::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::QuestionMarkCircle;
+
+    protected static \UnitEnum|string|null $navigationGroup = 'Content & CMS';
+
+    protected static ?string $navigationLabel = 'FAQs';
+
+    protected static ?int $navigationSort = 6;
 
     public static function form(Schema $schema): Schema
     {

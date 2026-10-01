@@ -93,24 +93,115 @@
             </div>
         </div>
 
-        <!-- Main Property Hero Showcase -->
-        <div class="rounded-3xl overflow-hidden shadow-2xl h-[400px] sm:h-[500px] lg:h-[560px] bg-slate-900 relative mb-12 border border-slate-200/80">
-            <img src="{{ $property->image ?? '/city-placeholder-c.svg' }}" 
-                 alt="{{ $property->title }}" 
-                 onerror="this.src='/city-placeholder-c.svg'"
-                 class="w-full h-full object-cover">
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent"></div>
-            
-            <div class="absolute bottom-6 left-6 right-6 flex flex-wrap justify-between items-end gap-4">
-                <span class="px-4 py-2 rounded-xl bg-slate-950/70 backdrop-blur-md text-white text-xs font-bold border border-white/10 flex items-center gap-2">
-                    <i class="fa-solid fa-camera text-brand-cyan"></i>
-                    High-Definition Architectural Tour
-                </span>
-                <button type="button" onclick="openTourModal()" class="px-5 py-2.5 rounded-xl bg-brand-cyan/90 hover:bg-brand-cyan backdrop-blur-md text-white text-xs font-bold uppercase tracking-wider border border-white/20 flex items-center gap-2 shadow-lg transition">
-                    <i class="fa-regular fa-calendar-check"></i> Book Showing Slot
-                </button>
+        @php
+            $gallery = is_array($property->gallery) ? array_values(array_filter($property->gallery)) : [];
+            if (empty($gallery) && !empty($property->image)) {
+                $gallery = [$property->image];
+            }
+            $totalPhotos = count($gallery);
+        @endphp
+
+        <!-- Main Property Hero Showcase (Multi-Photo Showcase & Lightbox) -->
+        @if($totalPhotos >= 5)
+            <!-- Architectural 5+ Photo Collage Grid Layout -->
+            <div class="rounded-3xl overflow-hidden shadow-2xl bg-slate-950 mb-12 border border-slate-200/80 relative">
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-2 p-2 h-[420px] sm:h-[500px] lg:h-[560px]">
+                    <!-- Left: Large Cover Image (7 cols) -->
+                    <div class="md:col-span-7 h-full relative rounded-2xl overflow-hidden cursor-pointer group" onclick="openLightbox(0)">
+                        <img src="{{ $gallery[0] }}" 
+                             alt="{{ $property->title }} - Cover Photo" 
+                             onerror="this.src='/city-placeholder-c.svg'"
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/75 via-transparent to-transparent pointer-events-none"></div>
+                        <span class="absolute top-4 left-4 px-3 py-1.5 rounded-xl bg-slate-950/80 backdrop-blur-md text-white text-xs font-bold border border-white/10 flex items-center gap-1.5 shadow-sm">
+                            <i class="fa-solid fa-star text-brand-cyan text-xs"></i> Cover Photo
+                        </span>
+                        <div class="absolute bottom-4 left-4 text-white pointer-events-none">
+                            <span class="text-xs text-slate-300 font-semibold block">Click to open full-screen gallery ({{ $totalPhotos }} photos)</span>
+                        </div>
+                    </div>
+
+                    <!-- Right: 2x2 Grid for next 4 images (5 cols) -->
+                    <div class="hidden md:grid md:col-span-5 grid-cols-2 grid-rows-2 gap-2 h-full">
+                        @for($i = 1; $i < 5; $i++)
+                            @if(isset($gallery[$i]))
+                                <div class="relative rounded-2xl overflow-hidden cursor-pointer group h-full" onclick="openLightbox({{ $i }})">
+                                    <img src="{{ $gallery[$i] }}" 
+                                         alt="{{ $property->title }} - Photo {{ $i + 1 }}" 
+                                         onerror="this.src='/city-placeholder-b.svg'"
+                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                    
+                                    @if($i === 4 && $totalPhotos > 5)
+                                        <!-- Overlay for remaining photos -->
+                                        <div class="absolute inset-0 bg-slate-950/80 hover:bg-slate-950/70 backdrop-blur-xs flex flex-col items-center justify-center text-white text-center p-3 transition-colors">
+                                            <i class="fa-solid fa-images text-2xl text-brand-cyan mb-1"></i>
+                                            <span class="text-base font-extrabold">+{{ $totalPhotos - 5 }} More</span>
+                                            <span class="text-[11px] text-slate-300 font-semibold">View All {{ $totalPhotos }} Photos</span>
+                                        </div>
+                                    @else
+                                        <div class="absolute inset-0 bg-slate-950/0 group-hover:bg-slate-950/20 transition-colors"></div>
+                                        <span class="absolute bottom-2 right-2 px-2 py-0.5 rounded-lg bg-slate-950/70 text-white text-[10px] font-bold">
+                                            #{{ $i + 1 }}
+                                        </span>
+                                    @endif
+                                </div>
+                            @endif
+                        @endfor
+                    </div>
+                </div>
+
+                <!-- Floating Bottom Actions Bar -->
+                <div class="absolute bottom-4 right-4 flex flex-wrap items-center gap-2.5 z-10">
+                    @if(!empty($property->video_url))
+                        <a href="#property-video-section" class="px-4 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold uppercase tracking-wider backdrop-blur-md shadow-lg flex items-center gap-2 transition hover:-translate-y-0.5">
+                            <i class="fa-solid fa-circle-play text-sm"></i>
+                            <span>Watch Video Tour</span>
+                        </a>
+                    @endif
+                    <button type="button" onclick="openLightbox(0)" class="px-4 py-2.5 rounded-xl bg-white/95 hover:bg-white text-brand-navy text-xs font-bold uppercase tracking-wider shadow-xl border border-white/40 flex items-center gap-2 transition hover:-translate-y-0.5">
+                        <i class="fa-solid fa-camera text-brand-cyan"></i>
+                        <span>All {{ $totalPhotos }} Photos</span>
+                    </button>
+                    <button type="button" onclick="openTourModal()" class="px-4 py-2.5 rounded-xl bg-brand-cyan hover:bg-brand-cyan-hover text-white text-xs font-bold uppercase tracking-wider shadow-xl flex items-center gap-2 transition hover:-translate-y-0.5">
+                        <i class="fa-regular fa-calendar-check"></i>
+                        <span>Book Slot</span>
+                    </button>
+                </div>
             </div>
-        </div>
+        @else
+            <!-- Standard Hero (1 to 4 photos) -->
+            <div class="rounded-3xl overflow-hidden shadow-2xl h-[400px] sm:h-[500px] lg:h-[560px] bg-slate-900 relative mb-12 border border-slate-200/80">
+                <img src="{{ $gallery[0] ?? ($property->image ?? '/city-placeholder-c.svg') }}" 
+                     alt="{{ $property->title }}" 
+                     onerror="this.src='/city-placeholder-c.svg'"
+                     class="w-full h-full object-cover cursor-pointer"
+                     onclick="openLightbox(0)">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent pointer-events-none"></div>
+                
+                <div class="absolute bottom-6 left-6 right-6 flex flex-wrap justify-between items-end gap-4 z-10">
+                    <span class="px-4 py-2 rounded-xl bg-slate-950/70 backdrop-blur-md text-white text-xs font-bold border border-white/10 flex items-center gap-2">
+                        <i class="fa-solid fa-camera text-brand-cyan"></i>
+                        {{ $totalPhotos }} Verified {{ $totalPhotos === 1 ? 'Photo' : 'Photos' }}
+                    </span>
+                    <div class="flex items-center gap-2">
+                        @if(!empty($property->video_url))
+                            <a href="#property-video-section" class="px-4 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold uppercase tracking-wider backdrop-blur-md shadow-lg flex items-center gap-2 transition hover:-translate-y-0.5">
+                                <i class="fa-solid fa-circle-play text-sm"></i>
+                                <span>Watch Video</span>
+                            </a>
+                        @endif
+                        @if($totalPhotos > 1)
+                            <button type="button" onclick="openLightbox(0)" class="px-4 py-2.5 rounded-xl bg-white/90 hover:bg-white text-brand-navy text-xs font-bold uppercase tracking-wider backdrop-blur-md transition shadow-lg">
+                                View Gallery
+                            </button>
+                        @endif
+                        <button type="button" onclick="openTourModal()" class="px-5 py-2.5 rounded-xl bg-brand-cyan/90 hover:bg-brand-cyan backdrop-blur-md text-white text-xs font-bold uppercase tracking-wider border border-white/20 flex items-center gap-2 shadow-lg transition">
+                            <i class="fa-regular fa-calendar-check"></i> Book Showing Slot
+                        </button>
+                    </div>
+                </div>
+            </div>
+        @endif
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12">
             <!-- Left 8 Cols: Specs, Story & Amenities -->
@@ -197,6 +288,72 @@
                                 <span>Maintenance: {{ $property->maintenance }}</span>
                             </div>
                         @endif
+                    </div>
+                @endif
+
+                <!-- ── PROPERTY VIDEO TOUR (IF PRESENT) ── -->
+                @if(!empty($property->video_url))
+                    <div id="property-video-section" class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200/80 shadow-md scroll-mt-24">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5 pb-4 border-b border-slate-100">
+                            <div class="flex items-center gap-3">
+                                <div class="size-11 rounded-2xl bg-purple-100 text-purple-600 flex items-center justify-center text-xl shrink-0 shadow-sm">
+                                    <i class="fa-solid fa-video"></i>
+                                </div>
+                                <div>
+                                    <div class="flex items-center gap-2">
+                                        <h3 class="font-display text-xl sm:text-2xl font-bold text-brand-navy">Virtual Video Walkthrough</h3>
+                                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-purple-100 text-purple-700">HD Tour</span>
+                                    </div>
+                                    <p class="text-xs text-slate-500 mt-0.5">Experience a realistic walkthrough tour of this property before your site visit.</p>
+                                </div>
+                            </div>
+                            <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-100 self-start sm:self-auto flex items-center gap-1.5">
+                                <i class="fa-solid fa-circle-check text-xs"></i> 100% Genuine Video
+                            </span>
+                        </div>
+
+                        <!-- Video Player Box -->
+                        @php
+                            $isYoutube = Str::contains($property->video_url, ['youtube.com', 'youtu.be']);
+                            $youtubeEmbed = null;
+                            if ($isYoutube) {
+                                if (preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/', $property->video_url, $m)) {
+                                    $youtubeEmbed = 'https://www.youtube.com/embed/' . $m[1];
+                                }
+                            }
+                        @endphp
+
+                        <div class="rounded-2xl overflow-hidden bg-slate-950 shadow-inner">
+                            @if($youtubeEmbed)
+                                <div class="aspect-video w-full">
+                                    <iframe src="{{ $youtubeEmbed }}" 
+                                            title="{{ $property->title }} Video Tour" 
+                                            class="w-full h-full border-0" 
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                            allowfullscreen>
+                                    </iframe>
+                                </div>
+                            @elseif(Str::endsWith(strtolower($property->video_url), ['.mp4', '.webm', '.mov', '.mkv']) || Str::startsWith($property->video_url, '/storage/'))
+                                <video controls playsinline preload="metadata" poster="{{ $property->image }}" class="w-full max-h-[500px] object-contain bg-black">
+                                    <source src="{{ $property->video_url }}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            @else
+                                <div class="p-8 text-center bg-slate-900 text-white space-y-4">
+                                    <div class="size-16 rounded-full bg-brand-cyan/20 text-brand-cyan flex items-center justify-center text-2xl mx-auto">
+                                        <i class="fa-solid fa-play"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-base font-bold text-white">External Video Walkthrough Available</h4>
+                                        <p class="text-xs text-slate-400 mt-1 max-w-md mx-auto">This property includes an external virtual video walkthrough link provided by the owner.</p>
+                                    </div>
+                                    <a href="{{ $property->video_url }}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-brand-cyan hover:bg-brand-cyan-hover text-white font-bold text-xs uppercase tracking-wider shadow-lg transition">
+                                        <span>Open Video Walkthrough</span>
+                                        <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                                    </a>
+                                </div>
+                            @endif
+                        </div>
                     </div>
                 @endif
 
@@ -984,7 +1141,126 @@ async function unlockContact(propertyId) {
         console.error('Failed to unlock contact:', err);
     }
 }
+
+// Lightbox Gallery Logic
+const GALLERY_ITEMS = @json($gallery);
+let currentLightboxIdx = 0;
+
+function openLightbox(index) {
+    if (!GALLERY_ITEMS || GALLERY_ITEMS.length === 0) return;
+    currentLightboxIdx = index >= 0 && index < GALLERY_ITEMS.length ? index : 0;
+    updateLightbox();
+    const modal = document.getElementById('lightbox-modal');
+    if (!modal) return;
+    modal.classList.remove('hidden');
+    setTimeout(() => {
+        modal.classList.remove('opacity-0');
+    }, 10);
+    document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+    const modal = document.getElementById('lightbox-modal');
+    if (!modal) return;
+    modal.classList.add('opacity-0');
+    setTimeout(() => {
+        modal.classList.add('hidden');
+        document.body.style.overflow = '';
+    }, 300);
+}
+
+function lightboxPrev() {
+    if (currentLightboxIdx > 0) {
+        currentLightboxIdx--;
+    } else {
+        currentLightboxIdx = GALLERY_ITEMS.length - 1;
+    }
+    updateLightbox();
+}
+
+function lightboxNext() {
+    if (currentLightboxIdx < GALLERY_ITEMS.length - 1) {
+        currentLightboxIdx++;
+    } else {
+        currentLightboxIdx = 0;
+    }
+    updateLightbox();
+}
+
+function setLightboxIndex(idx) {
+    currentLightboxIdx = idx;
+    updateLightbox();
+}
+
+function updateLightbox() {
+    const img = document.getElementById('lightbox-img');
+    const idxDisp = document.getElementById('lightbox-idx-display');
+    if (img && GALLERY_ITEMS[currentLightboxIdx]) {
+        img.src = GALLERY_ITEMS[currentLightboxIdx];
+    }
+    if (idxDisp) {
+        idxDisp.textContent = currentLightboxIdx + 1;
+    }
+    document.querySelectorAll('.lightbox-thumb').forEach(thumb => {
+        const idx = parseInt(thumb.getAttribute('data-idx'));
+        if (idx === currentLightboxIdx) {
+            thumb.className = 'lightbox-thumb relative size-14 rounded-xl overflow-hidden border-2 border-brand-cyan ring-2 ring-brand-cyan/40 shrink-0 transition-all opacity-100 scale-105';
+            thumb.scrollIntoView({ behavior: 'smooth', inline: 'center' });
+        } else {
+            thumb.className = 'lightbox-thumb relative size-14 rounded-xl overflow-hidden border-2 border-white/20 shrink-0 transition-all opacity-60 hover:opacity-100';
+        }
+    });
+}
+
+document.addEventListener('keydown', function(e) {
+    const modal = document.getElementById('lightbox-modal');
+    if (modal && !modal.classList.contains('hidden')) {
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowLeft') lightboxPrev();
+        if (e.key === 'ArrowRight') lightboxNext();
+    }
+});
 </script>
+
+<!-- ── FULLSCREEN LIGHTBOX GALLERY MODAL ── -->
+<div id="lightbox-modal" class="hidden fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-md flex flex-col justify-between transition-opacity duration-300 opacity-0" tabindex="-1">
+    <!-- Top Header -->
+    <div class="px-6 py-4 flex items-center justify-between text-white border-b border-white/10 shrink-0">
+        <div>
+            <h4 class="text-sm font-bold text-white truncate max-w-md sm:max-w-xl">{{ $property->title }}</h4>
+            <span class="text-xs text-slate-400 font-semibold">
+                Photo <span id="lightbox-idx-display">1</span> of {{ $totalPhotos }}
+            </span>
+        </div>
+        <button type="button" onclick="closeLightbox()" class="size-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center text-lg transition">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+    </div>
+
+    <!-- Center Stage: Main Image & Prev/Next Arrows -->
+    <div class="relative flex-1 flex items-center justify-center p-4 min-h-0">
+        <!-- Prev Button -->
+        <button type="button" onclick="lightboxPrev()" class="absolute left-4 sm:left-8 z-10 size-12 rounded-full bg-white/10 hover:bg-white/25 text-white flex items-center justify-center text-lg transition backdrop-blur-md">
+            <i class="fa-solid fa-chevron-left"></i>
+        </button>
+
+        <img id="lightbox-img" src="" alt="{{ $property->title }}" class="max-h-full max-w-full object-contain rounded-2xl shadow-2xl transition-all duration-300">
+
+        <!-- Next Button -->
+        <button type="button" onclick="lightboxNext()" class="absolute right-4 sm:right-8 z-10 size-12 rounded-full bg-white/10 hover:bg-white/25 text-white flex items-center justify-center text-lg transition backdrop-blur-md">
+            <i class="fa-solid fa-chevron-right"></i>
+        </button>
+    </div>
+
+    <!-- Bottom Thumbnail Strip -->
+    <div class="px-6 py-3 border-t border-white/10 bg-slate-950/60 shrink-0 overflow-x-auto flex items-center justify-center gap-2">
+        @foreach($gallery as $gIdx => $gImg)
+            <button type="button" onclick="setLightboxIndex({{ $gIdx }})" class="lightbox-thumb relative size-14 rounded-xl overflow-hidden border-2 shrink-0 transition-all opacity-60 hover:opacity-100" data-idx="{{ $gIdx }}">
+                <img src="{{ $gImg }}" alt="Thumb {{ $gIdx + 1 }}" class="w-full h-full object-cover">
+            </button>
+        @endforeach
+    </div>
+</div>
 
 <!-- ── STICKY MOBILE BOTTOM ACTION BAR (MagicBricks Style) ── -->
 <div class="sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 px-4 py-3 flex items-center justify-between shadow-2xl">

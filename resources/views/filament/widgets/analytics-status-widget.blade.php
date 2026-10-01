@@ -64,7 +64,7 @@
                             @if($gscActive)
                                 Site verification meta tag is active in public layout head.
                             @else
-                                Paste your Google site verification token or meta tag to index and rank Canadian and US pages.
+                                Paste your Google site verification token or meta tag to index and rank Indian state and metro city pages across Google search.
                             @endif
                         </p>
                     </div>

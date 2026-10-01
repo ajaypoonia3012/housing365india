@@ -5,7 +5,7 @@ namespace App\Filament\Widgets;
 use App\Models\CityLocation;
 use App\Models\Inquiry;
 use App\Models\Property;
-use App\Models\Service;
+use App\Models\User;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 
@@ -15,37 +15,42 @@ class StatsOverviewWidget extends BaseWidget
 
     protected function getStats(): array
     {
+        $totalProperties = Property::count();
+        $rentCount = Property::where('purpose', 'rent')->count();
+        $saleCount = Property::where('purpose', 'sale')->count();
+        $verifiedCount = Property::where('is_verified', true)->count();
+
         $totalInquiries = Inquiry::count();
         $newInquiries = Inquiry::where('status', 'new')->count();
 
-        $totalProperties = Property::count();
-        $featuredProperties = Property::where('featured', true)->count();
+        $totalUsers = User::count();
+        $primeUsers = User::where('is_prime', true)->count();
 
-        $activeServices = Service::where('is_active', true)->count();
         $totalCities = CityLocation::count();
 
         return [
-            Stat::make('Total Inquiries & Leads', (string)$totalInquiries)
-                ->description($newInquiries > 0 ? "{$newInquiries} new awaiting response" : 'All inquiries reviewed')
-                ->descriptionIcon($newInquiries > 0 ? 'heroicon-m-bell-alert' : 'heroicon-m-check-circle')
-                ->chart([3, 6, 4, 9, 7, 12, max($totalInquiries, 14)])
-                ->color($newInquiries > 0 ? 'warning' : 'primary'),
-
-            Stat::make('Rental Properties', (string)$totalProperties)
-                ->description("{$featuredProperties} featured active units")
-                ->descriptionIcon('heroicon-m-home')
-                ->chart([5, 8, 7, 11, 10, 14, max($totalProperties, 16)])
+            Stat::make('Marketplace Properties', (string)$totalProperties)
+                ->description("{$rentCount} Rent • {$saleCount} Sale • {$verifiedCount} Verified")
+                ->descriptionIcon('heroicon-m-building-office-2')
+                ->chart([8, 12, 11, 15, 14, 18, max($totalProperties, 20)])
                 ->color('success'),
 
-            Stat::make('Leasing Services', (string)$activeServices)
-                ->description('14 Landing Pages & 8 Primary')
-                ->descriptionIcon('heroicon-m-briefcase')
-                ->color('info'),
+            Stat::make('Inquiries & Leads', (string)$totalInquiries)
+                ->description($newInquiries > 0 ? "{$newInquiries} new awaiting response" : 'All customer leads addressed')
+                ->descriptionIcon($newInquiries > 0 ? 'heroicon-m-bell-alert' : 'heroicon-m-check-circle')
+                ->chart([4, 7, 5, 10, 8, 13, max($totalInquiries, 16)])
+                ->color($newInquiries > 0 ? 'warning' : 'primary'),
 
-            Stat::make('Covered Cities & Metros', (string)$totalCities)
-                ->description('Canada & 57 Programmatic US Cities')
+            Stat::make('Registered Users & Prime', (string)$totalUsers)
+                ->description("{$primeUsers} Active Prime Members")
+                ->descriptionIcon('heroicon-m-star')
+                ->chart([2, 5, 4, 8, 7, 11, max($totalUsers, 12)])
+                ->color('warning'),
+
+            Stat::make('Pan-India Coverage', (string)$totalCities . ' Metros')
+                ->description('All 28 States & UTs Catalogued')
                 ->descriptionIcon('heroicon-m-map-pin')
-                ->color('primary'),
+                ->color('info'),
         ];
     }
 }

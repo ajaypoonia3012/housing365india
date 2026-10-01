@@ -2,12 +2,15 @@
 
 namespace App\Filament\Resources\Properties\Tables;
 
+use App\Models\Property;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 
 class PropertiesTable
@@ -16,52 +19,124 @@ class PropertiesTable
     {
         return $table
             ->columns([
+                ImageColumn::make('image')
+                    ->label('Photo')
+                    ->circular()
+                    ->defaultImageUrl('https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=100&auto=format&fit=crop&q=80'),
+
                 TextColumn::make('title')
-                    ->searchable(),
-                TextColumn::make('slug')
-                    ->searchable(),
-                TextColumn::make('address')
-                    ->searchable(),
-                TextColumn::make('city')
-                    ->searchable(),
-                TextColumn::make('state')
-                    ->searchable(),
-                TextColumn::make('country')
-                    ->searchable(),
-                TextColumn::make('postal_code')
-                    ->searchable(),
-                TextColumn::make('price')
-                    ->money()
-                    ->sortable(),
-                TextColumn::make('price_frequency')
-                    ->searchable(),
+                    ->label('Property Listing')
+                    ->description(fn (Property $record): string => ($record->locality ? $record->locality . ', ' : '') . $record->city)
+                    ->searchable()
+                    ->weight('bold')
+                    ->limit(35),
+
+                TextColumn::make('purpose')
+                    ->label('Purpose')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'rent' => 'info',
+                        'sale' => 'success',
+                        'lease' => 'warning',
+                        default => 'gray',
+                    })
+                    ->formatStateUsing(fn ($state) => strtoupper($state)),
+
+                TextColumn::make('category')
+                    ->label('Category')
+                    ->badge()
+                    ->color('primary')
+                    ->formatStateUsing(fn ($state) => ucwords(str_replace('_', ' ', $state))),
+
+                TextColumn::make('price_display')
+                    ->label('Price')
+                    ->state(function (Property $record): string {
+                        if (!empty($record->price_display)) return $record->price_display;
+                        return '₹' . number_format($record->price) . ($record->purpose === 'sale' ? '' : '/mo');
+                    })
+                    ->weight('semibold')
+                    ->color('success')
+                    ->sortable(query: function ($query, string $direction) {
+                        return $query->orderBy('price', $direction);
+                    }),
+
                 TextColumn::make('bedrooms')
-                    ->numeric()
+                    ->label('BHK')
+                    ->formatStateUsing(fn ($state) => $state ? $state . ' BHK' : 'Plot/Studio')
                     ->sortable(),
-                TextColumn::make('bathrooms')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('sqft')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('property_type')
-                    ->searchable(),
-                TextColumn::make('status')
-                    ->searchable(),
+
+                TextColumn::make('seller_phone')
+                    ->label('Owner Contact')
+                    ->description(fn (Property $record): string => $record->seller_name ?? 'Owner')
+                    ->searchable()
+                    ->copyable()
+                    ->icon('heroicon-m-phone'),
+
+                IconColumn::make('is_verified')
+                    ->label('Verified')
+                    ->boolean()
+                    ->trueIcon('heroicon-s-check-badge')
+                    ->falseIcon('heroicon-o-x-circle')
+                    ->trueColor('success')
+                    ->falseColor('gray'),
+
                 IconColumn::make('featured')
-                    ->boolean(),
-                ImageColumn::make('image'),
+                    ->label('Featured')
+                    ->boolean()
+                    ->trueIcon('heroicon-s-star')
+                    ->falseIcon('heroicon-o-minus')
+                    ->trueColor('warning')
+                    ->falseColor('gray'),
+
+                TextColumn::make('status')
+                    ->label('Status')
+                    ->badge()
+                    ->color(fn (string $state): string => match (strtolower($state)) {
+                        'available' => 'success',
+                        'under offer' => 'warning',
+                        'rented' => 'gray',
+                        'sold' => 'danger',
+                        default => 'primary',
+                    }),
+
                 TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->label('Listed')
+                    ->dateTime('d M Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                SelectFilter::make('purpose')
+                    ->label('Listing Type')
+                    ->options([
+                        'rent' => 'For Rent',
+                        'sale' => 'For Sale',
+                        'lease' => 'Commercial Lease',
+                    ]),
+
+                SelectFilter::make('category')
+                    ->label('Category')
+                    ->options([
+                        'residential' => 'Residential',
+                        'commercial' => 'Commercial',
+                        'plot_land' => 'Plots & Land',
+                    ]),
+
+                TernaryFilter::make('is_verified')
+                    ->label('Verification Status')
+                    ->trueLabel('Verified Listings Only')
+                    ->falseLabel('Unverified / Pending Listings'),
+
+                TernaryFilter::make('featured')
+                    ->label('Homepage Featured'),
+
+                SelectFilter::make('status')
+                    ->options([
+                        'Available' => 'Available',
+                        'Under Offer' => 'Under Offer',
+                        'Rented' => 'Rented',
+                        'Sold' => 'Sold',
+                    ]),
             ])
             ->recordActions([
                 EditAction::make(),

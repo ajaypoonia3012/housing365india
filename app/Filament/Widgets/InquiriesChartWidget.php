@@ -10,9 +10,12 @@ class InquiriesChartWidget extends ChartWidget
 {
     protected ?string $heading = 'Inquiries & Leads Activity';
 
-    protected static ?int $sort = 4;
+    protected static ?int $sort = 5;
 
-    protected int | string | array $columnSpan = 'full';
+    protected int | string | array $columnSpan = [
+        'md' => 1,
+        'xl' => 1,
+    ];
 
     protected function getData(): array
     {

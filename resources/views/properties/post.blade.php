@@ -666,25 +666,141 @@
                                 </div>
                             </div>
 
-                            <!-- Photo Upload -->
-                            <div class="pt-3 border-t border-slate-100">
-                                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Upload Property Photos</label>
-                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 items-center">
-                                    <label class="sm:col-span-2 flex flex-col items-center justify-center p-6 border-2 border-dashed border-slate-300 hover:border-brand-cyan rounded-2xl cursor-pointer bg-slate-50 hover:bg-brand-cyan/5 transition text-center">
-                                        <i class="fa-solid fa-cloud-arrow-up text-3xl text-brand-cyan mb-2"></i>
-                                        <span class="text-xs font-bold text-brand-navy">Click or Drag &amp; Drop Photos Here</span>
-                                        <span class="text-[11px] text-slate-400 mt-1">JPEG, PNG, WebP up to 8MB</span>
-                                        <input type="file" name="image_file" accept="image/*" class="sr-only" onchange="previewSelectedPhoto(this)">
-                                    </label>
-                                    <div class="text-xs text-slate-500 space-y-1.5">
-                                        <span class="font-bold text-brand-navy block">Or Image URL:</span>
-                                        <input type="url" name="image_url" placeholder="https://..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs focus:ring-1 focus:ring-brand-cyan">
-                                        <p class="text-[10px] text-slate-400 leading-tight">If none provided, verified architectural photography will be automatically attached.</p>
+                            <!-- Photo Upload (Min 5, Max 12 Mandatory) -->
+                            <div class="pt-5 border-t border-slate-100" id="photo-upload-section">
+                                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+                                    <div>
+                                        <label class="block text-xs font-bold text-slate-800 uppercase tracking-wider">
+                                            Upload Property Photos (Min 5, Max 12 Photos Mandatory) *
+                                        </label>
+                                        <span class="text-[11px] text-slate-500">कम से कम 5 फोटो एवं अधिकतम 12 फोटो अपलोड करना अनिवार्य है।</span>
+                                    </div>
+                                    <!-- Dynamic Badge Status -->
+                                    <div id="photo-count-badge" class="px-3 py-1 rounded-full text-xs font-bold bg-rose-100 text-rose-800 border border-rose-200 flex items-center gap-1.5 self-start sm:self-auto">
+                                        <i class="fa-solid fa-camera text-xs"></i>
+                                        <span id="photo-count-text">0 / 12</span>
+                                        <span class="text-[10px] opacity-80" id="photo-count-status">(Min 5 required)</span>
                                     </div>
                                 </div>
-                                <div id="selected-photo-notice" class="hidden mt-2 text-xs font-bold text-emerald-700 flex items-center gap-1.5">
-                                    <i class="fa-solid fa-circle-check text-emerald-600"></i>
-                                    <span id="selected-photo-name">Photo selected</span>
+
+                                <!-- Validation Alert (hidden by default) -->
+                                <div id="photo-validation-alert" class="hidden mb-3 p-3.5 rounded-2xl bg-rose-50 border border-rose-200 text-rose-800 text-xs font-semibold flex items-center gap-2.5">
+                                    <i class="fa-solid fa-circle-exclamation text-rose-600 text-base shrink-0"></i>
+                                    <span id="photo-validation-message">कम से कम 5 फोटो अपलोड करना अनिवार्य है (Please select at least 5 photos before publishing).</span>
+                                </div>
+
+                                <!-- Multi-Photo Dropzone -->
+                                <div id="photos-main-dropzone" 
+                                     ondragover="handleDragOver(event)" 
+                                     ondragleave="handleDragLeave(event)" 
+                                     ondrop="handleDrop(event)"
+                                     class="relative p-6 sm:p-8 border-2 border-dashed border-slate-300 hover:border-brand-cyan rounded-2xl cursor-pointer bg-slate-50 hover:bg-brand-cyan/5 transition-all text-center group">
+                                    
+                                    <input type="file" 
+                                           name="photos[]" 
+                                           id="property_photos_input" 
+                                           accept="image/jpeg,image/png,image/webp,image/jpg" 
+                                           multiple 
+                                           class="sr-only" 
+                                           onchange="handlePhotosSelected(event)">
+
+                                    <div class="pointer-events-none flex flex-col items-center justify-center">
+                                        <div class="size-14 rounded-2xl bg-brand-cyan/10 text-brand-cyan flex items-center justify-center text-2xl mb-3 group-hover:scale-110 transition-transform">
+                                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                                        </div>
+                                        <span class="text-sm font-bold text-brand-navy">Click or Drag &amp; Drop Photos Here</span>
+                                        <p class="text-xs text-slate-500 mt-1">Select multiple photos at once (Min 5 to Max 12 images)</p>
+                                        <div class="mt-2.5 flex items-center gap-2 text-[11px] text-slate-400 font-medium">
+                                            <span>JPEG, PNG, WebP up to 15MB</span>
+                                            <span>&bull;</span>
+                                            <span class="text-brand-cyan font-bold">1st photo will be Cover Photo</span>
+                                        </div>
+                                    </div>
+                                    <button type="button" onclick="document.getElementById('property_photos_input').click()" class="mt-4 px-5 py-2 rounded-xl bg-white border border-slate-200 text-brand-navy text-xs font-bold shadow-sm hover:border-brand-cyan hover:text-brand-cyan transition">
+                                        Browse Photos
+                                    </button>
+                                </div>
+
+                                <!-- Previews Grid -->
+                                <div id="photos-preview-grid" class="hidden mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+                                    <!-- Populated dynamically via JS -->
+                                </div>
+
+                                <!-- Or Image URL fallback (Optional) -->
+                                <div class="mt-3 flex items-center gap-2">
+                                    <button type="button" onclick="toggleImageUrlInput()" class="text-[11px] text-slate-500 hover:text-brand-cyan font-semibold flex items-center gap-1 transition">
+                                        <i class="fa-solid fa-link text-[10px]"></i>
+                                        <span>Have an image URL instead? Click here</span>
+                                    </button>
+                                </div>
+                                <div id="image-url-container" class="hidden mt-2">
+                                    <input type="url" name="image_url" placeholder="https://... (Optional Image URL)" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-brand-cyan font-medium">
+                                </div>
+                            </div>
+
+                            <!-- Video Upload Section (Optional 1 Video) -->
+                            <div class="pt-5 border-t border-slate-100" id="video-upload-section">
+                                <div class="flex items-center justify-between mb-2">
+                                    <div>
+                                        <label class="block text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
+                                            <i class="fa-solid fa-video text-brand-cyan"></i>
+                                            <span>Property Video Walkthrough / Tour (Optional - 1 Video)</span>
+                                        </label>
+                                        <span class="text-[11px] text-slate-500">प्रॉपर्टी का वॉकथ्रू वीडियो जोड़ें (वैकल्पिक / Optional)</span>
+                                    </div>
+                                    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-600">Max 1 Video</span>
+                                </div>
+
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <!-- Option A: File Upload -->
+                                    <div class="relative p-4 border-2 border-dashed border-slate-200 hover:border-brand-cyan rounded-2xl bg-slate-50 hover:bg-brand-cyan/5 transition text-center flex flex-col items-center justify-center">
+                                        <input type="file" 
+                                               name="video_file" 
+                                               id="property_video_input" 
+                                               accept="video/mp4,video/webm,video/quicktime,video/mkv" 
+                                               class="sr-only" 
+                                               onchange="previewSelectedVideo(this)">
+                                        
+                                        <div class="size-10 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center text-lg mb-2">
+                                            <i class="fa-solid fa-file-video"></i>
+                                        </div>
+                                        <span class="text-xs font-bold text-brand-navy">Upload Video File</span>
+                                        <span class="text-[10px] text-slate-400 mt-0.5">MP4, WebM, MOV (Max 100MB)</span>
+                                        <button type="button" onclick="document.getElementById('property_video_input').click()" class="mt-2.5 px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-xs font-bold text-brand-navy hover:border-brand-cyan hover:text-brand-cyan transition shadow-2xs">
+                                            Choose Video
+                                        </button>
+
+                                        <!-- Selected Video Notice -->
+                                        <div id="selected-video-notice" class="hidden mt-2 p-2 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-[11px] font-bold flex items-center justify-between w-full">
+                                            <div class="flex items-center gap-1.5 truncate">
+                                                <i class="fa-solid fa-circle-check text-emerald-600"></i>
+                                                <span id="selected-video-name" class="truncate">video.mp4</span>
+                                                <span id="selected-video-size" class="text-[10px] font-normal text-emerald-600">(0 MB)</span>
+                                            </div>
+                                            <button type="button" onclick="removeSelectedVideo()" class="text-rose-600 hover:text-rose-800 ml-2" title="Remove video">
+                                                <i class="fa-solid fa-xmark"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Option B: Video Link / URL -->
+                                    <div class="p-4 border border-slate-200 rounded-2xl bg-slate-50 flex flex-col justify-between">
+                                        <div>
+                                            <div class="flex items-center gap-2 mb-1.5">
+                                                <i class="fa-brands fa-youtube text-red-600 text-base"></i>
+                                                <span class="text-xs font-bold text-brand-navy">Or Video Link / Walkthrough URL</span>
+                                            </div>
+                                            <p class="text-[10px] text-slate-500 mb-2">Paste YouTube, Vimeo, Google Drive or Cloud video link</p>
+                                        </div>
+                                        <div class="relative">
+                                            <input type="text" 
+                                                   name="video_url" 
+                                                   id="wizard_video_url"
+                                                   value="{{ old('video_url') }}"
+                                                   placeholder="https://youtube.com/watch?v=... or https://..." 
+                                                   class="w-full bg-white border border-slate-200 text-slate-900 rounded-xl px-3.5 py-2.5 text-xs focus:outline-none focus:ring-1 focus:ring-brand-cyan font-medium">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -1042,13 +1158,254 @@
         }
     });
 
-    // 8. Photo Upload Preview
-    function previewSelectedPhoto(input) {
-        if (input.files && input.files[0]) {
-            document.getElementById('selected-photo-notice').classList.remove('hidden');
-            document.getElementById('selected-photo-name').textContent = 'Selected: ' + input.files[0].name;
+    // 8. Multi-Photo Upload & Limit Enforcement (Min 5, Max 12)
+    let selectedPhotos = [];
+    const MIN_PHOTOS = 5;
+    const MAX_PHOTOS = 12;
+
+    function handlePhotosSelected(event) {
+        const files = Array.from(event.target.files || []);
+        addPhotosToSelection(files);
+        event.target.value = ''; // Reset input to allow re-selection
+    }
+
+    function addMorePhotos(input) {
+        if (input.files && input.files.length > 0) {
+            addPhotosToSelection(Array.from(input.files));
+            input.value = '';
         }
     }
+
+    function addPhotosToSelection(newFiles) {
+        const validationAlert = document.getElementById('photo-validation-alert');
+        if (validationAlert) validationAlert.classList.add('hidden');
+
+        for (let file of newFiles) {
+            if (!file.type.startsWith('image/')) continue;
+            if (selectedPhotos.length >= MAX_PHOTOS) {
+                alert(`अधिकतम ${MAX_PHOTOS} फोटो ही अपलोड कर सकते हैं (Maximum ${MAX_PHOTOS} photos limit reached).`);
+                break;
+            }
+            // Avoid duplicate by name & size
+            const isDuplicate = selectedPhotos.some(p => p.name === file.name && p.size === file.size);
+            if (!isDuplicate) {
+                selectedPhotos.push(file);
+            }
+        }
+        syncPhotosInput();
+        renderPhotosPreviews();
+    }
+
+    function removePhoto(index) {
+        selectedPhotos.splice(index, 1);
+        syncPhotosInput();
+        renderPhotosPreviews();
+    }
+
+    function syncPhotosInput() {
+        const input = document.getElementById('property_photos_input');
+        if (!input) return;
+        try {
+            const dt = new DataTransfer();
+            selectedPhotos.forEach(f => dt.items.add(f));
+            input.files = dt.files;
+        } catch (e) {
+            console.error('DataTransfer sync error:', e);
+        }
+    }
+
+    function renderPhotosPreviews() {
+        const grid = document.getElementById('photos-preview-grid');
+        const badge = document.getElementById('photo-count-badge');
+        const countText = document.getElementById('photo-count-text');
+        const countStatus = document.getElementById('photo-count-status');
+        const count = selectedPhotos.length;
+
+        if (countText) countText.textContent = `${count} / ${MAX_PHOTOS}`;
+
+        if (countStatus && badge) {
+            if (count === 0) {
+                countStatus.textContent = `(कम से कम 5 फोटो अनिवार्य)`;
+                badge.className = 'px-3 py-1 rounded-full text-xs font-bold bg-rose-100 text-rose-800 border border-rose-200 flex items-center gap-1.5 self-start sm:self-auto';
+            } else if (count < MIN_PHOTOS) {
+                countStatus.textContent = `(${MIN_PHOTOS - count} और आवश्यक / Need ${MIN_PHOTOS - count} more)`;
+                badge.className = 'px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-200 flex items-center gap-1.5 self-start sm:self-auto';
+            } else {
+                countStatus.textContent = `(शर्त पूरी हुई / ${count} Photos Ready)`;
+                badge.className = 'px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-200 flex items-center gap-1.5 self-start sm:self-auto';
+            }
+        }
+
+        if (!grid) return;
+
+        if (count === 0) {
+            grid.innerHTML = '';
+            grid.classList.add('hidden');
+            return;
+        }
+
+        grid.classList.remove('hidden');
+        grid.innerHTML = '';
+
+        selectedPhotos.forEach((file, idx) => {
+            const card = document.createElement('div');
+            card.className = 'relative group aspect-square rounded-2xl overflow-hidden border-2 ' + 
+                (idx === 0 ? 'border-brand-cyan shadow-md shadow-brand-cyan/20 ring-2 ring-brand-cyan/20' : 'border-slate-200') + 
+                ' bg-slate-900 flex items-center justify-center transition-all duration-200';
+
+            const img = document.createElement('img');
+            img.className = 'w-full h-full object-cover';
+            img.src = URL.createObjectURL(file);
+            img.alt = file.name;
+
+            // Index / Cover Badge
+            const topBadge = document.createElement('span');
+            topBadge.className = 'absolute top-2 left-2 px-2 py-0.5 rounded-lg text-[10px] font-extrabold uppercase tracking-wider backdrop-blur-md ' +
+                (idx === 0 ? 'bg-brand-cyan text-white shadow-sm' : 'bg-slate-950/75 text-white');
+            topBadge.innerHTML = idx === 0 ? '<i class="fa-solid fa-star text-[9px] mr-1"></i> Cover' : `#${idx + 1}`;
+
+            // Remove Button
+            const removeBtn = document.createElement('button');
+            removeBtn.type = 'button';
+            removeBtn.title = 'Remove photo';
+            removeBtn.className = 'absolute top-2 right-2 size-6 rounded-full bg-rose-600/90 hover:bg-rose-600 text-white flex items-center justify-center text-xs shadow-md transition-transform hover:scale-110';
+            removeBtn.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+            removeBtn.onclick = function(e) {
+                e.stopPropagation();
+                removePhoto(idx);
+            };
+
+            // Bottom metadata strip
+            const meta = document.createElement('div');
+            meta.className = 'absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/90 via-slate-950/50 to-transparent p-2 pt-4 text-white text-[10px] truncate';
+            meta.innerHTML = `<span class="truncate block font-semibold">${file.name}</span><span class="text-[9px] text-slate-300">${(file.size / 1024 / 1024).toFixed(1)} MB</span>`;
+
+            card.appendChild(img);
+            card.appendChild(topBadge);
+            card.appendChild(removeBtn);
+            card.appendChild(meta);
+            grid.appendChild(card);
+        });
+
+        // Add "+ Add More Photos" button tile inside grid if < MAX_PHOTOS
+        if (count < MAX_PHOTOS) {
+            const addTile = document.createElement('label');
+            addTile.className = 'aspect-square rounded-2xl border-2 border-dashed border-slate-300 hover:border-brand-cyan bg-slate-50 hover:bg-brand-cyan/5 flex flex-col items-center justify-center p-3 text-center cursor-pointer transition-all';
+            addTile.innerHTML = `
+                <div class="size-8 rounded-full bg-brand-cyan/10 text-brand-cyan flex items-center justify-center text-sm mb-1.5">
+                    <i class="fa-solid fa-plus"></i>
+                </div>
+                <span class="text-xs font-bold text-brand-navy">Add More</span>
+                <span class="text-[10px] text-slate-400">Up to ${MAX_PHOTOS}</span>
+                <input type="file" accept="image/jpeg,image/png,image/jpg,image/webp" multiple class="sr-only" onchange="addMorePhotos(this)">
+            `;
+            grid.appendChild(addTile);
+        }
+    }
+
+    // Drag and Drop handlers
+    function handleDragOver(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        const dropzone = document.getElementById('photos-main-dropzone');
+        if (dropzone) {
+            dropzone.classList.add('border-brand-cyan', 'bg-brand-cyan/10');
+        }
+    }
+
+    function handleDragLeave(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        const dropzone = document.getElementById('photos-main-dropzone');
+        if (dropzone) {
+            dropzone.classList.remove('border-brand-cyan', 'bg-brand-cyan/10');
+        }
+    }
+
+    function handleDrop(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        const dropzone = document.getElementById('photos-main-dropzone');
+        if (dropzone) {
+            dropzone.classList.remove('border-brand-cyan', 'bg-brand-cyan/10');
+        }
+        if (e.dataTransfer && e.dataTransfer.files) {
+            addPhotosToSelection(Array.from(e.dataTransfer.files));
+        }
+    }
+
+    function toggleImageUrlInput() {
+        const box = document.getElementById('image-url-container');
+        if (box) box.classList.toggle('hidden');
+    }
+
+    // 8b. Video Preview Handlers
+    function previewSelectedVideo(input) {
+        const notice = document.getElementById('selected-video-notice');
+        const nameEl = document.getElementById('selected-video-name');
+        const sizeEl = document.getElementById('selected-video-size');
+        if (input.files && input.files[0]) {
+            const file = input.files[0];
+            if (notice) notice.classList.remove('hidden');
+            if (nameEl) nameEl.textContent = file.name;
+            if (sizeEl) sizeEl.textContent = `(${(file.size / 1024 / 1024).toFixed(1)} MB)`;
+        }
+    }
+
+    function removeSelectedVideo() {
+        const input = document.getElementById('property_video_input');
+        const notice = document.getElementById('selected-video-notice');
+        if (input) input.value = '';
+        if (notice) notice.classList.add('hidden');
+    }
+
+    // Form Submission Interception for Min 5 Photos Mandatory Validation
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('main-wizard-form');
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                // Ensure photos are synced
+                syncPhotosInput();
+
+                if (selectedPhotos.length < MIN_PHOTOS) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    const alertBox = document.getElementById('photo-validation-alert');
+                    const alertMsg = document.getElementById('photo-validation-message');
+                    if (alertMsg) {
+                        alertMsg.textContent = `कम से कम 5 फोटो अपलोड करना अनिवार्य है! आपने अभी केवल ${selectedPhotos.length} फोटो चुनी हैं। (Please upload at least 5 photos before publishing. Currently selected: ${selectedPhotos.length})`;
+                    }
+                    if (alertBox) {
+                        alertBox.classList.remove('hidden');
+                        alertBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                    
+                    const section = document.getElementById('photo-upload-section');
+                    if (section) {
+                        section.classList.add('ring-4', 'ring-rose-500/40', 'rounded-2xl', 'p-2', 'bg-rose-50/20');
+                        setTimeout(() => {
+                            section.classList.remove('ring-4', 'ring-rose-500/40', 'bg-rose-50/20');
+                        }, 3000);
+                    }
+                    return false;
+                }
+
+                if (selectedPhotos.length > MAX_PHOTOS) {
+                    e.preventDefault();
+                    alert(`अधिकतम ${MAX_PHOTOS} फोटो ही अपलोड कर सकते हैं (Maximum ${MAX_PHOTOS} photos limit).`);
+                    return false;
+                }
+
+                // Show uploading spinner on publish button
+                const submitBtn = form.querySelector('button[type="submit"]');
+                if (submitBtn) {
+                    submitBtn.disabled = true;
+                    submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> <span>Uploading ' + selectedPhotos.length + ' Photos &amp; Publishing...</span>';
+                }
+            });
+        }
+    });
 
     // 9. Expert Assistance Modal Actions
     function openAssistanceModal() {

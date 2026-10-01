@@ -18,7 +18,13 @@ class TestimonialResource extends Resource
 {
     protected static ?string $model = Testimonial::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedStar;
+
+    protected static \UnitEnum|string|null $navigationGroup = 'Content & CMS';
+
+    protected static ?string $navigationLabel = 'Reviews & Testimonials';
+
+    protected static ?int $navigationSort = 5;
 
     public static function form(Schema $schema): Schema
     {
