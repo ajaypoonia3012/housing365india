@@ -2,21 +2,24 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
-use App\Models\User;
-use App\Models\Property;
 use App\Models\CityLocation;
-use App\Models\Service;
 use App\Models\Faq;
 use App\Models\Page;
-use App\Models\Testimonial;
+use App\Models\Property;
+use App\Models\Service;
 use App\Models\Setting;
+use App\Models\Testimonial;
+use App\Models\User;
+use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Schema;
 
 class IndiaDatabaseSeeder extends Seeder
 {
     public function run(): void
     {
+        Schema::disableForeignKeyConstraints();
+
         // ── 1. ADMIN USER ──
         User::updateOrCreate(
             ['email' => 'admin@housing365.in'],
@@ -348,7 +351,7 @@ class IndiaDatabaseSeeder extends Seeder
                 'category' => 'owners',
                 'icon' => 'bullhorn',
                 'short_description' => 'Professional HDR photos and syndication across 40+ Indian rental portals.',
-                'full_description' => 'Professional photography, video walkthrough, and multi-platform syndication across MagicBricks, 99acres, Housing.com, NoBroker, and corporate expat networks.',
+                'full_description' => 'Professional photography, video walkthrough, and multi-platform syndication across the Housing365 verified network, corporate expat channels, and national real estate directories.',
                 'features' => ['Professional HDR Photography', '40+ Indian Portal Syndication', 'Targeted Corporate Tenant Outreach', 'Dedicated Property Landing Page'],
                 'pricing_info' => '₹199 all-inclusive setup',
                 'order' => 7,
@@ -1813,8 +1816,8 @@ class IndiaDatabaseSeeder extends Seeder
         Faq::truncate();
         $faqs = [
             [
-                'question' => 'How does Housing 365 India outsmart MagicBricks, 99acres, and NoBroker?',
-                'answer' => 'Unlike MagicBricks and 99acres which are flooded with fake broker listings and sell your phone number to dozens of aggressive telecallers, Housing 365 India protects your privacy with 100% Aadhaar & title-verified owners. Unlike NoBroker\'s pushy relationship manager plans, we charge a single, transparent success fee only after a verified tenant signs the legal lease.',
+                'question' => 'How does Housing365 India protect owners and tenants compared to traditional classifieds?',
+                'answer' => 'Unlike legacy classified portals which are flooded with unverified broker listings and expose your phone number to dozens of telemarketers, Housing365 protects your privacy with 100% Aadhaar & title-verified owners. We operate on a transparent, owner-first model with ₹0 standard residential placement fee and verified digital agreements.',
                 'category' => 'Pricing',
                 'order' => 1,
                 'is_active' => true,
@@ -1846,7 +1849,7 @@ class IndiaDatabaseSeeder extends Seeder
                 'category' => 'General',
                 'order' => 5,
                 'is_active' => true,
-            ]
+            ],
         ];
 
         foreach ($faqs as $faq) {
@@ -1860,7 +1863,7 @@ class IndiaDatabaseSeeder extends Seeder
                 'name' => 'Vikram Singhania',
                 'role' => 'NRI Landlord & Mumbai Property Owner',
                 'location' => 'Bandra West, Mumbai',
-                'content' => 'After horrible experiences with local brokers who kept my flat locked for 3 months and MagicBricks where my phone was spammed with 50 calls a day, Housing 365 placed a senior VP tenant in Bandra West within 11 days. Complete Leave & License and Mumbai Police verification handled digitally.',
+                'content' => 'After frustrating experiences with local brokers who kept my flat locked for 3 months and open portals where my phone was spammed with 50 calls a day, Housing365 placed a senior corporate tenant in Bandra West within 11 days. Complete Leave & License and Mumbai Police verification handled digitally.',
                 'rating' => 5,
                 'is_featured' => true,
                 'order' => 1,
@@ -1869,7 +1872,7 @@ class IndiaDatabaseSeeder extends Seeder
                 'name' => 'Pooja Venkatesh',
                 'role' => 'Tech Lead at Google & Bengaluru Tenant',
                 'location' => 'HSR Layout, Bengaluru',
-                'content' => 'Relocated from Hyderabad to Bengaluru. Finding a flat on NoBroker was a nightmare of paid plans and fake contacts. Housing 365 gave me a verified owner, zero broker fees, transparent 3-month deposit, and society move-in gate pass in 48 hours.',
+                'content' => 'Relocated from Hyderabad to Bengaluru. Finding a flat on regular classifieds was a nightmare of hidden paywalls and outdated contacts. Housing365 gave me a verified owner, zero broker fees, transparent deposit terms, and society move-in gate pass in 48 hours.',
                 'rating' => 5,
                 'is_featured' => true,
                 'order' => 2,
@@ -1882,7 +1885,7 @@ class IndiaDatabaseSeeder extends Seeder
                 'rating' => 5,
                 'is_featured' => true,
                 'order' => 3,
-            ]
+            ],
         ];
 
         foreach ($testimonials as $t) {
@@ -1979,5 +1982,7 @@ class IndiaDatabaseSeeder extends Seeder
         foreach ($pages as $p) {
             Page::updateOrCreate(['slug' => $p['slug']], $p);
         }
+
+        Schema::enableForeignKeyConstraints();
     }
 }

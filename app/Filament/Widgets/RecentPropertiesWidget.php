@@ -3,7 +3,6 @@
 namespace App\Filament\Widgets;
 
 use App\Models\Property;
-use Filament\Actions\EditAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -14,7 +13,7 @@ class RecentPropertiesWidget extends BaseWidget
 {
     protected static ?int $sort = 3;
 
-    protected int | string | array $columnSpan = 'full';
+    protected int|string|array $columnSpan = 'full';
 
     public function table(Table $table): Table
     {
@@ -32,7 +31,7 @@ class RecentPropertiesWidget extends BaseWidget
 
                 TextColumn::make('title')
                     ->label('Listing')
-                    ->description(fn (Property $record): string => ($record->locality ? $record->locality . ', ' : '') . $record->city)
+                    ->description(fn (Property $record): string => ($record->locality ? $record->locality.', ' : '').$record->city)
                     ->weight('bold')
                     ->limit(32)
                     ->searchable(),
@@ -56,8 +55,11 @@ class RecentPropertiesWidget extends BaseWidget
                 TextColumn::make('price_display')
                     ->label('Price')
                     ->state(function (Property $record): string {
-                        if (!empty($record->price_display)) return $record->price_display;
-                        return '₹' . number_format($record->price) . ($record->purpose === 'sale' ? '' : '/mo');
+                        if (! empty($record->price_display)) {
+                            return $record->price_display;
+                        }
+
+                        return '₹'.number_format($record->price).($record->purpose === 'sale' ? '' : '/mo');
                     })
                     ->weight('bold')
                     ->color('success'),

@@ -11,7 +11,7 @@ class AnalyticsStatusWidget extends Widget
 
     protected static ?int $sort = 6;
 
-    protected int | string | array $columnSpan = 'full';
+    protected int|string|array $columnSpan = 'full';
 
     protected function getViewData(): array
     {
@@ -20,9 +20,9 @@ class AnalyticsStatusWidget extends Widget
 
         return [
             'gaId' => $gaId,
-            'gaActive' => !empty($gaId),
+            'gaActive' => ! empty($gaId),
             'gscCode' => $gscCode,
-            'gscActive' => !empty($gscCode),
+            'gscActive' => ! empty($gscCode),
         ];
     }
 }

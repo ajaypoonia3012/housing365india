@@ -2,8 +2,8 @@
 
 namespace App\Filament\Pages;
 
-use BackedEnum;
 use App\Models\Setting;
+use BackedEnum;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Filament\Support\Icons\Heroicon;
@@ -23,7 +23,9 @@ class AnalyticsSettings extends Page
     protected static ?int $navigationSort = 2;
 
     public ?string $google_analytics_id = '';
+
     public ?string $google_search_console_code = '';
+
     public ?string $google_analytics_script = '';
 
     public function mount(): void
@@ -35,9 +37,9 @@ class AnalyticsSettings extends Page
 
     public function save(): void
     {
-        Setting::set('google_analytics_id', trim((string)$this->google_analytics_id), 'analytics', 'text', 'Google Analytics 4 Measurement ID');
-        Setting::set('google_search_console_code', trim((string)$this->google_search_console_code), 'seo', 'text', 'Google Search Console Verification Code');
-        Setting::set('google_analytics_script', trim((string)$this->google_analytics_script), 'analytics', 'textarea', 'Custom Analytics / Header Tracking Script');
+        Setting::set('google_analytics_id', trim((string) $this->google_analytics_id), 'analytics', 'text', 'Google Analytics 4 Measurement ID');
+        Setting::set('google_search_console_code', trim((string) $this->google_search_console_code), 'seo', 'text', 'Google Search Console Verification Code');
+        Setting::set('google_analytics_script', trim((string) $this->google_analytics_script), 'analytics', 'textarea', 'Custom Analytics / Header Tracking Script');
 
         Notification::make()
             ->title('Settings Saved Successfully')

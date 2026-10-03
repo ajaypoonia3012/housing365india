@@ -6,7 +6,6 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -17,24 +16,29 @@ class CityLocationsTable
         return $table
             ->columns([
                 TextColumn::make('name')
-                    ->searchable(),
-                TextColumn::make('slug')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('province_or_state')
-                    ->searchable(),
-                TextColumn::make('country')
+                    ->label('State')
                     ->searchable(),
                 TextColumn::make('tier')
                     ->numeric()
                     ->sortable(),
-                TextColumn::make('avg_rent')
-                    ->searchable(),
-                TextColumn::make('available_units_count')
-                    ->numeric()
-                    ->sortable(),
-                ImageColumn::make('image'),
-                IconColumn::make('is_featured')
+                TextColumn::make('active_properties_count')
+                    ->label('Live Properties')
+                    ->badge()
+                    ->color('info')
+                    ->sortable(false),
+                IconColumn::make('is_active')
+                    ->label('Active')
                     ->boolean(),
+                IconColumn::make('is_indexable')
+                    ->label('Indexable')
+                    ->boolean(),
+                IconColumn::make('is_featured')
+                    ->label('Featured')
+                    ->boolean(),
+
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

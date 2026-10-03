@@ -1,2 +1,24 @@
 User-agent: *
-Disallow:
+Allow: /
+
+# Private & Authenticated Portals
+Disallow: /dashboard/
+Disallow: /admin/
+Disallow: /login
+Disallow: /register
+Disallow: /logout
+Disallow: /password/
+
+# Private Referral & Financial Portals
+Disallow: /referrals/
+Disallow: /rewards/
+Disallow: /payouts/
+Disallow: /storage/private/
+Disallow: /r/
+
+# API & Webhooks
+Disallow: /api/
+Disallow: /rent/webhook
+
+# XML Sitemaps
+Sitemap: https://housing365.in/sitemap.xml

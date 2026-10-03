@@ -163,7 +163,7 @@
                     <div class="p-8 rounded-2xl bg-[#F8FAFD] border border-slate-200 text-center">
                         <span class="font-display text-4xl sm:text-5xl font-extrabold text-brand-cyan">148</span>
                         <p class="text-sm font-bold text-brand-navy mt-2">Active Prospective Tenant Inquiries This Week</p>
-                        <p class="text-xs text-slate-500 mt-1 max-w-md mx-auto">Broadcasting across Housing365, MagicBricks, 99acres, Housing.com, and targeted social ad audiences.</p>
+                        <p class="text-xs text-slate-500 mt-1 max-w-md mx-auto">Broadcasting across the Housing365 verified network, corporate relocation programs, and targeted tenant search audiences.</p>
                     </div>
                 </div>
 
@@ -207,7 +207,7 @@
                 </div>
                 <h3 class="text-xl font-bold text-brand-navy mb-3">75-Point Automated Underwriting</h3>
                 <p class="text-slate-600 text-sm leading-relaxed">
-                    Direct API integration with Equifax, TransUnion, Plaid bank payroll verification, and landlord dispute court records to prevent rental defaults before they happen.
+                    Direct digital integration with Aadhaar OTP verification, PAN checks, CIBIL credit scoring, and biometric police verification assistance to prevent rental defaults before they happen.
                 </p>
             </div>
 
@@ -237,7 +237,7 @@
                 </div>
                 <h3 class="text-xl font-bold text-brand-navy mb-3">Digital Legal Lease Generation</h3>
                 <p class="text-slate-600 text-sm leading-relaxed">
-                    Automated creation of Ontario Standard Leases (OSL) and state-specific statutory agreements with customized condominium rules, pet clauses, and e-signatures.
+                    Automated creation of legally vetted 11-month rental agreements with official state e-stamping, biometric police verification integration, and secure digital signatures.
                 </p>
             </div>
 
@@ -247,7 +247,7 @@
                 </div>
                 <h3 class="text-xl font-bold text-brand-navy mb-3">Automated Financial &amp; Tax Ledgers</h3>
                 <p class="text-slate-600 text-sm leading-relaxed">
-                    Export CPA-ready financial summaries, direct EFT payouts, and end-of-year tax statements (T5013 / Schedule 88) with one single click.
+                    Export CA-ready financial summaries, direct bank / UPI rental receipts, and end-of-year income tax ledgers with one single click.
                 </p>
             </div>
 
@@ -303,12 +303,12 @@
                     <tr>
                         <td class="p-6 font-bold text-brand-navy">Applicant Verification</td>
                         <td class="p-6 text-rose-500"><i class="fa-solid fa-xmark mr-2"></i> Easily faked paper PDFs</td>
-                        <td class="p-6 text-emerald-600 font-bold bg-sky-50/30"><i class="fa-solid fa-check mr-2"></i> 75-Point Automated Plaid &amp; Equifax API</td>
+                        <td class="p-6 text-emerald-600 font-bold bg-sky-50/30"><i class="fa-solid fa-check mr-2"></i> Aadhaar, PAN &amp; CIBIL Digital Verification</td>
                     </tr>
                     <tr>
                         <td class="p-6 font-bold text-brand-navy">Listing Syndication Reach</td>
-                        <td class="p-6 text-slate-500">MLS only (1 portal)</td>
-                        <td class="p-6 text-emerald-600 font-bold bg-sky-50/30"><i class="fa-solid fa-check mr-2"></i> 40+ Consumer &amp; Social Portals</td>
+                        <td class="p-6 text-slate-500">Single portal only</td>
+                        <td class="p-6 text-emerald-600 font-bold bg-sky-50/30"><i class="fa-solid fa-check mr-2"></i> Verified Housing365 Network</td>
                     </tr>
                     <tr>
                         <td class="p-6 font-bold text-brand-navy">Rental Agreement &amp; E-Stamping</td>

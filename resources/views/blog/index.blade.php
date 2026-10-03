@@ -19,7 +19,7 @@
             Rental Guides &amp; <span class="text-brand-cyan">Market Updates</span>
         </h1>
         <p class="mt-4 max-w-2xl text-base sm:text-lg text-slate-600 font-normal leading-relaxed mx-auto">
-            Stay ahead with authoritative guidance on residential tenancy regulations, property yield optimization, and multifamily rental trends across Canada and the United States.
+            Stay ahead with authoritative guidance on residential tenancy regulations, Model Tenancy Act compliance, property yield optimization, and real estate trends across India.
         </p>
     </div>
 </section>

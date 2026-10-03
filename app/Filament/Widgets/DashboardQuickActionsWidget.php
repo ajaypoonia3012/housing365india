@@ -13,19 +13,19 @@ class DashboardQuickActionsWidget extends Widget
 
     protected static ?int $sort = 0;
 
-    protected int | string | array $columnSpan = 'full';
+    protected int|string|array $columnSpan = 'full';
 
     protected function getViewData(): array
     {
         $newLeadsCount = Inquiry::where('status', 'new')->count();
         $unverifiedProperties = Property::where('is_verified', false)->count();
-        $primeUsersCount = User::where('is_prime', true)->count();
+        $totalUsersCount = User::count();
         $totalProperties = Property::count();
 
         return [
             'newLeadsCount' => $newLeadsCount,
             'unverifiedProperties' => $unverifiedProperties,
-            'primeUsersCount' => $primeUsersCount,
+            'totalUsersCount' => $totalUsersCount,
             'totalProperties' => $totalProperties,
             'adminUser' => auth()->user(),
         ];

@@ -126,7 +126,7 @@
                 <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
                     <div class="bg-emerald-500 h-full rounded-full" style="width: 100%"></div>
                 </div>
-                <p class="text-xs text-slate-500 mt-3">Zero LTB infractions across all contracts</p>
+                <p class="text-xs text-slate-500 mt-3">Zero legal disputes across all registered agreements</p>
             </div>
         </div>
     </div>

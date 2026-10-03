@@ -358,19 +358,43 @@
                         <div class="space-y-5">
                             <!-- For: Radio Options (Sale / Rent / PG) -->
                             <div>
-                                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">For</label>
-                                <div class="flex items-center gap-6 text-sm font-semibold text-slate-800">
-                                    <label class="inline-flex items-center gap-2 cursor-pointer">
+                                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Listing Purpose *</label>
+                                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2.5 text-xs font-semibold text-slate-800">
+                                    <label class="p-2.5 rounded-xl border border-slate-200 bg-slate-50 hover:border-brand-cyan flex items-center gap-2 cursor-pointer transition">
+                                        <input type="radio" name="purpose" value="rent" class="size-4 text-brand-cyan focus:ring-brand-cyan" onchange="syncPurposeChange('rent')" {{ old('purpose', 'rent') === 'rent' ? 'checked' : '' }}>
+                                        <span>Rent (₹0 Free)</span>
+                                    </label>
+                                    <label class="p-2.5 rounded-xl border border-slate-200 bg-slate-50 hover:border-brand-cyan flex items-center gap-2 cursor-pointer transition">
                                         <input type="radio" name="purpose" value="sale" class="size-4 text-brand-cyan focus:ring-brand-cyan" onchange="syncPurposeChange('sale')" {{ old('purpose') === 'sale' ? 'checked' : '' }}>
                                         <span>Sale</span>
                                     </label>
-                                    <label class="inline-flex items-center gap-2 cursor-pointer">
-                                        <input type="radio" name="purpose" value="rent" class="size-4 text-brand-cyan focus:ring-brand-cyan" onchange="syncPurposeChange('rent')" {{ old('purpose', 'rent') === 'rent' ? 'checked' : '' }}>
-                                        <span>Rent/ Lease</span>
+                                    <label class="p-2.5 rounded-xl border border-slate-200 bg-slate-50 hover:border-brand-cyan flex items-center gap-2 cursor-pointer transition">
+                                        <input type="radio" name="purpose" value="commercial_rent" class="size-4 text-brand-cyan focus:ring-brand-cyan" onchange="syncPurposeChange('commercial_rent')" {{ old('purpose') === 'commercial_rent' ? 'checked' : '' }}>
+                                        <span>Commercial Rent</span>
                                     </label>
-                                    <label class="inline-flex items-center gap-2 cursor-pointer">
-                                        <input type="radio" name="purpose" value="lease" class="size-4 text-brand-cyan focus:ring-brand-cyan" onchange="syncPurposeChange('lease')" {{ old('purpose') === 'lease' ? 'checked' : '' }}>
-                                        <span>PG / Hostel</span>
+                                    <label class="p-2.5 rounded-xl border border-slate-200 bg-slate-50 hover:border-brand-cyan flex items-center gap-2 cursor-pointer transition">
+                                        <input type="radio" name="purpose" value="commercial_sale" class="size-4 text-brand-cyan focus:ring-brand-cyan" onchange="syncPurposeChange('commercial_sale')" {{ old('purpose') === 'commercial_sale' ? 'checked' : '' }}>
+                                        <span>Commercial Sale</span>
+                                    </label>
+                                    <label class="p-2.5 rounded-xl border border-slate-200 bg-slate-50 hover:border-brand-cyan flex items-center gap-2 cursor-pointer transition">
+                                        <input type="radio" name="purpose" value="land_sale" class="size-4 text-brand-cyan focus:ring-brand-cyan" onchange="syncPurposeChange('land_sale')" {{ old('purpose') === 'land_sale' ? 'checked' : '' }}>
+                                        <span>Plot / Land</span>
+                                    </label>
+                                    <label class="p-2.5 rounded-xl border border-slate-200 bg-slate-50 hover:border-brand-cyan flex items-center gap-2 cursor-pointer transition">
+                                        <input type="radio" name="purpose" value="pg" class="size-4 text-brand-cyan focus:ring-brand-cyan" onchange="syncPurposeChange('pg')" {{ old('purpose') === 'pg' ? 'checked' : '' }}>
+                                        <span>PG</span>
+                                    </label>
+                                    <label class="p-2.5 rounded-xl border border-slate-200 bg-slate-50 hover:border-brand-cyan flex items-center gap-2 cursor-pointer transition">
+                                        <input type="radio" name="purpose" value="coliving" class="size-4 text-brand-cyan focus:ring-brand-cyan" onchange="syncPurposeChange('coliving')" {{ old('purpose') === 'coliving' ? 'checked' : '' }}>
+                                        <span>Co-Living</span>
+                                    </label>
+                                    <label class="p-2.5 rounded-xl border border-slate-200 bg-slate-50 hover:border-brand-cyan flex items-center gap-2 cursor-pointer transition">
+                                        <input type="radio" name="purpose" value="coworking" class="size-4 text-brand-cyan focus:ring-brand-cyan" onchange="syncPurposeChange('coworking')" {{ old('purpose') === 'coworking' ? 'checked' : '' }}>
+                                        <span>Coworking</span>
+                                    </label>
+                                    <label class="p-2.5 rounded-xl border border-slate-200 bg-slate-50 hover:border-brand-cyan flex items-center gap-2 cursor-pointer transition">
+                                        <input type="radio" name="purpose" value="project" class="size-4 text-brand-cyan focus:ring-brand-cyan" onchange="syncPurposeChange('project')" {{ old('purpose') === 'project' ? 'checked' : '' }}>
+                                        <span>Builder Project</span>
                                     </label>
                                 </div>
                             </div>
@@ -590,7 +614,7 @@
                             <!-- Expected Price / Rent -->
                             <div>
                                 <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5" id="wizard-price-label">
-                                    Expected Monthly Rent (in ₹) *
+                                    Expected Monthly Rent / Total Price (in ₹) *
                                 </label>
                                 <div class="relative">
                                     <span class="absolute left-3.5 top-3 text-slate-400 font-bold text-base">₹</span>
@@ -602,13 +626,55 @@
                                 </div>
                             </div>
 
-                            <!-- Monthly Maintenance -->
+                            <!-- Security Deposit (Optional for Rent / PG) -->
                             <div>
                                 <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-                                    Maintenance (Monthly)
+                                    Security Deposit (₹)
+                                </label>
+                                <div class="relative">
+                                    <span class="absolute left-3.5 top-3 text-slate-400 font-bold text-base">₹</span>
+                                    <input type="number" name="deposit_amount" value="{{ old('deposit_amount') }}" placeholder="e.g. 50000" class="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-xl pl-8 pr-4 py-3 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-brand-cyan/20 focus:border-brand-cyan transition">
+                                </div>
+                                <span class="text-[11px] text-slate-400 mt-1 block">Usually 1-2 months rent for residential / PG.</span>
+                            </div>
+
+                            <!-- Monthly Maintenance -->
+                            <div class="sm:col-span-2">
+                                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                                    Maintenance Charges
                                 </label>
                                 <input type="text" name="maintenance" value="{{ old('maintenance', 'Included in rent') }}" placeholder="e.g. ₹ 2,000 / month or Included" class="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-cyan/20 focus:border-brand-cyan transition font-medium">
-                                <span class="text-[11px] text-slate-400 mt-1 block">Specify if society maintenance is included or extra.</span>
+                            </div>
+                        </div>
+
+                        <!-- CLEAR DISTINCTION: Free Leasing vs Optional Property Management -->
+                        <div class="mt-6 p-5 rounded-2xl border-2 border-dashed border-brand-cyan/40 bg-brand-cyan/5">
+                            <div class="flex items-start gap-3">
+                                <div class="size-6 rounded-full bg-brand-cyan text-white flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">
+                                    <i class="fa-solid fa-handshake"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-bold text-brand-navy">Choose Your Housing365 Service Model</h4>
+                                    <p class="text-xs text-slate-600 mt-0.5">
+                                        Standard residential listing and tenant placement on Housing 365 is <strong>100% FREE (₹0 Brokerage)</strong>. You only pay if you voluntarily opt in to full-service property management.
+                                    </p>
+                                    <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                                        <label class="p-3 rounded-xl border border-slate-200 bg-white hover:border-brand-cyan cursor-pointer flex items-start gap-2.5">
+                                            <input type="radio" name="opt_in_management" value="0" checked class="size-4 text-brand-cyan mt-0.5">
+                                            <div>
+                                                <span class="font-bold text-brand-navy block">Leasing Only (₹0 Free)</span>
+                                                <span class="text-slate-500 text-[11px]">Free listing, free enquiries, you manage property directly.</span>
+                                            </div>
+                                        </label>
+                                        <label class="p-3 rounded-xl border border-slate-200 bg-white hover:border-brand-cyan cursor-pointer flex items-start gap-2.5">
+                                            <input type="radio" name="opt_in_management" value="1" class="size-4 text-brand-cyan mt-0.5">
+                                            <div>
+                                                <span class="font-bold text-brand-navy block">Leasing + Property Management</span>
+                                                <span class="text-slate-500 text-[11px]">Optional paid service (rent guarantee, vendor maintenance, inspection).</span>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -637,6 +703,31 @@
                                     <span class="text-[11px] text-slate-400">Auto-generated with complete specs if blank</span>
                                 </div>
                                 <textarea name="description" rows="3" placeholder="Highlight property advantages: road connectivity, sunlight, nearby metro/schools, water supply..." class="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-xl p-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-cyan/20 focus:border-brand-cyan transition leading-relaxed">{{ old('description') }}</textarea>
+                            </div>
+
+                            <!-- Purpose-specific Additional Details (PG / Builder) -->
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 rounded-2xl bg-[#F8FAFD] border border-slate-200">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">PG / Co-Living Gender</label>
+                                    <select name="pg_gender" class="w-full bg-white border border-slate-200 text-slate-900 rounded-xl px-3 py-2 text-xs font-medium">
+                                        <option value="">Not Applicable / Unisex</option>
+                                        <option value="boys">Boys Only</option>
+                                        <option value="girls">Girls Only</option>
+                                        <option value="unisex">Unisex / All Welcome</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">PG Occupancy Type</label>
+                                    <input type="text" name="occupancy_type" placeholder="e.g. Single Room, Twin Sharing" class="w-full bg-white border border-slate-200 text-slate-900 rounded-xl px-3 py-2 text-xs font-medium">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Project Name (For Builders)</label>
+                                    <input type="text" name="project_name" placeholder="e.g. Royal Heights Phase 2" class="w-full bg-white border border-slate-200 text-slate-900 rounded-xl px-3 py-2 text-xs font-medium">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">RERA Registration No.</label>
+                                    <input type="text" name="rera_number" placeholder="e.g. RAJ/P/2024/1234" class="w-full bg-white border border-slate-200 text-slate-900 rounded-xl px-3 py-2 text-xs font-medium">
+                                </div>
                             </div>
 
                             <!-- Amenities Grid -->

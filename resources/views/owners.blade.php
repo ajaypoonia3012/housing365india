@@ -36,7 +36,7 @@
 
                 <!-- Subheadline -->
                 <p class="mt-6 text-base sm:text-lg leading-relaxed text-slate-600 max-w-2xl">
-                    {{ $page->hero_subtitle ?? 'Full-service leasing execution built for landlords who value their time. We handle pricing analysis, 4K marketing, showings, 75-point tenant qualification, and legal lease execution across Ontario and major US hubs.' }}
+                    {{ $page->hero_subtitle ?? 'Full-service leasing execution built for Indian property owners and NRIs who value their time. We handle pricing analysis, HD marketing, tenant screening, legal 11-month e-stamped agreement drafting, and biometric police verification across all top Indian cities.' }}
                 </p>
 
                 <!-- Value Highlights -->
@@ -120,7 +120,7 @@
                 Why Self-Managing Leasing Carries Expensive Risks
             </h2>
             <p class="mt-4 text-base text-slate-600">
-                Placing the wrong tenant costs thousands in unpaid rent, LTB hearings, legal representation, and property damage.
+                Placing the wrong tenant costs thousands in unpaid rent, protracted tenancy litigation, court fees, and property damage.
             </p>
         </div>
 
@@ -252,11 +252,11 @@
                     </div>
                     <h3 class="text-xl font-bold text-brand-navy mb-3">Compliant Legal Leases</h3>
                     <p class="text-slate-600 text-sm leading-relaxed">
-                        We draft and execute official Ontario Standard Leases (OSL) complete with enforceable condominium bylaws, pet covenants, tenant insurance riders, and utility agreements.
+                        We draft and execute legally vetted 11-month rent agreements with official state e-stamping and biometric police verification assistance, notary coordination, and clear society-specific clauses.
                     </p>
                 </div>
                 <div class="mt-6 pt-4 border-t border-slate-100 text-xs text-brand-cyan font-bold">
-                    LTB &amp; Tribunal ready
+                    Court &amp; Legal Authority Ready
                 </div>
             </div>
 
@@ -311,14 +311,14 @@
                     </tr>
                     <tr>
                         <td class="p-6 font-bold text-brand-navy">Listing Syndication Reach</td>
-                        <td class="p-6 bg-sky-50/30 border-x border-brand-cyan/20 font-bold text-emerald-600"><i class="fa-solid fa-check mr-2"></i> 40+ Portals &amp; Social</td>
-                        <td class="p-6 text-slate-500">OLX &amp; FB Marketplace</td>
+                        <td class="p-6 bg-sky-50/30 border-x border-brand-cyan/20 font-bold text-emerald-600"><i class="fa-solid fa-check mr-2"></i> Verified Housing365 Network</td>
+                        <td class="p-6 text-slate-500">Classifieds &amp; Social Groups</td>
                         <td class="p-6 text-slate-500">Single portal only</td>
                     </tr>
                     <tr>
                         <td class="p-6 font-bold text-brand-navy">Screening &amp; Fraud Vetting</td>
-                        <td class="p-6 bg-sky-50/30 border-x border-brand-cyan/20 font-bold text-emerald-600"><i class="fa-solid fa-check mr-2"></i> 75-Point Automated Plaid &amp; Equifax</td>
-                        <td class="p-6 text-slate-500">Easily forged paper paystubs</td>
+                        <td class="p-6 bg-sky-50/30 border-x border-brand-cyan/20 font-bold text-emerald-600"><i class="fa-solid fa-check mr-2"></i> Aadhaar, PAN &amp; CIBIL Screening</td>
+                        <td class="p-6 text-slate-500">Easily forged paper salary slips</td>
                         <td class="p-6 text-slate-500">Basic credit check</td>
                     </tr>
                     <tr>

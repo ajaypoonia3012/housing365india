@@ -70,7 +70,7 @@
                     Welcome back, {{ $adminUser?->name ?? 'Administrator' }}
                 </h2>
                 <p style="font-size: 0.85rem; color: #CBD5E1; margin: 0.25rem 0 0 0; max-width: 650px; line-height: 1.4;">
-                    Full dynamic control over marketplace listings, verified inventory, inbound leads, Prime memberships, CMS landing pages, and pan-India SEO coverage.
+                    Full dynamic control over marketplace listings, verified inventory, inbound leads, user management, CMS landing pages, and pan-India SEO coverage.
                 </p>
             </div>
 
@@ -114,13 +114,13 @@
                     <span style="font-size: 0.65rem; color: #94A3B8; margin-top: 0.15rem;">Rent / Sale / Land</span>
                 </a>
 
-                <!-- 2. Prime & Users -->
+                <!-- 2. Users Directory -->
                 <a href="{{ url('/admin/users') }}" class="h365-btn">
                     <div class="h365-btn-icon" style="background: rgba(245, 158, 11, 0.2); color: #FBBF24;">
-                        <i class="fa-solid fa-crown"></i>
+                        <i class="fa-solid fa-users"></i>
                     </div>
-                    <span style="font-size: 0.78rem; font-weight: 700; color: #FFFFFF;">Prime &amp; Users</span>
-                    <span style="font-size: 0.65rem; color: #94A3B8; margin-top: 0.15rem;">{{ $primeUsersCount }} Subscribers</span>
+                    <span style="font-size: 0.78rem; font-weight: 700; color: #FFFFFF;">Users &amp; Clients</span>
+                    <span style="font-size: 0.65rem; color: #94A3B8; margin-top: 0.15rem;">{{ $totalUsersCount }} Accounts</span>
                 </a>
 
                 <!-- 3. Inquiries -->

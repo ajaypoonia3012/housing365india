@@ -2,11 +2,12 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
-use App\Models\Page;
-use App\Models\Service;
 use App\Models\CityLocation;
 use App\Models\Faq;
+use App\Models\Page;
+use App\Models\Service;
+use App\Services\ServiceCatalog;
+use Illuminate\Database\Seeder;
 
 class DynamicContentSeeder extends Seeder
 {
@@ -269,7 +270,7 @@ class DynamicContentSeeder extends Seeder
         foreach ($pricingFaqs as $faq) {
             Faq::updateOrCreate([
                 'question' => $faq['question'],
-                'category' => 'Pricing'
+                'category' => 'Pricing',
             ], $faq);
         }
 
@@ -290,7 +291,7 @@ class DynamicContentSeeder extends Seeder
                         'hero_eyebrow' => $data['heroEyebrow'] ?? null,
                         'hero_headline' => $data['heroHeadline'] ?? null,
                         'hero_lede' => $data['heroLede'] ?? null,
-                        'hero_backdrop' => \App\Services\ServiceCatalog::getHeroBackdrop($slug)['src'] ?? null,
+                        'hero_backdrop' => ServiceCatalog::getHeroBackdrop($slug)['src'] ?? null,
                         'features' => $data['problemPoints'] ?? [],
                         'scope' => $data['scope'] ?? [],
                         'how_it_works' => $data['howItWorks'] ?? [],
@@ -319,7 +320,7 @@ class DynamicContentSeeder extends Seeder
                         'province_or_state' => $c['stateSlug'] ?? 'US',
                         'country' => 'US',
                         'tier' => 1,
-                        'avg_rent' => isset($c['medianRent']) ? '$' . number_format($c['medianRent']) : '$2,500',
+                        'avg_rent' => isset($c['medianRent']) ? '$'.number_format($c['medianRent']) : '$2,500',
                         'available_units_count' => rand(20, 95),
                         'description' => $c['marketNote'] ?? 'High demand residential rental market managed by Housing365.',
                         'image' => $c['heroImageUrl'] ?? 'https://images.unsplash.com/photo-1535498730771-e735b998cd64?w=800&auto=format&fit=crop&q=80',

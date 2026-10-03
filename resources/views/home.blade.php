@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
-@section('title', 'Housing 365 India | Outsmarting MagicBricks & NoBroker with 100% Verified Owners & Legal Leases')
-@section('meta_description', 'India\'s premier institutional leasing platform. Verified property owners, zero broker spam calls, 11-month e-stamped legal agreements, and biometric police verification across Mumbai, Bengaluru, Delhi NCR, Hyderabad, Pune and all 28 states.')
+@section('title', 'Housing365 India | Everything Property. One Platform. Verified Owners, Zero Brokerage & Legal Leasing')
+@section('meta_description', 'Find, list, lease, verify, move, maintain, manage, buy and sell property across India — all through Housing365. ₹0 standard residential listing fee for owners.')
 
 @section('content')
 
-<!-- ── SECTION 1: HERO SHOWCASE WITH FLOATING PERFORMANCE DASHBOARD & 5-STAT STRIP ── -->
+<!-- ── SECTION 1: HERO SHOWCASE WITH EVERYTHING PROPERTY. ONE PLATFORM ── -->
 <section class="relative overflow-hidden bg-gradient-to-b from-[#F7FAFD] via-white to-white pt-8 pb-12 sm:pt-12 sm:pb-16 lg:pt-16 lg:pb-20">
     <!-- Glow Effects -->
     <div class="pointer-events-none absolute -left-40 top-0 h-[500px] w-[500px] rounded-full opacity-40 blur-3xl" style="background: radial-gradient(circle, rgba(0,174,239,0.18) 0%, transparent 70%)" aria-hidden="true"></div>
@@ -19,60 +19,53 @@
                 <!-- Eyebrow Badge -->
                 <div class="mb-4 inline-flex items-center gap-2 rounded-full border border-brand-cyan/20 bg-brand-cyan/5 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-brand-cyan">
                     <span class="h-1.5 w-1.5 rounded-full bg-brand-cyan"></span>
-                    {{ $settings['hero_eyebrow'] ?? 'VERIFIED OWNERS & ZERO BROKERAGE ACROSS INDIA' }}
+                    <span>EVERYTHING PROPERTY. ONE PLATFORM.</span>
                 </div>
 
                 <!-- Headline -->
                 <h1 class="font-display text-4xl font-normal leading-[1.12] tracking-tight text-brand-navy sm:text-5xl md:text-6xl">
-                    {{ $settings['hero_title_part1'] ?? 'Stress-Free Property Ownership, ' }}
-                    <span class="font-display font-medium text-brand-cyan">{{ $settings['hero_title_part2'] ?? 'Higher Returns.' }}</span>
+                    Everything Property.
+                    <span class="block font-display font-medium text-brand-cyan mt-1">One Platform.</span>
                 </h1>
 
                 <!-- Subheadline -->
                 <p class="mt-5 max-w-xl text-base leading-relaxed text-slate-600 sm:text-lg">
-                    {{ $settings['hero_subtitle'] ?? 'Full-service leasing and property management platform delivering end-to-end leasing execution for landlords, tenants, and property owners across India.' }}
+                    Find, list, lease, verify, move, maintain, manage, buy and sell property across India — all through Housing365. Enjoy <strong class="text-brand-navy font-bold">₹0 standard residential listing and leasing fee</strong> for owners.
                 </p>
+
+                <!-- Persona Quick Bar -->
+                <div class="mt-6 flex flex-wrap items-center gap-2 text-xs font-semibold text-slate-600">
+                    <span class="text-slate-400 text-[11px] uppercase tracking-wider mr-1">I am an:</span>
+                    <a href="{{ route('owners') }}" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-brand-cyan/10 hover:text-brand-navy transition">Owner</a>
+                    <a href="{{ route('tenants') }}" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-brand-cyan/10 hover:text-brand-navy transition">Tenant</a>
+                    <a href="{{ route('franchising') }}#brokers" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-brand-cyan/10 hover:text-brand-navy transition">Broker</a>
+                    <a href="{{ route('franchising') }}#builders" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-brand-cyan/10 hover:text-brand-navy transition">Builder</a>
+                    <a href="{{ route('properties.index', ['property_type' => 'pg']) }}" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-brand-cyan/10 hover:text-brand-navy transition">PG &amp; Co-Living</a>
+                    <a href="{{ route('properties.index', ['property_type' => 'coworking']) }}" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-brand-cyan/10 hover:text-brand-navy transition">Coworking</a>
+                    <a href="{{ route('services.care') }}" class="px-2.5 py-1 rounded-lg bg-cyan-50 text-brand-cyan-dark hover:bg-cyan-100 transition font-bold">Housing365 Care</a>
+                </div>
 
                 <!-- CTA Buttons -->
                 <div class="mt-8 flex flex-wrap items-center gap-4">
-                    <a href="{{ $settings['hero_cta_primary_link'] ?? route('contact') }}" class="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-cyan px-7 py-3.5 text-sm font-bold text-white shadow-lg shadow-brand-cyan/25 transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-cyan-hover hover:shadow-brand-cyan/40">
-                        <span>{{ $settings['hero_cta_primary_text'] ?? 'Talk to an Expert' }}</span>
-                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                    <a href="{{ route('properties.post') }}" class="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-navy px-7 py-3.5 text-sm font-bold text-white shadow-lg shadow-brand-navy/20 transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-navy-light">
+                        <i class="fa-solid fa-circle-plus text-brand-cyan text-xs"></i>
+                        <span>List my Property — Free</span>
                     </a>
 
-                    <a href="{{ $settings['hero_cta_secondary_link'] ?? route('services') }}" class="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-7 py-3.5 text-sm font-bold text-brand-navy shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:bg-slate-50">
-                        {{ $settings['hero_cta_secondary_text'] ?? 'Explore Services' }}
+                    <a href="{{ route('properties.index') }}" class="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-7 py-3.5 text-sm font-bold text-brand-navy shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:bg-slate-50">
+                        <i class="fa-solid fa-magnifying-glass text-xs text-brand-cyan"></i>
+                        <span>Find a Property</span>
                     </a>
                 </div>
 
-                <!-- Contact Info Strip -->
-                <div class="mt-10 flex flex-wrap items-center gap-y-3 gap-x-6 text-xs text-slate-500">
-                    <a href="tel:{{ $settings['contact_phone'] ?? '+916376163263' }}" class="inline-flex items-center gap-2 transition hover:text-brand-navy">
-                        <div class="flex size-7 items-center justify-center rounded-full bg-brand-cyan/10 text-brand-cyan">
-                            <i class="fa-solid fa-phone text-xs"></i>
-                        </div>
-                        <span class="font-medium">{{ $settings['contact_phone'] ?? '+91 63761 63263' }}</span>
-                    </a>
-
-                    <a href="tel:{{ $settings['contact_phone_alt'] ?? '+916376163263' }}" class="inline-flex items-center gap-2 transition hover:text-brand-navy">
-                        <div class="flex size-7 items-center justify-center rounded-full bg-brand-cyan/10 text-brand-cyan">
-                            <i class="fa-solid fa-phone text-xs"></i>
-                        </div>
-                        <span class="font-medium">{{ $settings['contact_phone_alt'] ?? '+91 63761 63263' }}</span>
-                    </a>
-
-                    <a href="mailto:{{ $settings['contact_email'] ?? 'contact@housing365.in' }}" class="inline-flex items-center gap-2 transition hover:text-brand-navy">
-                        <div class="flex size-7 items-center justify-center rounded-full bg-brand-cyan/10 text-brand-cyan">
-                            <i class="fa-solid fa-envelope text-xs"></i>
-                        </div>
-                        <span class="font-medium">{{ $settings['contact_email'] ?? 'contact@housing365.com' }}</span>
-                    </a>
-
-                    <div class="inline-flex items-center gap-2">
-                        <div class="flex size-7 items-center justify-center rounded-full bg-brand-cyan/10 text-brand-cyan">
-                            <i class="fa-solid fa-location-dot text-xs"></i>
-                        </div>
-                        <span class="font-medium">{{ $settings['office_address'] ?? 'Indiqube Emerald, Sector 2, HSR Layout, Bengaluru, Karnataka 560102' }}</span>
+                <!-- Owner Zero Fee Assurance Strip -->
+                <div class="mt-8 inline-flex items-center gap-3 p-3 rounded-2xl bg-cyan-50/60 border border-cyan-100 text-xs text-slate-700">
+                    <span class="flex size-7 items-center justify-center rounded-full bg-brand-cyan text-white text-xs">
+                        <i class="fa-solid fa-check"></i>
+                    </span>
+                    <div>
+                        <strong class="text-brand-navy font-bold block">₹0 Standard Residential Listing &amp; Leasing Fee</strong>
+                        <span class="text-slate-500 text-[11px]">Free listing for owners &bull; Property Management is strictly opt-in and optional</span>
                     </div>
                 </div>
             </div>
@@ -81,7 +74,7 @@
             <div class="relative lg:col-span-6 xl:col-span-6">
                 <div class="relative h-[540px] sm:h-[600px] lg:h-[640px] w-full overflow-hidden rounded-3xl shadow-2xl shadow-slate-900/15 ring-1 ring-slate-200/80">
                     <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1600&auto=format&fit=crop&q=80" 
-                         alt="Luxury residential property building managed by Housing365" 
+                         alt="Luxury residential property building on Housing365 India" 
                          class="w-full h-full object-cover">
                     <div class="absolute inset-0 bg-gradient-to-t from-slate-900/50 via-transparent to-transparent"></div>
 
@@ -90,11 +83,11 @@
                         <!-- Card Header -->
                         <div class="flex items-center justify-between border-b border-slate-100 pb-3">
                             <h3 class="text-xs font-bold text-brand-navy sm:text-sm">
-                                Property Performance
+                                Verified Property Performance
                             </h3>
                             <div class="flex items-center gap-1 text-[11px] font-semibold text-slate-500">
-                                <span>Last 12 months</span>
-                                <i class="fa-solid fa-chevron-down text-[9px]"></i>
+                                <span>Pan-India Network</span>
+                                <i class="fa-solid fa-shield-halved text-[9px] text-brand-cyan"></i>
                             </div>
                         </div>
 
@@ -103,25 +96,25 @@
                             <div class="rounded-xl bg-emerald-50/80 p-2 sm:p-2.5">
                                 <div class="flex items-center gap-1.5 text-emerald-600">
                                     <i class="fa-solid fa-arrow-trend-up text-xs"></i>
-                                    <span class="text-xs font-bold sm:text-sm">{{ $settings['perf_rental_income'] ?? '₹1,85,000' }}</span>
+                                    <span class="text-xs font-bold sm:text-sm">₹0 Fee</span>
                                 </div>
-                                <p class="mt-0.5 text-[10px] text-slate-500">Rental Income</p>
+                                <p class="mt-0.5 text-[10px] text-slate-500">Owner Placement</p>
                             </div>
 
                             <div class="rounded-xl bg-sky-50/80 p-2 sm:p-2.5">
                                 <div class="flex items-center gap-1.5 text-brand-cyan">
                                     <i class="fa-solid fa-circle-check text-xs"></i>
-                                    <span class="text-xs font-bold sm:text-sm">{{ $settings['perf_occupancy'] ?? '100%' }}</span>
+                                    <span class="text-xs font-bold sm:text-sm">100%</span>
                                 </div>
-                                <p class="mt-0.5 text-[10px] text-slate-500">Occupancy</p>
+                                <p class="mt-0.5 text-[10px] text-slate-500">Verified Owners</p>
                             </div>
 
                             <div class="rounded-xl bg-blue-50/80 p-2 sm:p-2.5">
                                 <div class="flex items-center gap-1.5 text-blue-600">
                                     <i class="fa-solid fa-clock text-xs"></i>
-                                    <span class="text-xs font-bold sm:text-sm">{{ $settings['perf_time_to_lease'] ?? '12 Days' }}</span>
+                                    <span class="text-xs font-bold sm:text-sm">11-Month</span>
                                 </div>
-                                <p class="mt-0.5 text-[10px] text-slate-500">Avg Time to Lease</p>
+                                <p class="mt-0.5 text-[10px] text-slate-500">Legal Agreements</p>
                             </div>
                         </div>
 
@@ -140,20 +133,19 @@
                                 </svg>
                             </div>
                             <div class="mt-1 flex justify-between text-[9px] font-medium text-slate-400">
-                                <span>Jan</span>
-                                <span>Mar</span>
-                                <span>May</span>
-                                <span>Jul</span>
-                                <span>Sep</span>
-                                <span>Nov</span>
-                                <span>Dec</span>
+                                <span>Delhi NCR</span>
+                                <span>Mumbai</span>
+                                <span>Bengaluru</span>
+                                <span>Hyderabad</span>
+                                <span>Pune</span>
+                                <span>Chennai</span>
                             </div>
                         </div>
 
                         <!-- Recent Activity Mini Feed -->
                         <div class="mt-3 border-t border-slate-100 pt-2.5">
                             <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                                Recent Activity
+                                Live Platform Activity
                             </p>
                             <div class="mt-1.5 space-y-1.5 text-[11px]">
                                 <div class="flex items-center justify-between text-slate-700">
@@ -161,9 +153,9 @@
                                         <span class="flex size-4 items-center justify-center rounded-full bg-brand-cyan/15 text-brand-cyan">
                                             <i class="fa-solid fa-users text-[8px]"></i>
                                         </span>
-                                        <span>New tenant application</span>
+                                        <span>Direct owner inquiry verified</span>
                                     </div>
-                                    <span class="text-[10px] text-slate-400">2 hours ago</span>
+                                    <span class="text-[10px] text-slate-400">Just now</span>
                                 </div>
 
                                 <div class="flex items-center justify-between text-slate-700">
@@ -171,19 +163,9 @@
                                         <span class="flex size-4 items-center justify-center rounded-full bg-brand-cyan/15 text-brand-cyan">
                                             <i class="fa-solid fa-file-circle-check text-[8px]"></i>
                                         </span>
-                                        <span>Lease signed - Unit 2301</span>
+                                        <span>E-stamped lease agreement executed</span>
                                     </div>
-                                    <span class="text-[10px] text-slate-400">1 day ago</span>
-                                </div>
-
-                                <div class="flex items-center justify-between text-slate-700">
-                                    <div class="flex items-center gap-1.5">
-                                        <span class="flex size-4 items-center justify-center rounded-full bg-brand-cyan/15 text-brand-cyan">
-                                            <i class="fa-solid fa-indian-rupee-sign text-[8px]"></i>
-                                        </span>
-                                        <span>Rent received - Unit 1205</span>
-                                    </div>
-                                    <span class="text-[10px] text-slate-400">3 days ago</span>
+                                    <span class="text-[10px] text-slate-400">1 hour ago</span>
                                 </div>
                             </div>
                         </div>
@@ -199,7 +181,7 @@
             <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6 pb-6 border-b border-slate-100">
                 <!-- Search Intent Tabs -->
                 <div class="flex flex-wrap items-center gap-2">
-                    <span class="text-xs font-bold uppercase tracking-wider text-slate-400 mr-2 hidden sm:inline">I want to:</span>
+                    <span class="text-xs font-bold uppercase tracking-wider text-slate-400 mr-2 hidden sm:inline">Search:</span>
                     <button type="button" onclick="setSearchIntent('rent', 'residential', this)" class="intent-btn active px-4 py-2 rounded-xl text-xs font-bold bg-brand-navy text-white shadow-sm transition">
                         <i class="fa-solid fa-key mr-1.5 text-brand-cyan"></i> Rent
                     </button>
@@ -218,7 +200,7 @@
                 <div class="hidden sm:flex items-center gap-2">
                     <span class="text-xs text-slate-500">Property Owner?</span>
                     <a href="{{ route('properties.post') }}" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold transition">
-                        <i class="fa-solid fa-circle-plus text-amber-500 text-xs"></i>
+                        <i class="fa-solid fa-circle-plus text-brand-cyan text-xs"></i>
                         <span>List Property Free</span>
                     </a>
                 </div>
@@ -292,25 +274,45 @@
             }
         </script>
 
-        <!-- ── HOUSING365 PRIME SHOWCASE BANNER (MagicBricks MB Prime Style) ── -->
-        <div class="mt-8 relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#03234B] via-[#0B1D3A] to-[#021630] p-6 sm:p-8 text-white shadow-2xl border border-amber-400/30">
-            <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
-                <div class="max-w-2xl text-left">
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-400/20 border border-amber-400/40 text-amber-300 text-[11px] font-black uppercase tracking-wider mb-2.5">
-                        <i class="fa-solid fa-crown text-amber-400"></i>
-                        <span>HOUSING365 PRIME &bull; ZERO BROKERAGE MEMBERSHIP</span>
-                    </div>
-                    <h3 class="font-display text-2xl sm:text-3xl font-extrabold text-white">
-                        Looking to Rent or Buy? <span class="bg-gradient-to-r from-amber-300 via-yellow-200 to-amber-400 bg-clip-text text-transparent">Contact 100% Direct Owners</span>
-                    </h3>
-                    <p class="text-slate-300 text-xs sm:text-sm mt-1.5 leading-relaxed">
-                        Unlock verified landlord phone numbers &bull; Personal Relationship Manager to shortlist and schedule showings &bull; Zero broker fees guaranteed.
-                    </p>
+        <!-- ── HOUSING365 CARE & OWNER ZERO FEE ASSURANCE BANNER ── -->
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Owner-First Free Leasing Card -->
+            <div class="relative overflow-hidden rounded-3xl bg-brand-navy p-6 sm:p-8 text-white shadow-xl border border-slate-700">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-cyan/20 text-brand-cyan text-[11px] font-black uppercase tracking-wider mb-2.5">
+                    <i class="fa-solid fa-tag"></i>
+                    <span>OWNER-FIRST PRICING</span>
                 </div>
-                <div class="flex items-center gap-3 shrink-0">
-                    <a href="{{ route('prime') }}" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-500 hover:from-amber-600 text-slate-950 font-black text-xs uppercase tracking-wider shadow-lg shadow-amber-500/25 transition-all duration-200 hover:-translate-y-0.5">
-                        <i class="fa-solid fa-crown"></i>
-                        <span>Explore Prime Packages</span>
+                <h3 class="font-display text-2xl font-bold text-white">
+                    ₹0 Standard Listing &amp; Placement Fee
+                </h3>
+                <p class="text-slate-300 text-xs sm:text-sm mt-2 leading-relaxed">
+                    List residential properties for free. Connect directly with verified tenants, manage applications, and execute legal agreements with zero placement charges.
+                </p>
+                <div class="mt-4 pt-4 border-t border-slate-800 flex items-center justify-between">
+                    <span class="text-xs text-slate-400">Leasing Only: <strong class="text-emerald-400">Free</strong> &bull; Mgmt: <strong class="text-white">Optional</strong></span>
+                    <a href="{{ route('pricing') }}" class="text-xs font-bold text-brand-cyan hover:underline flex items-center gap-1">
+                        <span>View Pricing</span>
+                        <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Housing365 Care Concept Banner -->
+            <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-900 via-[#0B1D3A] to-slate-950 p-6 sm:p-8 text-white shadow-xl border border-cyan-500/20">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-cyan/20 text-brand-cyan text-[11px] font-black uppercase tracking-wider mb-2.5">
+                    <i class="fa-solid fa-shield-heart"></i>
+                    <span>HOUSING365 CARE</span>
+                </div>
+                <h3 class="font-display text-2xl font-bold text-white">
+                    "Your Property, Taken Care Of."
+                </h3>
+                <p class="text-slate-300 text-xs sm:text-sm mt-2 leading-relaxed">
+                    Structured maintenance triage, periodic inspections, rental preparation, and optional property management for discerning property owners and NRIs across India.
+                </p>
+                <div class="mt-4 pt-4 border-t border-slate-800 flex items-center justify-between">
+                    <span class="text-xs text-slate-400">Dedicated Service Coordinators</span>
+                    <a href="{{ route('services.care') }}" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-brand-cyan text-brand-navy font-bold text-xs hover:bg-cyan-300 transition">
+                        <span>Explore Care</span>
                         <i class="fa-solid fa-arrow-right text-[10px]"></i>
                     </a>
                 </div>
@@ -325,8 +327,8 @@
                         <i class="fa-solid fa-house text-base"></i>
                     </div>
                     <div>
-                        <p class="font-display text-lg font-bold text-brand-navy sm:text-xl">{{ $settings['hero_stat_1_val'] ?? '10K+' }}</p>
-                        <p class="text-xs text-slate-500">{{ $settings['hero_stat_1_lbl'] ?? 'Properties Leased' }}</p>
+                        <p class="font-display text-lg font-bold text-brand-navy sm:text-xl">10K+</p>
+                        <p class="text-xs text-slate-500">Properties Leased</p>
                     </div>
                 </div>
 
@@ -335,8 +337,8 @@
                         <i class="fa-solid fa-heart text-base"></i>
                     </div>
                     <div>
-                        <p class="font-display text-lg font-bold text-brand-navy sm:text-xl">{{ $settings['hero_stat_2_val'] ?? '98%' }}</p>
-                        <p class="text-xs text-slate-500">{{ $settings['hero_stat_2_lbl'] ?? 'Owner Satisfaction' }}</p>
+                        <p class="font-display text-lg font-bold text-brand-navy sm:text-xl">98%</p>
+                        <p class="text-xs text-slate-500">Owner Satisfaction</p>
                     </div>
                 </div>
 
@@ -345,8 +347,8 @@
                         <i class="fa-solid fa-city text-base"></i>
                     </div>
                     <div>
-                        <p class="font-display text-lg font-bold text-brand-navy sm:text-xl">{{ $settings['hero_stat_3_val'] ?? '50+' }}</p>
-                        <p class="text-xs text-slate-500">{{ $settings['hero_stat_3_lbl'] ?? 'Major Cities' }}</p>
+                        <p class="font-display text-lg font-bold text-brand-navy sm:text-xl">50+</p>
+                        <p class="text-xs text-slate-500">Indian Cities</p>
                     </div>
                 </div>
 
@@ -355,8 +357,8 @@
                         <i class="fa-solid fa-shield-halved text-base"></i>
                     </div>
                     <div>
-                        <p class="font-display text-lg font-bold text-brand-navy sm:text-xl">{{ $settings['hero_stat_4_val'] ?? 'End-to-End' }}</p>
-                        <p class="text-xs text-slate-500">{{ $settings['hero_stat_4_lbl'] ?? 'Leasing Execution' }}</p>
+                        <p class="font-display text-lg font-bold text-brand-navy sm:text-xl">₹0 Fee</p>
+                        <p class="text-xs text-slate-500">Owner Residential Listing</p>
                     </div>
                 </div>
 
@@ -365,8 +367,8 @@
                         <i class="fa-solid fa-users text-base"></i>
                     </div>
                     <div>
-                        <p class="font-display text-lg font-bold text-brand-navy sm:text-xl">{{ $settings['hero_stat_5_val'] ?? 'Trusted by' }}</p>
-                        <p class="text-xs text-slate-500">{{ $settings['hero_stat_5_lbl'] ?? 'Landlords & Institutions' }}</p>
+                        <p class="font-display text-lg font-bold text-brand-navy sm:text-xl">100%</p>
+                        <p class="text-xs text-slate-500">Direct Verified Network</p>
                     </div>
                 </div>
             </div>
@@ -642,7 +644,7 @@
             <div class="lg:col-span-4 lg:pl-2">
                 <div class="mb-3 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-brand-cyan">
                     <span class="h-1.5 w-1.5 rounded-full bg-brand-cyan"></span>
-                    {{ $settings['owner_val_eyebrow'] ?? 'OWNERS' }}
+                    {{ $settings['owner_val_eyebrow'] ?? 'OWNERS & LANDLORDS' }}
                 </div>
 
                 <h2 class="font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl">
@@ -650,42 +652,42 @@
                 </h2>
 
                 <p class="mt-4 text-sm leading-relaxed text-slate-600 sm:text-base">
-                    {{ $settings['owner_val_desc'] ?? 'From single-family homes to multi-unit buildings, we help landlords and institutional owners achieve higher returns with less stress.' }}
+                    From independent flats to luxury villas and multi-unit portfolios, choose the service model that fits your lifestyle.
                 </p>
 
-                <!-- Checklist -->
+                <!-- 2 Service Options Comparison (Free Leasing vs Optional Paid Management) -->
                 <div class="mt-6 space-y-3">
-                    <div class="flex items-center gap-3">
-                        <div class="flex size-5 shrink-0 items-center justify-center rounded-full bg-brand-cyan text-white shadow-sm">
-                            <i class="fa-solid fa-check text-[10px]"></i>
+                    <div class="p-3.5 rounded-2xl bg-white border border-slate-200/80 shadow-sm">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold uppercase tracking-wider text-brand-navy flex items-center gap-1.5">
+                                <i class="fa-solid fa-circle-check text-emerald-500"></i>
+                                <span>Leasing Only</span>
+                            </span>
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-black uppercase bg-emerald-100 text-emerald-800">₹0 Free</span>
                         </div>
-                        <span class="text-sm font-medium text-slate-700">Data-driven pricing and market insights</span>
+                        <p class="text-xs text-slate-500 mt-1">Free standard listing, direct tenant verification, and digital agreement support with zero placement commissions.</p>
                     </div>
-                    <div class="flex items-center gap-3">
-                        <div class="flex size-5 shrink-0 items-center justify-center rounded-full bg-brand-cyan text-white shadow-sm">
-                            <i class="fa-solid fa-check text-[10px]"></i>
+
+                    <div class="p-3.5 rounded-2xl bg-cyan-50/50 border border-cyan-200/80 shadow-sm">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold uppercase tracking-wider text-brand-navy flex items-center gap-1.5">
+                                <i class="fa-solid fa-shield-heart text-brand-cyan"></i>
+                                <span>Leasing + Property Management</span>
+                            </span>
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-black uppercase bg-brand-cyan/20 text-brand-navy">Opt-In &bull; Paid</span>
                         </div>
-                        <span class="text-sm font-medium text-slate-700">Professional marketing and showings</span>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <div class="flex size-5 shrink-0 items-center justify-center rounded-full bg-brand-cyan text-white shadow-sm">
-                            <i class="fa-solid fa-check text-[10px]"></i>
-                        </div>
-                        <span class="text-sm font-medium text-slate-700">Thorough tenant screening</span>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <div class="flex size-5 shrink-0 items-center justify-center rounded-full bg-brand-cyan text-white shadow-sm">
-                            <i class="fa-solid fa-check text-[10px]"></i>
-                        </div>
-                        <span class="text-sm font-medium text-slate-700">Ongoing support and transparent reporting</span>
+                        <p class="text-xs text-slate-500 mt-1">End-to-end periodic inspections, maintenance triage, and tenant ledger. <em>Strictly optional — never mandatory.</em></p>
                     </div>
                 </div>
 
                 <!-- CTA -->
-                <div class="mt-8">
-                    <a href="{{ route('contact') }}" class="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-cyan px-7 py-3.5 text-sm font-bold text-white shadow-lg shadow-brand-cyan/25 transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-cyan-hover">
-                        <span>Talk to an Expert</span>
-                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                <div class="mt-8 flex items-center gap-3">
+                    <a href="{{ route('properties.post') }}" class="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-navy px-6 py-3.5 text-xs font-bold text-white shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-navy-light">
+                        <i class="fa-solid fa-circle-plus text-brand-cyan"></i>
+                        <span>List Property Free</span>
+                    </a>
+                    <a href="{{ route('pricing') }}" class="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-3.5 text-xs font-bold text-slate-700 hover:bg-slate-50 transition">
+                        <span>Compare Plans</span>
                     </a>
                 </div>
             </div>
@@ -830,7 +832,151 @@
     </div>
 </section>
 
-<!-- ── SECTION 5: EXPLORE RENTAL PROPERTIES ACROSS CANADA & THE US (4 FEATURED CARDS) ── -->
+<!-- ── SECTION 4.1: FLEXIBLE LIVING & WORKSPACES: PG, CO-LIVING & COWORKING ── -->
+<section class="bg-[#F8FAFD] py-16 sm:py-20 lg:py-24 border-y border-slate-200/70">
+    <div class="mx-auto w-full max-w-[1720px] px-4 sm:px-8 lg:px-12 xl:px-16">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+            <div>
+                <div class="mb-3 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-brand-cyan">
+                    <span class="h-1.5 w-1.5 rounded-full bg-brand-cyan"></span>
+                    MODERN LIVING &amp; HYBRID WORKSPACES
+                </div>
+                <h2 class="font-display text-3xl sm:text-4xl font-normal tracking-tight text-brand-navy">
+                    PG, Co-Living &amp; Managed Coworking Spaces
+                </h2>
+                <p class="mt-3 text-slate-600 text-sm sm:text-base max-w-2xl">
+                    Tailored accommodations for students, young professionals, and distributed startup teams across India's top business corridors.
+                </p>
+            </div>
+            <div class="flex items-center gap-3">
+                <a href="{{ route('properties.index', ['property_type' => 'pg']) }}" class="px-4 py-2.5 rounded-xl bg-white border border-slate-200 text-xs font-bold text-brand-navy hover:border-brand-cyan transition shadow-sm">
+                    Browse All PGs
+                </a>
+                <a href="{{ route('properties.index', ['property_type' => 'coworking']) }}" class="px-4 py-2.5 rounded-xl bg-brand-navy text-white text-xs font-bold hover:bg-slate-800 transition shadow-sm">
+                    Explore Coworking
+                </a>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- PG Living Card -->
+            <div class="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm hover:shadow-lg transition flex flex-col justify-between">
+                <div>
+                    <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-bed"></i>
+                    </div>
+                    <span class="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded bg-amber-100 text-amber-800">Ready to Move</span>
+                    <h3 class="font-display font-bold text-xl text-brand-navy mt-2">Paying Guest (PG) Stays</h3>
+                    <p class="text-xs text-slate-500 mt-2 leading-relaxed">
+                        Single &amp; shared rooms with Wi-Fi, home-style meals, housekeeping, and biometric security in prime tech hubs.
+                    </p>
+                </div>
+                <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+                    <span class="text-xs font-bold text-brand-navy">From ₹6,500/mo</span>
+                    <a href="{{ route('properties.index', ['property_type' => 'pg']) }}" class="text-xs font-bold text-brand-cyan hover:underline">View PGs &rarr;</a>
+                </div>
+            </div>
+
+            <!-- Co-Living Spaces Card -->
+            <div class="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm hover:shadow-lg transition flex flex-col justify-between">
+                <div>
+                    <div class="w-12 h-12 rounded-2xl bg-cyan-50 text-brand-cyan flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-people-roof"></i>
+                    </div>
+                    <span class="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded bg-cyan-100 text-cyan-900">Community First</span>
+                    <h3 class="font-display font-bold text-xl text-brand-navy mt-2">Managed Co-Living</h3>
+                    <p class="text-xs text-slate-500 mt-2 leading-relaxed">
+                        Premium private suites with designer shared lounges, community game nights, gym access, and flexible lock-in terms.
+                    </p>
+                </div>
+                <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+                    <span class="text-xs font-bold text-brand-navy">From ₹12,000/mo</span>
+                    <a href="{{ route('properties.index', ['property_type' => 'co-living']) }}" class="text-xs font-bold text-brand-cyan hover:underline">Explore Co-Living &rarr;</a>
+                </div>
+            </div>
+
+            <!-- Coworking Card -->
+            <div class="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm hover:shadow-lg transition flex flex-col justify-between">
+                <div>
+                    <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-laptop-code"></i>
+                    </div>
+                    <span class="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded bg-indigo-100 text-indigo-900">Workspaces</span>
+                    <h3 class="font-display font-bold text-xl text-brand-navy mt-2">Coworking &amp; Private Cabins</h3>
+                    <p class="text-xs text-slate-500 mt-2 leading-relaxed">
+                        Ergonomic hot desks, dedicated desks, and fully serviced sound-proof private team cabins with high-speed leased line internet.
+                    </p>
+                </div>
+                <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+                    <span class="text-xs font-bold text-brand-navy">From ₹4,500/desk</span>
+                    <a href="{{ route('properties.index', ['property_type' => 'coworking']) }}" class="text-xs font-bold text-brand-cyan hover:underline">Find Desks &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── SECTION 4.2: PROFESSIONAL NETWORK: BROKERS, BUILDERS & FRANCHISING ── -->
+<section class="bg-white py-16 sm:py-20 lg:py-24">
+    <div class="mx-auto w-full max-w-[1720px] px-4 sm:px-8 lg:px-12 xl:px-16">
+        <div class="relative overflow-hidden rounded-3xl bg-brand-navy p-8 sm:p-12 lg:p-16 text-white shadow-2xl">
+            <div class="pointer-events-none absolute right-0 top-0 h-96 w-96 rounded-full bg-brand-cyan/15 blur-3xl"></div>
+            
+            <div class="relative z-10 max-w-3xl mb-10">
+                <div class="mb-3 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-brand-cyan">
+                    <span class="h-1.5 w-1.5 rounded-full bg-brand-cyan"></span>
+                    HOUSING365 PROFESSIONAL ECOSYSTEM
+                </div>
+                <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-normal tracking-tight text-white">
+                    Built for Certified Brokers, Top Builders &amp; City Franchisees
+                </h2>
+                <p class="mt-4 text-slate-300 text-sm sm:text-base leading-relaxed">
+                    We empower India's real estate professionals with institutional leasing infrastructure, verified buyer leads, and local franchise territories.
+                </p>
+            </div>
+
+            <div class="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Brokers -->
+                <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/10">
+                    <i class="fa-solid fa-id-badge text-2xl text-brand-cyan mb-3 block"></i>
+                    <h3 class="font-bold text-lg text-white">Certified Broker Partner</h3>
+                    <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+                        Zero platform fees on primary listings. Close verified tenant leads faster with digital agreements and automated commission escrows.
+                    </p>
+                    <a href="{{ route('franchising') }}#brokers" class="mt-4 inline-flex items-center gap-1.5 text-xs font-bold text-brand-cyan hover:text-cyan-200">
+                        <span>Join Broker Network</span> &rarr;
+                    </a>
+                </div>
+
+                <!-- Builders -->
+                <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/10">
+                    <i class="fa-solid fa-city text-2xl text-amber-400 mb-3 block"></i>
+                    <h3 class="font-bold text-lg text-white">Builder Project Showcase</h3>
+                    <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+                        Showcase RERA-registered inventory to pre-qualified high-net-worth buyers and institutional NRI investors pan-India.
+                    </p>
+                    <a href="{{ route('franchising') }}#builders" class="mt-4 inline-flex items-center gap-1.5 text-xs font-bold text-amber-400 hover:text-amber-300">
+                        <span>Partner as a Builder</span> &rarr;
+                    </a>
+                </div>
+
+                <!-- Franchising -->
+                <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/10">
+                    <i class="fa-solid fa-shop text-2xl text-emerald-400 mb-3 block"></i>
+                    <h3 class="font-bold text-lg text-white">City Franchise Opportunities</h3>
+                    <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+                        Exclusive pin-code and city operational rights. Operate Housing365 leasing, Care triage, and verification hubs locally.
+                    </p>
+                    <a href="{{ route('franchising') }}" class="mt-4 inline-flex items-center gap-1.5 text-xs font-bold text-emerald-400 hover:text-emerald-300">
+                        <span>Explore Franchising</span> &rarr;
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── SECTION 5: EXPLORE VERIFIED RENTAL PROPERTIES ACROSS TOP INDIAN METRO CLUSTERS ── -->
 <section class="bg-[#F8FAFD] py-16 sm:py-20 lg:py-24">
     <div class="mx-auto w-full max-w-[1720px] px-4 sm:px-8 lg:px-12 xl:px-16">
         

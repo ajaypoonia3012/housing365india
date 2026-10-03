@@ -2,10 +2,9 @@
 
 namespace App\Filament\Resources\Properties\Schemas;
 
-use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Schema;
 
@@ -29,9 +28,15 @@ class PropertyForm
                 Select::make('purpose')
                     ->label('Listing Purpose')
                     ->options([
-                        'rent' => 'For Rent / Lease',
-                        'sale' => 'For Sale / Purchase',
-                        'lease' => 'Commercial Lease',
+                        'rent' => 'Residential Rent',
+                        'sale' => 'Residential Sale',
+                        'commercial_rent' => 'Commercial Rent',
+                        'commercial_sale' => 'Commercial Sale',
+                        'land_sale' => 'Land / Plots Sale',
+                        'pg' => 'PG (Paying Guest)',
+                        'coliving' => 'Co-Living',
+                        'coworking' => 'Coworking Space',
+                        'project' => 'Builder Project',
                     ])
                     ->default('rent')
                     ->required(),
@@ -39,11 +44,24 @@ class PropertyForm
                 Select::make('category')
                     ->label('Property Category')
                     ->options([
-                        'residential' => 'Residential (Flat, Villa, House)',
-                        'commercial' => 'Commercial (Office, Shop, Showroom)',
+                        'residential' => 'Residential (Apartment, Villa, House, Studio)',
+                        'commercial' => 'Commercial (Office, Shop, Showroom, Warehouse)',
                         'plot_land' => 'Plots & Land (Residential, Farm, Industrial)',
+                        'pg_coliving' => 'PG & Co-Living',
                     ])
                     ->default('residential')
+                    ->required(),
+
+                Select::make('verification_level')
+                    ->label('Verification Tier')
+                    ->options([
+                        'unverified' => 'Unverified (Level 0)',
+                        'submitted' => 'Submitted (Level 1)',
+                        'basic_verified' => 'Basic Verified (Level 2)',
+                        'document_verified' => 'Document Verified (Level 3)',
+                        'housing365_verified' => 'Housing365 Verified (Level 4)',
+                    ])
+                    ->default('unverified')
                     ->required(),
 
                 TextInput::make('property_type')

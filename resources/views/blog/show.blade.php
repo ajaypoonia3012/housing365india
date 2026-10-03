@@ -168,7 +168,7 @@
                     Turn Your Rental Property Into a <span class="text-brand-cyan">Hands-Off Asset</span>
                 </h3>
                 <p class="text-slate-600 text-sm sm:text-base leading-relaxed mb-8">
-                    Discover why hundreds of property owners across Ontario, Alberta, British Columbia, Florida, and Texas trust Housing 365 for tenant screening, leasing, and asset care.
+                    Discover why property owners and NRIs across Mumbai, Bengaluru, Delhi NCR, Hyderabad, Pune, and all 28 states &amp; UTs trust Housing365 for tenant screening, legal leasing, and property care.
                 </p>
                 <div class="flex flex-wrap items-center justify-center gap-4">
                     <a href="{{ route('contact') }}" class="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-cyan px-7 py-3.5 text-xs font-bold uppercase tracking-wider text-white shadow-lg shadow-brand-cyan/25 hover:bg-brand-cyan-hover transition">

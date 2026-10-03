@@ -26,7 +26,7 @@ class PropertiesTable
 
                 TextColumn::make('title')
                     ->label('Property Listing')
-                    ->description(fn (Property $record): string => ($record->locality ? $record->locality . ', ' : '') . $record->city)
+                    ->description(fn (Property $record): string => ($record->locality ? $record->locality.', ' : '').$record->city)
                     ->searchable()
                     ->weight('bold')
                     ->limit(35),
@@ -51,8 +51,11 @@ class PropertiesTable
                 TextColumn::make('price_display')
                     ->label('Price')
                     ->state(function (Property $record): string {
-                        if (!empty($record->price_display)) return $record->price_display;
-                        return '₹' . number_format($record->price) . ($record->purpose === 'sale' ? '' : '/mo');
+                        if (! empty($record->price_display)) {
+                            return $record->price_display;
+                        }
+
+                        return '₹'.number_format($record->price).($record->purpose === 'sale' ? '' : '/mo');
                     })
                     ->weight('semibold')
                     ->color('success')
@@ -62,7 +65,7 @@ class PropertiesTable
 
                 TextColumn::make('bedrooms')
                     ->label('BHK')
-                    ->formatStateUsing(fn ($state) => $state ? $state . ' BHK' : 'Plot/Studio')
+                    ->formatStateUsing(fn ($state) => $state ? $state.' BHK' : 'Plot/Studio')
                     ->sortable(),
 
                 TextColumn::make('seller_phone')
@@ -107,11 +110,17 @@ class PropertiesTable
             ])
             ->filters([
                 SelectFilter::make('purpose')
-                    ->label('Listing Type')
+                    ->label('Listing Purpose')
                     ->options([
-                        'rent' => 'For Rent',
-                        'sale' => 'For Sale',
-                        'lease' => 'Commercial Lease',
+                        'rent' => 'Residential Rent',
+                        'sale' => 'Residential Sale',
+                        'commercial_rent' => 'Commercial Rent',
+                        'commercial_sale' => 'Commercial Sale',
+                        'land_sale' => 'Land / Plots Sale',
+                        'pg' => 'PG (Paying Guest)',
+                        'coliving' => 'Co-Living',
+                        'coworking' => 'Coworking Space',
+                        'project' => 'Builder Project',
                     ]),
 
                 SelectFilter::make('category')
@@ -120,6 +129,7 @@ class PropertiesTable
                         'residential' => 'Residential',
                         'commercial' => 'Commercial',
                         'plot_land' => 'Plots & Land',
+                        'pg_coliving' => 'PG & Co-Living',
                     ]),
 
                 TernaryFilter::make('is_verified')

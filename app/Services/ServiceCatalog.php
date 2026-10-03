@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Models\Service;
+
 class ServiceCatalog
 {
     private static ?array $services = null;
@@ -9,13 +11,14 @@ class ServiceCatalog
     private static function load(): array
     {
         if (self::$services === null) {
-            $path = __DIR__ . '/services_data.json';
+            $path = __DIR__.'/services_data.json';
             if (file_exists($path)) {
                 self::$services = json_decode(file_get_contents($path), true) ?: [];
             } else {
                 self::$services = [];
             }
         }
+
         return self::$services;
     }
 
@@ -23,7 +26,7 @@ class ServiceCatalog
     {
         $services = self::load();
         try {
-            $dbServices = \App\Models\Service::where('is_active', true)->orderBy('order')->get();
+            $dbServices = Service::where('is_active', true)->orderBy('order')->get();
             foreach ($dbServices as $db) {
                 $slug = $db->slug;
                 $base = $services[$slug] ?? [];
@@ -40,15 +43,16 @@ class ServiceCatalog
                     'problemPoints' => $base['problemPoints'] ?? [],
                     'solutionTitle' => $base['solutionTitle'] ?? null,
                     'solutionLede' => $base['solutionLede'] ?? null,
-                    'scope' => !empty($db->scope) ? $db->scope : ($base['scope'] ?? []),
-                    'howItWorks' => !empty($db->how_it_works) ? $db->how_it_works : ($base['howItWorks'] ?? []),
-                    'whoItsFor' => !empty($db->who_its_for) ? $db->who_its_for : ($base['whoItsFor'] ?? []),
+                    'scope' => ! empty($db->scope) ? $db->scope : ($base['scope'] ?? []),
+                    'howItWorks' => ! empty($db->how_it_works) ? $db->how_it_works : ($base['howItWorks'] ?? []),
+                    'whoItsFor' => ! empty($db->who_its_for) ? $db->who_its_for : ($base['whoItsFor'] ?? []),
                     'pricingNote' => $db->pricing_note ?: ($base['pricingNote'] ?? null),
-                    'faqItems' => !empty($db->faq_items) ? $db->faq_items : ($base['faqItems'] ?? []),
+                    'faqItems' => ! empty($db->faq_items) ? $db->faq_items : ($base['faqItems'] ?? []),
                 ];
             }
         } catch (\Throwable $e) {
         }
+
         return $services;
     }
 
@@ -58,7 +62,7 @@ class ServiceCatalog
         $base = $services[$slug] ?? null;
 
         try {
-            $db = \App\Models\Service::where('slug', $slug)->first();
+            $db = Service::where('slug', $slug)->first();
             if ($db) {
                 return [
                     'slug' => $db->slug,
@@ -73,11 +77,11 @@ class ServiceCatalog
                     'problemPoints' => $base['problemPoints'] ?? [],
                     'solutionTitle' => $base['solutionTitle'] ?? null,
                     'solutionLede' => $base['solutionLede'] ?? null,
-                    'scope' => !empty($db->scope) ? $db->scope : ($base['scope'] ?? []),
-                    'howItWorks' => !empty($db->how_it_works) ? $db->how_it_works : ($base['howItWorks'] ?? []),
-                    'whoItsFor' => !empty($db->who_its_for) ? $db->who_its_for : ($base['whoItsFor'] ?? []),
+                    'scope' => ! empty($db->scope) ? $db->scope : ($base['scope'] ?? []),
+                    'howItWorks' => ! empty($db->how_it_works) ? $db->how_it_works : ($base['howItWorks'] ?? []),
+                    'whoItsFor' => ! empty($db->who_its_for) ? $db->who_its_for : ($base['whoItsFor'] ?? []),
                     'pricingNote' => $db->pricing_note ?: ($base['pricingNote'] ?? null),
-                    'faqItems' => !empty($db->faq_items) ? $db->faq_items : ($base['faqItems'] ?? []),
+                    'faqItems' => ! empty($db->faq_items) ? $db->faq_items : ($base['faqItems'] ?? []),
                 ];
             }
         } catch (\Throwable $e) {
@@ -96,6 +100,7 @@ class ServiceCatalog
                     $out[] = $services[$slug];
                 }
             }
+
             return $out;
         }
 
@@ -108,17 +113,18 @@ class ServiceCatalog
                 }
             }
         }
+
         return $out;
     }
 
     public static function getHeroBackdrop(string $slug): array
     {
         try {
-            $db = \App\Models\Service::where('slug', $slug)->first();
-            if ($db && !empty($db->hero_backdrop)) {
+            $db = Service::where('slug', $slug)->first();
+            if ($db && ! empty($db->hero_backdrop)) {
                 return [
                     'url' => $db->hero_backdrop,
-                    'alt' => ($db->title ?? 'Housing365 Service') . ' - Housing365',
+                    'alt' => ($db->title ?? 'Housing365 Service').' - Housing365',
                 ];
             }
         } catch (\Throwable $e) {

@@ -1,7 +1,18 @@
 @extends('layouts.app')
 
-@section('title', 'Verified Properties, Plots, Lands & Commercial Leasing | Housing 365 India')
-@section('meta_description', 'Search 100% owner-verified apartments, luxury villas, commercial offices, retail shops, and plots for sale and rent across India. Zero brokerage.')
+@section('title', 'Verified Properties, Plots, Lands & Commercial Spaces | Housing365 India')
+@section('meta_description', 'Search 100% verified apartments, villas, commercial offices, PG, co-living, coworking, and builder projects across India. Zero brokerage.')
+
+@if(!empty($canonicalUrl))
+    @section('canonical', $canonicalUrl)
+@endif
+
+@if($properties->total() === 0 || !empty($noIndex))
+    @section('meta_robots', 'noindex, follow')
+@else
+    @section('meta_robots', 'index, follow')
+@endif
+
 
 @section('content')
 
@@ -21,13 +32,13 @@
 
             <!-- Headline -->
             <h1 class="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-[1.15] tracking-tight text-brand-navy">
-                Buy, Rent, Sell &amp; Lease <br class="hidden sm:inline">
-                <span class="text-brand-cyan font-extrabold">Flats, Commercial Spaces, Plots &amp; Lands.</span>
+                Buy, Rent, PG, Co-Living &amp; Commercial <br class="hidden sm:inline">
+                <span class="text-brand-cyan font-extrabold">Flats, Coworking, Plots &amp; Builder Projects.</span>
             </h1>
 
             <!-- Subheadline -->
             <p class="mt-4 text-base leading-relaxed text-slate-600 sm:text-lg max-w-2xl mx-auto">
-                Discover 100% verified properties with zero broker spam. Looking to sell or lease your property? Post it free in 60 seconds.
+                Discover 100% verified properties across 9 distinct purposes with zero broker spam. List your property free in 60 seconds.
             </p>
 
             <!-- Action Pill CTAs -->
@@ -50,49 +61,79 @@
 <section class="py-10 sm:py-14 bg-[#F8FAFD]" id="marketplace-filters">
     <div class="mx-auto w-full max-w-[1720px] px-4 sm:px-8 lg:px-12 xl:px-16">
         
-        <!-- Marketplace Quick Intent Tabs -->
+        <!-- Marketplace Quick Intent Tabs (9 Unified Purposes) -->
         <div class="mb-6 flex flex-wrap items-center gap-2">
             <a href="{{ route('properties.index') }}" 
-               class="px-4 py-2.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 {{ !request('purpose') && !request('category') ? 'bg-brand-navy text-white shadow-md' : 'bg-white text-slate-700 border border-slate-200 hover:border-brand-cyan' }}">
+               class="px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 {{ empty($effectivePurpose) || $effectivePurpose === 'all' ? 'bg-brand-navy text-white shadow-md' : 'bg-white text-slate-700 border border-slate-200 hover:border-brand-cyan' }}">
                 <i class="fa-solid fa-layer-group"></i>
-                <span>All Properties</span>
-                <span class="ml-1 px-1.5 py-0.5 rounded-full text-[10px] {{ !request('purpose') && !request('category') ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-600' }}">{{ $counts['all'] ?? 0 }}</span>
+                <span>All</span>
+                <span class="ml-1 px-1.5 py-0.5 rounded-full text-[10px] {{ empty($effectivePurpose) || $effectivePurpose === 'all' ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-600' }}">{{ $counts['all'] ?? 0 }}</span>
             </a>
 
-            <a href="{{ route('properties.index', ['purpose' => 'rent']) }}" 
-               class="px-4 py-2.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 {{ request('purpose') === 'rent' && !request('category') ? 'bg-brand-cyan text-white shadow-md' : 'bg-white text-slate-700 border border-slate-200 hover:border-brand-cyan' }}">
+            <a href="{{ route('marketplace.rent') }}" 
+               class="px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 {{ $effectivePurpose === 'rent' ? 'bg-brand-cyan text-white shadow-md' : 'bg-white text-slate-700 border border-slate-200 hover:border-brand-cyan' }}">
                 <i class="fa-solid fa-key"></i>
-                <span>For Rent</span>
-                <span class="ml-1 px-1.5 py-0.5 rounded-full text-[10px] {{ request('purpose') === 'rent' ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-600' }}">{{ $counts['rent'] ?? 0 }}</span>
+                <span>Rent</span>
+                <span class="ml-1 px-1.5 py-0.5 rounded-full text-[10px] {{ $effectivePurpose === 'rent' ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-600' }}">{{ $counts['rent'] ?? 0 }}</span>
             </a>
 
-            <a href="{{ route('properties.index', ['purpose' => 'sale']) }}" 
-               class="px-4 py-2.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 {{ request('purpose') === 'sale' && !request('category') ? 'bg-emerald-600 text-white shadow-md' : 'bg-white text-slate-700 border border-slate-200 hover:border-brand-cyan' }}">
+            <a href="{{ route('marketplace.sale') }}" 
+               class="px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 {{ $effectivePurpose === 'sale' ? 'bg-emerald-600 text-white shadow-md' : 'bg-white text-slate-700 border border-slate-200 hover:border-brand-cyan' }}">
                 <i class="fa-solid fa-tag"></i>
-                <span>For Sale</span>
-                <span class="ml-1 px-1.5 py-0.5 rounded-full text-[10px] {{ request('purpose') === 'sale' ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-600' }}">{{ $counts['sale'] ?? 0 }}</span>
+                <span>Buy / Sale</span>
+                <span class="ml-1 px-1.5 py-0.5 rounded-full text-[10px] {{ $effectivePurpose === 'sale' ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-600' }}">{{ $counts['sale'] ?? 0 }}</span>
             </a>
 
-            <a href="{{ route('properties.index', ['category' => 'commercial']) }}" 
-               class="px-4 py-2.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 {{ request('category') === 'commercial' ? 'bg-indigo-600 text-white shadow-md' : 'bg-white text-slate-700 border border-slate-200 hover:border-brand-cyan' }}">
+            <a href="{{ route('marketplace.commercial') }}" 
+               class="px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 {{ in_array($effectivePurpose, ['commercial', 'commercial_rent', 'commercial_sale']) ? 'bg-indigo-600 text-white shadow-md' : 'bg-white text-slate-700 border border-slate-200 hover:border-brand-cyan' }}">
                 <i class="fa-solid fa-building"></i>
-                <span>Commercial Leasing</span>
-                <span class="ml-1 px-1.5 py-0.5 rounded-full text-[10px] {{ request('category') === 'commercial' ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-600' }}">{{ $counts['commercial'] ?? 0 }}</span>
+                <span>Commercial</span>
+                <span class="ml-1 px-1.5 py-0.5 rounded-full text-[10px] {{ in_array($effectivePurpose, ['commercial', 'commercial_rent', 'commercial_sale']) ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-600' }}">{{ $counts['commercial'] ?? 0 }}</span>
             </a>
 
-            <a href="{{ route('properties.index', ['category' => 'plot_land']) }}" 
-               class="px-4 py-2.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 {{ request('category') === 'plot_land' ? 'bg-amber-600 text-white shadow-md' : 'bg-white text-slate-700 border border-slate-200 hover:border-brand-cyan' }}">
+            <a href="{{ route('marketplace.land') }}" 
+               class="px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 {{ in_array($effectivePurpose, ['land', 'land_sale']) ? 'bg-amber-600 text-white shadow-md' : 'bg-white text-slate-700 border border-slate-200 hover:border-brand-cyan' }}">
                 <i class="fa-solid fa-map-location-dot"></i>
-                <span>Plots &amp; Lands</span>
-                <span class="ml-1 px-1.5 py-0.5 rounded-full text-[10px] {{ request('category') === 'plot_land' ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-600' }}">{{ $counts['plot_land'] ?? 0 }}</span>
+                <span>Plots &amp; Land</span>
+                <span class="ml-1 px-1.5 py-0.5 rounded-full text-[10px] {{ in_array($effectivePurpose, ['land', 'land_sale']) ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-600' }}">{{ $counts['land_sale'] ?? 0 }}</span>
             </a>
 
-            <!-- Right CTAs on tab strip: Prime & Post Property -->
+            <a href="{{ route('marketplace.pg') }}" 
+               class="px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 {{ $effectivePurpose === 'pg' ? 'bg-purple-600 text-white shadow-md' : 'bg-white text-slate-700 border border-slate-200 hover:border-brand-cyan' }}">
+                <i class="fa-solid fa-bed"></i>
+                <span>PG</span>
+                <span class="ml-1 px-1.5 py-0.5 rounded-full text-[10px] {{ $effectivePurpose === 'pg' ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-600' }}">{{ $counts['pg'] ?? 0 }}</span>
+            </a>
+
+            <a href="{{ route('marketplace.coliving') }}" 
+               class="px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 {{ in_array($effectivePurpose, ['coliving', 'co-living']) ? 'bg-pink-600 text-white shadow-md' : 'bg-white text-slate-700 border border-slate-200 hover:border-brand-cyan' }}">
+                <i class="fa-solid fa-users"></i>
+                <span>Co-Living</span>
+                <span class="ml-1 px-1.5 py-0.5 rounded-full text-[10px] {{ in_array($effectivePurpose, ['coliving', 'co-living']) ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-600' }}">{{ $counts['coliving'] ?? 0 }}</span>
+            </a>
+
+            <a href="{{ route('marketplace.coworking') }}" 
+               class="px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 {{ $effectivePurpose === 'coworking' ? 'bg-cyan-700 text-white shadow-md' : 'bg-white text-slate-700 border border-slate-200 hover:border-brand-cyan' }}">
+                <i class="fa-solid fa-briefcase"></i>
+                <span>Coworking</span>
+                <span class="ml-1 px-1.5 py-0.5 rounded-full text-[10px] {{ $effectivePurpose === 'coworking' ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-600' }}">{{ $counts['coworking'] ?? 0 }}</span>
+            </a>
+
+            <a href="{{ route('marketplace.projects') }}" 
+               class="px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 {{ in_array($effectivePurpose, ['project', 'projects']) ? 'bg-teal-700 text-white shadow-md' : 'bg-white text-slate-700 border border-slate-200 hover:border-brand-cyan' }}">
+                <i class="fa-solid fa-city"></i>
+                <span>Builder Projects</span>
+                <span class="ml-1 px-1.5 py-0.5 rounded-full text-[10px] {{ in_array($effectivePurpose, ['project', 'projects']) ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-600' }}">{{ $counts['project'] ?? 0 }}</span>
+            </a>
+
+            <!-- Right CTAs on tab strip -->
             <div class="ml-auto flex items-center gap-2">
-                <a href="{{ route('prime') }}" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-500 hover:from-amber-600 text-slate-950 font-black text-xs uppercase tracking-wider shadow-sm transition">
-                    <i class="fa-solid fa-crown text-amber-950 text-xs"></i>
-                    <span>Housing365 Prime</span>
-                </a>
+                @auth
+                    <a href="{{ route('properties.saved') }}" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white border border-slate-200 hover:border-brand-cyan text-slate-700 font-bold text-xs uppercase tracking-wider shadow-sm transition">
+                        <i class="fa-solid fa-bookmark text-brand-cyan text-xs"></i>
+                        <span>Saved</span>
+                    </a>
+                @endauth
                 <a href="{{ route('properties.post') }}" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider shadow-sm transition">
                     <i class="fa-solid fa-plus text-xs"></i>
                     <span>List Free</span>
@@ -100,7 +141,7 @@
             </div>
         </div>
 
-        <!-- Micro-Locality Quick Chips (MagicBricks Jaipur & Indian Metros Style) -->
+        <!-- Micro-Locality Quick Chips (Indian Metros & Clusters) -->
         @if(!empty($popularLocalities))
         <div class="mb-5 flex items-center gap-2 overflow-x-auto pb-2 scrollbar-thin">
             <span class="text-xs font-bold text-slate-500 uppercase tracking-wider shrink-0 flex items-center gap-1.5 mr-1">
@@ -156,6 +197,7 @@
                         <option value="residential" {{ request('category') == 'residential' ? 'selected' : '' }}>Residential</option>
                         <option value="commercial" {{ request('category') == 'commercial' ? 'selected' : '' }}>Commercial</option>
                         <option value="plot_land" {{ request('category') == 'plot_land' ? 'selected' : '' }}>Plots &amp; Land</option>
+                        <option value="pg_coliving" {{ request('category') == 'pg_coliving' ? 'selected' : '' }}>PG &amp; Co-Living</option>
                     </select>
                 </div>
 
@@ -163,10 +205,16 @@
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Intent</label>
                     <select name="purpose" class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-3 py-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-brand-cyan focus:border-brand-cyan transition font-medium">
-                        <option value="">Rent &amp; Buy</option>
-                        <option value="rent" {{ request('purpose') == 'rent' ? 'selected' : '' }}>For Rent</option>
-                        <option value="sale" {{ request('purpose') == 'sale' ? 'selected' : '' }}>For Sale</option>
-                        <option value="lease" {{ request('purpose') == 'lease' ? 'selected' : '' }}>Commercial Lease</option>
+                        <option value="">All Intents</option>
+                        <option value="rent" {{ request('purpose') == 'rent' || $effectivePurpose == 'rent' ? 'selected' : '' }}>For Rent</option>
+                        <option value="sale" {{ request('purpose') == 'sale' || $effectivePurpose == 'sale' ? 'selected' : '' }}>For Sale</option>
+                        <option value="commercial_rent" {{ request('purpose') == 'commercial_rent' ? 'selected' : '' }}>Commercial Rent</option>
+                        <option value="commercial_sale" {{ request('purpose') == 'commercial_sale' ? 'selected' : '' }}>Commercial Sale</option>
+                        <option value="land_sale" {{ request('purpose') == 'land_sale' || $effectivePurpose == 'land_sale' ? 'selected' : '' }}>Plots &amp; Land</option>
+                        <option value="pg" {{ request('purpose') == 'pg' || $effectivePurpose == 'pg' ? 'selected' : '' }}>Paying Guest (PG)</option>
+                        <option value="coliving" {{ request('purpose') == 'coliving' || $effectivePurpose == 'coliving' ? 'selected' : '' }}>Co-Living</option>
+                        <option value="coworking" {{ request('purpose') == 'coworking' || $effectivePurpose == 'coworking' ? 'selected' : '' }}>Coworking Space</option>
+                        <option value="project" {{ request('purpose') == 'project' || $effectivePurpose == 'project' ? 'selected' : '' }}>Builder Project</option>
                     </select>
                 </div>
 
@@ -181,7 +229,7 @@
                 </div>
             </form>
 
-            <!-- Secondary Quick-Filter Row: BHK & Budget & Zero Brokerage (MagicBricks Inspired) -->
+            <!-- Secondary Quick-Filter Row: BHK & Budget & Zero Brokerage -->
             <div class="pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-4">
                 <!-- BHK Buttons -->
                 <div class="flex items-center gap-1.5 flex-wrap">
@@ -310,11 +358,31 @@
                             @endif
                         </div>
 
-                        <!-- Top Right: Zero Brokerage / Verified -->
-                        <div class="absolute top-4 right-4">
-                            <span class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-teal-500/90 text-white backdrop-blur-md shadow-sm">
-                                <i class="fa-solid fa-check text-[9px] mr-1"></i> Zero Brokerage
-                            </span>
+                        <!-- Top Right: Zero Brokerage / Verified / Bookmark -->
+                        <div class="absolute top-4 right-4 flex items-center gap-1.5">
+                            @if(!empty($prop->verification_level) && $prop->verification_level !== 'unverified')
+                                <span class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider {{ $prop->verification_level === 'housing365_verified' ? 'bg-brand-cyan text-brand-navy font-extrabold' : 'bg-emerald-600 text-white' }} backdrop-blur-md shadow-sm">
+                                    <i class="fa-solid fa-certificate text-[9px] mr-1"></i>
+                                    {{ ucwords(str_replace('_', ' ', $prop->verification_level)) }}
+                                </span>
+                            @else
+                                <span class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-teal-500/90 text-white backdrop-blur-md shadow-sm">
+                                    <i class="fa-solid fa-check text-[9px] mr-1"></i> Zero Brokerage
+                                </span>
+                            @endif
+
+                            @auth
+                                <form action="{{ route('properties.save', $prop->id) }}" method="POST" class="inline">
+                                    @csrf
+                                    <button type="submit" class="size-7 rounded-full bg-white/90 hover:bg-white text-slate-700 hover:text-rose-600 backdrop-blur-md shadow-md flex items-center justify-center text-xs transition" title="Save property">
+                                        <i class="{{ in_array($prop->id, $savedPropertyIds ?? []) ? 'fa-solid fa-heart text-rose-600' : 'fa-regular fa-heart' }}"></i>
+                                    </button>
+                                </form>
+                            @else
+                                <a href="{{ route('login') }}" class="size-7 rounded-full bg-white/90 hover:bg-white text-slate-700 hover:text-rose-600 backdrop-blur-md shadow-md flex items-center justify-center text-xs transition" title="Log in to save">
+                                    <i class="fa-regular fa-heart"></i>
+                                </a>
+                            @endauth
                         </div>
 
                         <!-- Bottom Left: Photos Count & Video Indicator -->

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', $page->meta_title ?? 'Rental Homes Canada & US | Apartments, Condos & Houses for Rent | Housing 365')
-@section('meta_description', $page->meta_description ?? 'Browse verified rental apartments, condos, houses, and suites across Canada and the United States. 100% verified listings, rapid digital applications, and direct landlord coordination.')
+@section('title', $page->meta_title ?? 'Verified Rental Homes & Flats Across India | Tenants Hub | Housing365')
+@section('meta_description', $page->meta_description ?? 'Browse verified rental apartments, flats, independent floors, and PG accommodations across Mumbai, Bengaluru, Delhi NCR, Hyderabad, Pune, and all Indian cities. 100% verified listings and direct owner connect.')
 
 @section('content')
 
@@ -24,7 +24,7 @@
                 <!-- Eyebrow Badge -->
                 <div class="mb-5 inline-flex items-center gap-2 rounded-full border border-brand-cyan/20 bg-brand-cyan/5 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-brand-cyan">
                     <span class="h-2 w-2 rounded-full bg-brand-cyan animate-pulse"></span>
-                    {{ $page->hero_badge ?? 'VERIFIED RENTAL HOMES & APARTMENTS' }}
+                    {{ $page->hero_badge ?? 'VERIFIED RENTAL HOMES & APARTMENTS ACROSS INDIA' }}
                 </div>
 
                 <!-- Headline -->
@@ -35,7 +35,7 @@
 
                 <!-- Subheadline -->
                 <p class="mt-6 text-base sm:text-lg leading-relaxed text-slate-600 max-w-xl">
-                    {{ $page->hero_subtitle ?? 'Explore curated, verified rental properties across Ontario, Canada, and major US cities. We eliminate fake listings, hidden fees, and application confusion with an honest, streamlined rental experience.' }}
+                    {{ $page->hero_subtitle ?? 'Explore curated, verified rental properties across Mumbai, Bengaluru, Delhi NCR, and 50+ Indian cities. We eliminate fake listings, broker spam, and deposit confusion with 100% verified owners and legal e-stamped agreements.' }}
                 </p>
 
                 <!-- Search Bar -->
@@ -237,26 +237,26 @@
             <div class="lg:col-span-6">
                 <div class="bg-white rounded-3xl p-8 sm:p-10 border border-slate-200/80 shadow-xl">
                     <div class="size-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl mb-6">
-                        <i class="fa-solid fa-earth-americas"></i>
+                        <i class="fa-solid fa-map-location-dot"></i>
                     </div>
-                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-600">INCLUSIVE HOUSING ACCESS</span>
-                    <h3 class="text-2xl font-bold text-brand-navy mt-1 mb-4">New to Canada or International Student?</h3>
+                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-600">PAN-INDIA RELOCATION SUPPORT</span>
+                    <h3 class="text-2xl font-bold text-brand-navy mt-1 mb-4">Relocating Inter-City or Moving for a New Job?</h3>
                     <p class="text-slate-600 text-sm sm:text-base leading-relaxed mb-6">
-                        Don't have a Canadian credit score yet? You shouldn't be locked out of quality rental homes. Housing 365 partners with approved institutional guarantor services to help newcomers, immigrants, and students qualify for rental homes seamlessly.
+                        Moving to Bengaluru, Mumbai, Gurgaon, Pune, or Hyderabad from another state? You shouldn't face predatory broker demands or advance security deposit fraud. Housing365 helps tech professionals, students, and relocating families find verified homes with transparent digital agreements.
                     </p>
 
                     <div class="space-y-3 pt-4 border-t border-slate-100 text-sm font-medium text-slate-700">
                         <div class="flex items-center gap-3">
                             <i class="fa-solid fa-circle-check text-brand-cyan"></i>
-                            <span>Accepted study permits, work visas &amp; COPR letters</span>
+                            <span>Accepted corporate offer letters &amp; company ID verification</span>
                         </div>
                         <div class="flex items-center gap-3">
                             <i class="fa-solid fa-circle-check text-brand-cyan"></i>
-                            <span>Credit builder reporting: Build Equifax score with rent</span>
+                            <span>Biometric digital police verification assistance</span>
                         </div>
                         <div class="flex items-center gap-3">
                             <i class="fa-solid fa-circle-check text-brand-cyan"></i>
-                            <span>Third-party institutional lease guarantor support</span>
+                            <span>Legally binding e-stamped 11-month rent agreements delivered online</span>
                         </div>
                     </div>
 
@@ -305,7 +305,7 @@
                 </div>
                 <h3 class="text-xl font-bold text-brand-navy mb-3">Standard Legal Leases</h3>
                 <p class="text-slate-600 text-sm leading-relaxed">
-                    All leases use the official Ontario Standard Lease (OSL) or state tenancy boards. No illegal clauses, unfair penalties, or surprise fee addenda.
+                    All leases use legally vetted 11-month rent agreements with official state e-stamping and biometric police verification assistance. No illegal clauses, unfair penalties, or surprise fee addenda.
                 </p>
             </div>
 
@@ -315,7 +315,7 @@
                 </div>
                 <h3 class="text-xl font-bold text-brand-navy mb-3">24/7 Emergency Maintenance</h3>
                 <p class="text-slate-600 text-sm leading-relaxed">
-                    Submit repair requests in 30 seconds via your phone with photo uploads. Emergency plumbing or heating failures are dispatched immediately to licensed contractors.
+                    Submit repair requests in 30 seconds via your phone with photo uploads. Emergency plumbing or electrical failures are dispatched immediately to verified local technicians.
                 </p>
             </div>
         </div>
@@ -335,7 +335,7 @@
                     Renter Frequently Asked Questions
                 </h2>
                 <p class="mt-2 text-base text-slate-600 max-w-2xl">
-                    Get clear answers to all your rental, deposit, credit verification, and move-in questions.
+                    Get clear answers to all your rental, deposit, documentation verification, and move-in questions.
                 </p>
             </div>
             <div class="shrink-0">
@@ -354,7 +354,7 @@
                         <span>Do you charge tenants any application fees to apply?</span>
                     </h3>
                     <p class="text-slate-600 text-sm sm:text-base leading-relaxed pl-11">
-                        No. In accordance with provincial and fair housing guidelines, Housing 365 never charges prospective tenants application fees or showing fees. Applying for any of our rental homes is 100% free.
+                        No. In accordance with fair housing guidelines, Housing365 never charges prospective tenants application fees or viewing fees. Exploring and contacting owners across our rental properties is 100% free.
                     </p>
                 </div>
             </div>
@@ -366,7 +366,7 @@
                         <span>What rental deposits are legally required when I get approved?</span>
                     </h3>
                     <p class="text-slate-600 text-sm sm:text-base leading-relaxed pl-11">
-                        In Ontario and across Canadian jurisdictions, standard deposits consist of first and last month's rent upon signing the lease agreement. We do not ask for illegal security or damage deposits. A refundable key deposit (at replacement cost) is standard.
+                        Across Indian states, standard security deposits are clearly specified in the registered e-stamped agreement and settled directly with the verified owner. We enforce transparent terms with no hidden lock-ins or arbitrary deductions.
                     </p>
                 </div>
             </div>
@@ -411,10 +411,10 @@
                 <div>
                     <h3 class="font-heading font-bold text-brand-navy text-lg mb-3 flex items-start gap-3">
                         <span class="size-8 rounded-xl bg-brand-cyan/10 text-brand-cyan flex items-center justify-center text-sm shrink-0 font-bold mt-0.5">Q</span>
-                        <span>What if I am a newcomer or student without Canadian credit history?</span>
+                        <span>What if I am relocating from another city or starting a new job?</span>
                     </h3>
                     <p class="text-slate-600 text-sm sm:text-base leading-relaxed pl-11">
-                        We welcome international students and newcomers to Canada! You can qualify by providing proof of enrolled university studies, verified foreign banking assets, proof of visa/work permit, or through a qualified guarantor or co-signer.
+                        We welcome professionals and students relocating across India! You can easily qualify by providing your company employment/offer letter, verified bank statements, college student ID, or official KYC documents (Aadhaar / PAN).
                     </p>
                 </div>
             </div>

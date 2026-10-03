@@ -11,6 +11,7 @@ class Setting extends Model
     public static function get(string $key, $default = null)
     {
         $setting = static::where('key', $key)->first();
+
         return $setting ? $setting->value : $default;
     }
 
@@ -22,7 +23,7 @@ class Setting extends Model
                 'value' => $value,
                 'group' => $group,
                 'type' => $type,
-                'label' => $label ?? ucwords(str_replace('_', ' ', $key))
+                'label' => $label ?? ucwords(str_replace('_', ' ', $key)),
             ]
         );
     }

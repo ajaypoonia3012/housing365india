@@ -316,7 +316,7 @@
                     </div>
                     <h3 class="text-lg font-bold text-brand-navy mb-2">75-Point Underwriting Dossier</h3>
                     <p class="text-slate-600 text-sm leading-relaxed">
-                        Comprehensive Equifax/TransUnion credit reporting, bank payroll verification via Plaid, landlord reference auditing, and tribunal litigation registry checks.
+                        Comprehensive CIBIL/Experian credit reporting, employer HR verification, landlord reference auditing, and civil court litigation registry checks.
                     </p>
                 </div>
                 <div class="mt-6 pt-4 border-t border-slate-100 text-xs text-slate-500 font-semibold">

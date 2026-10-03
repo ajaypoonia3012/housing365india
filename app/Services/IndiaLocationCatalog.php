@@ -54,8 +54,8 @@ class IndiaLocationCatalog
                         'deposit_months' => '2 to 3 months',
                         'localities' => ['Indira Nagar', 'College Road', 'Gangapur Road', 'Panchavati'],
                         'meta_desc' => 'Affordable and premium homes for rent in Nashik with verified owner contact and digital lease execution.',
-                    ]
-                ]
+                    ],
+                ],
             ],
             'karnataka' => [
                 'name' => 'Karnataka',
@@ -84,8 +84,8 @@ class IndiaLocationCatalog
                         'deposit_months' => '3 to 5 months',
                         'localities' => ['Gokulam', 'Jayalakshmipuram', 'Vijayanagar', 'Kuvempunagar', 'Saraswathipuram'],
                         'meta_desc' => 'Independent houses and rental flats in Mysuru with transparent leasing terms and verified owners.',
-                    ]
-                ]
+                    ],
+                ],
             ],
             'delhi-ncr' => [
                 'name' => 'Delhi NCR',
@@ -144,8 +144,8 @@ class IndiaLocationCatalog
                         'deposit_months' => '1 to 2 months',
                         'localities' => ['Indirapuram', 'Vaishali', 'Vasundhara', 'Crossings Republik', 'Raj Nagar Extension'],
                         'meta_desc' => 'Rental flats in Indirapuram and Vaishali Ghaziabad near Delhi metro corridors. Fast 11-month agreement execution.',
-                    ]
-                ]
+                    ],
+                ],
             ],
             'telangana' => [
                 'name' => 'Telangana',
@@ -164,8 +164,8 @@ class IndiaLocationCatalog
                         'deposit_months' => '2 to 3 months',
                         'localities' => ['Gachibowli', 'Hitec City', 'Madhapur', 'Kondapur', 'Jubilee Hills', 'Banjara Hills', 'Financial District Nanakramguda', 'Kukatpally', 'Manikonda', 'Miyapur'],
                         'meta_desc' => 'Gated community flats and villas for rent in Hyderabad IT corridor. Direct owner verification, zero fake broker spam, 11-month digital agreements.',
-                    ]
-                ]
+                    ],
+                ],
             ],
             'tamil-nadu' => [
                 'name' => 'Tamil Nadu',
@@ -194,8 +194,8 @@ class IndiaLocationCatalog
                         'deposit_months' => '4 to 6 months',
                         'localities' => ['RS Puram', 'Gandhipuram', 'Saibaba Colony', 'Saravanampatti IT Corridor', 'Peelamedu', 'Race Course'],
                         'meta_desc' => 'Rental apartments and independent villas in Coimbatore with zero broker harassment.',
-                    ]
-                ]
+                    ],
+                ],
             ],
             'gujarat' => [
                 'name' => 'Gujarat',
@@ -224,8 +224,8 @@ class IndiaLocationCatalog
                         'deposit_months' => '2 to 3 months',
                         'localities' => ['Vesu', 'Pal', 'Adajan', 'Piplod', 'Ghod Dod Road', 'VIP Road'],
                         'meta_desc' => 'High-rise residential society apartments for rent in Surat with verified legal agreements.',
-                    ]
-                ]
+                    ],
+                ],
             ],
             'west-bengal' => [
                 'name' => 'West Bengal',
@@ -244,8 +244,8 @@ class IndiaLocationCatalog
                         'deposit_months' => '2 to 3 months',
                         'localities' => ['Salt Lake Sector 1-5', 'New Town Action Area 1-3', 'Rajarhat', 'Ballygunge', 'Alipore', 'Southern Avenue', 'Gariahat', 'EM Bypass', 'Behala'],
                         'meta_desc' => 'Gated community flats and heritage houses for rent in Kolkata, Salt Lake, and New Town. Transparent leasing and zero fake broker listings.',
-                    ]
-                ]
+                    ],
+                ],
             ],
             'rajasthan' => [
                 'name' => 'Rajasthan',
@@ -264,8 +264,8 @@ class IndiaLocationCatalog
                         'deposit_months' => '2 months',
                         'localities' => ['Vaishali Nagar', 'Malviya Nagar', 'Mansarovar', 'C-Scheme', 'Raja Park', 'Jagatpura', 'Tonk Road', 'Ajmer Road'],
                         'meta_desc' => 'Villas, builder floors, and apartments for rent in Jaipur with 100% verified owners and legal rent agreements.',
-                    ]
-                ]
+                    ],
+                ],
             ],
             'uttar-pradesh' => [
                 'name' => 'Uttar Pradesh',
@@ -284,8 +284,8 @@ class IndiaLocationCatalog
                         'deposit_months' => '2 months',
                         'localities' => ['Gomti Nagar & Extension', 'Hazratganj', 'Aliganj', 'Indira Nagar', 'Mahanagar', 'Sushant Golf City', 'Vibhuti Khand'],
                         'meta_desc' => 'Builder floors and society flats for rent in Lucknow with verified landlord credentials and UPCOP police verification.',
-                    ]
-                ]
+                    ],
+                ],
             ],
             'punjab-haryana' => [
                 'name' => 'Punjab & Chandigarh Tricity',
@@ -304,8 +304,8 @@ class IndiaLocationCatalog
                         'deposit_months' => '1 to 2 months',
                         'localities' => ['Sector 8-11', 'Sector 35-37', 'Sector 43-44', 'Mohali Phase 7-11', 'Aerocity Mohali', 'Panchkula Sector 1-21', 'Zirakpur VIP Road', 'New Chandigarh'],
                         'meta_desc' => 'Independent kothis, floors, and society flats for rent in Chandigarh, Mohali, and Panchkula with verified landlords.',
-                    ]
-                ]
+                    ],
+                ],
             ],
             'kerala' => [
                 'name' => 'Kerala',
@@ -324,8 +324,8 @@ class IndiaLocationCatalog
                         'deposit_months' => '3 to 4 months',
                         'localities' => ['Kakkanad Infopark', 'Marine Drive', 'Panampilly Nagar', 'Edappally', 'Kadavanthra', 'Aluva', 'Vyttila', 'Palarivattom'],
                         'meta_desc' => 'High-rise waterfront apartments and flats for rent in Kochi and Kakkanad Infopark with verified owner documentation.',
-                    ]
-                ]
+                    ],
+                ],
             ],
             'madhya-pradesh' => [
                 'name' => 'Madhya Pradesh',
@@ -344,8 +344,8 @@ class IndiaLocationCatalog
                         'deposit_months' => '2 months',
                         'localities' => ['Vijay Nagar', 'Super Corridor IT SEZ', 'Palasia', 'AB Road', 'Bypass Road', 'Mahalaxmi Nagar', 'Rau'],
                         'meta_desc' => 'Flats and independent homes for rent in Indore Vijay Nagar and Super Corridor with zero broker spam.',
-                    ]
-                ]
+                    ],
+                ],
             ],
             'andhra-pradesh' => [
                 'name' => 'Andhra Pradesh',
@@ -364,8 +364,8 @@ class IndiaLocationCatalog
                         'deposit_months' => '2 to 3 months',
                         'localities' => ['MVP Colony', 'Madhurawada IT SEZ', 'Seethammadhara', 'Gajuwaka', 'Rushikonda', 'Dwaraka Nagar'],
                         'meta_desc' => 'Coastal homes and apartments for rent in Vizag MVP Colony and Madhurawada with verified owners.',
-                    ]
-                ]
+                    ],
+                ],
             ],
             'goa' => [
                 'name' => 'Goa',
@@ -384,9 +384,9 @@ class IndiaLocationCatalog
                         'deposit_months' => '2 to 3 months',
                         'localities' => ['Panaji (Miramar & Dona Paula)', 'Candolim', 'Calangute', 'Siolim', 'Assagao', 'Anjuna', 'Porvorim', 'Margao', 'Colva', 'Vagator'],
                         'meta_desc' => 'Luxury villas, Portuguese holiday homes, and residential apartments for rent in North & South Goa. Verified owners and mandatory police clearance assistance.',
-                    ]
-                ]
-            ]
+                    ],
+                ],
+            ],
         ];
     }
 }

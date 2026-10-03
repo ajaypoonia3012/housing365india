@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'About Us | Housing 365 — Full-Service Leasing & Property Management')
-@section('meta_description', 'Learn about Housing 365 mission, institutional-grade property management platform, executive leadership team, and innovative rental operations across Canada and the US.')
+@section('title', 'About Us | Housing365 India — Everything Property. One Platform.')
+@section('meta_description', 'Learn about Housing365 India\'s mission, institutional property management platform, pan-India leadership, and unified real estate operations across all 28 states and metro hubs.')
 
 @section('content')
 

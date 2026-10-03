@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Property Management & Rental Services | Housing 365')
-@section('meta_description', 'Full-service residential property management, tenant placement, corporate relocation housing, and institutional lease-up services across Canada and the US.')
+@section('title', 'Property Management, Leasing & Unified Services | Housing365 India')
+@section('meta_description', 'Full-service residential property management, tenant placement, rental agreements, Housing365 Care, and institutional lease-up services across all 28 states of India.')
 
 @section('content')
 

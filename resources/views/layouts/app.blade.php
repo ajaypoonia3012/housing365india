@@ -3,8 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Housing 365 India | Verified Owners, Zero Brokerage & Legal Leasing Across All Indian Cities')</title>
-    <meta name="description" content="@yield('meta_description', 'India\'s institutional leasing & rental platform outsmarting MagicBricks, 99acres & NoBroker. 100% verified owners, zero broker spam calls, 11-month e-stamped legal agreements, and biometric police verification across Mumbai, Bengaluru, Delhi NCR, Hyderabad, Pune, and every city in India.')">
+    <title>@yield('title', 'Housing365 India | Everything Property. One Platform. Verified Owners, Zero Brokerage & Legal Leasing')</title>
+    <meta name="description" content="@yield('meta_description', 'India\'s unified property platform for leasing, verification, property care, management, buy & sell. 100% verified owners, ₹0 standard owner listing fee, legal e-stamped agreements, and end-to-end property solutions across all Indian cities.')">
+    <meta name="robots" content="@yield('meta_robots', 'index, follow')">
+
+    @if(trim($__env->yieldContent('canonical')))
+        <link rel="canonical" href="@yield('canonical')">
+    @endif
+
+    <!-- OpenGraph & Twitter/X Cards -->
+    <meta property="og:site_name" content="Housing365 India">
+    <meta property="og:title" content="@yield('title', 'Housing365 India')">
+    <meta property="og:description" content="@yield('meta_description', 'India\'s unified property lifecycle platform.')">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="@yield('canonical', url()->current())">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="@yield('title', 'Housing365 India')">
+    <meta name="twitter:description" content="@yield('meta_description', 'India\'s unified property lifecycle platform.')">
+
+    @stack('schema')
 
     {{-- Google Search Console Site Verification --}}
     @php
@@ -23,6 +40,7 @@
     {{-- Google Analytics (GA4) --}}
     @if(!empty($gaId))
         <!-- Google tag (gtag.js) -->
+
         <script async src="https://www.googletagmanager.com/gtag/js?id={{ trim($gaId) }}"></script>
         <script>
             window.dataLayer = window.dataLayer || [];
@@ -134,6 +152,7 @@
         }
     </style>
     @stack('styles')
+    @stack('head')
 </head>
 <body class="flex flex-col min-h-screen antialiased text-slate-800">
 
@@ -157,42 +176,39 @@
                 </svg>
             </a>
 
-            <!-- Desktop Nav Groups (xl+ only) -->
-            <nav class="hidden xl:flex items-center space-x-1 text-sm font-semibold">
-                <a href="{{ route('properties.index') }}" class="px-3.5 py-2 rounded-xl text-brand-navy/80 hover:text-brand-navy hover:bg-slate-100 transition">
-                    Properties
-                </a>
+            <!-- Desktop Nav Items -->
+            <nav class="hidden xl:flex items-center space-x-0.5 text-sm font-semibold">
                 
                 <!-- Owners Dropdown -->
                 <div class="relative group">
-                    <button class="flex items-center gap-1 px-3.5 py-2 rounded-xl text-brand-navy/80 hover:text-brand-navy hover:bg-slate-100 transition">
+                    <button class="flex items-center gap-1 px-3 py-2 rounded-xl text-brand-navy/80 hover:text-brand-navy hover:bg-slate-100 transition">
                         <span>Owners</span>
                         <i class="fa-solid fa-chevron-down text-[9px] text-slate-400 group-hover:rotate-180 transition-transform"></i>
                     </button>
                     <div class="absolute left-0 top-full pt-1.5 hidden group-hover:block z-50">
-                        <div class="min-w-[270px] bg-white rounded-2xl shadow-xl border border-slate-100 p-2 space-y-1">
+                        <div class="min-w-[280px] bg-white rounded-2xl shadow-xl border border-slate-100 p-2 space-y-1">
                             <a href="{{ route('owners') }}" class="block px-3 py-2 rounded-xl hover:bg-brand-cyan/5 transition">
-                                <span class="font-bold text-xs text-brand-navy block">Landlord &amp; Owner Hub</span>
-                                <span class="text-[11px] text-slate-500 block">Command centre for property owners</span>
+                                <span class="font-bold text-xs text-brand-navy block">Owner &amp; Landlord Hub</span>
+                                <span class="text-[11px] text-slate-500 block">Residential leasing &amp; management command center</span>
                             </a>
-                            <a href="{{ route('properties.post') }}" class="block px-3 py-2 rounded-xl hover:bg-amber-50 transition">
-                                <span class="font-bold text-xs text-amber-800 flex items-center gap-1.5">
-                                    <i class="fa-solid fa-circle-plus text-amber-500"></i>
-                                    <span>Post Property (Free Listing)</span>
+                            <a href="{{ route('properties.post') }}" class="block px-3 py-2 rounded-xl hover:bg-cyan-50/70 transition">
+                                <span class="font-bold text-xs text-brand-cyan-dark flex items-center gap-1.5">
+                                    <i class="fa-solid fa-circle-check text-brand-cyan"></i>
+                                    <span>List my Property — Free</span>
                                 </span>
-                                <span class="text-[11px] text-slate-500 block">List rental or resale home in 2 mins</span>
+                                <span class="text-[11px] text-slate-500 block">₹0 listing fee for standard residential leasing</span>
                             </a>
                             <a href="{{ route('pricing') }}" class="block px-3 py-2 rounded-xl hover:bg-brand-cyan/5 transition">
                                 <span class="font-bold text-xs text-brand-navy block">Transparent Pricing</span>
-                                <span class="text-[11px] text-slate-500 block">199 setup fee, no monthly retainer</span>
+                                <span class="text-[11px] text-slate-500 block">Clear distinction: Free Leasing vs Optional Care</span>
                             </a>
                             <a href="{{ route('property-managers') }}" class="block px-3 py-2 rounded-xl hover:bg-brand-cyan/5 transition">
                                 <span class="font-bold text-xs text-brand-navy block">Property Managers</span>
-                                <span class="text-[11px] text-slate-500 block">Institutional leasing-as-a-service</span>
+                                <span class="text-[11px] text-slate-500 block">Professional portfolio &amp; tenant oversight</span>
                             </a>
                             <a href="{{ route('portal-and-technology') }}" class="block px-3 py-2 rounded-xl hover:bg-brand-cyan/5 transition">
                                 <span class="font-bold text-xs text-brand-navy block">Owner Portal &amp; Tech</span>
-                                <span class="text-[11px] text-slate-500 block">Real-time tenant ledger &amp; inspection logs</span>
+                                <span class="text-[11px] text-slate-500 block">Digital agreements, tenant ledgers &amp; inspection logs</span>
                             </a>
                         </div>
                     </div>
@@ -200,86 +216,187 @@
 
                 <!-- Tenants Dropdown -->
                 <div class="relative group">
-                    <button class="flex items-center gap-1 px-3.5 py-2 rounded-xl text-brand-navy/80 hover:text-brand-navy hover:bg-slate-100 transition">
+                    <button class="flex items-center gap-1 px-3 py-2 rounded-xl text-brand-navy/80 hover:text-brand-navy hover:bg-slate-100 transition">
                         <span>Tenants</span>
                         <i class="fa-solid fa-chevron-down text-[9px] text-slate-400 group-hover:rotate-180 transition-transform"></i>
                     </button>
                     <div class="absolute left-0 top-full pt-1.5 hidden group-hover:block z-50">
-                        <div class="min-w-[270px] bg-white rounded-2xl shadow-xl border border-slate-100 p-2 space-y-1">
+                        <div class="min-w-[280px] bg-white rounded-2xl shadow-xl border border-slate-100 p-2 space-y-1">
                             <a href="{{ route('tenants') }}" class="block px-3 py-2 rounded-xl hover:bg-brand-cyan/5 transition">
-                                <span class="font-bold text-xs text-brand-navy block">Tenant Hub</span>
-                                <span class="text-[11px] text-slate-500 block">Everything renters need in one place</span>
+                                <span class="font-bold text-xs text-brand-navy block">Tenant &amp; Renter Hub</span>
+                                <span class="text-[11px] text-slate-500 block">Search, verify, move-in and rent easily</span>
                             </a>
                             <a href="{{ route('properties.index') }}" class="block px-3 py-2 rounded-xl hover:bg-brand-cyan/5 transition">
                                 <span class="font-bold text-xs text-brand-navy block">Browse Verified Rentals</span>
-                                <span class="text-[11px] text-slate-500 block">Flats, villas, and PGs across top cities</span>
+                                <span class="text-[11px] text-slate-500 block">Flats, villas, and apartments across India</span>
                             </a>
                             <a href="{{ url('/services/rental-agreement-registration') }}" class="block px-3 py-2 rounded-xl hover:bg-brand-cyan/5 transition">
                                 <span class="font-bold text-xs text-brand-navy block">Rent Agreement &amp; e-Stamping</span>
-                                <span class="text-[11px] text-slate-500 block">11-month draft delivered digitally</span>
+                                <span class="text-[11px] text-slate-500 block">Legally enforceable digital lease agreements</span>
                             </a>
-                            <a href="{{ url('/services/tenant-insurance') }}" class="block px-3 py-2 rounded-xl hover:bg-brand-cyan/5 transition">
-                                <span class="font-bold text-xs text-brand-navy block">Tenant Insurance</span>
-                                <span class="text-[11px] text-slate-500 block">Mandatory and contents coverage</span>
+                            <a href="{{ url('/properties?property_type=pg') }}" class="block px-3 py-2 rounded-xl hover:bg-brand-cyan/5 transition">
+                                <span class="font-bold text-xs text-brand-navy block">PG &amp; Co-Living Accommodations</span>
+                                <span class="text-[11px] text-slate-500 block">Flexible living options for young professionals</span>
                             </a>
                         </div>
                     </div>
                 </div>
 
-                <!-- Services Dropdown -->
+                <!-- Services Mega Menu (6 Groups) -->
                 <div class="relative group">
-                    <button class="flex items-center gap-1 px-3.5 py-2 rounded-xl text-brand-navy/80 hover:text-brand-navy hover:bg-slate-100 transition">
+                    <button class="flex items-center gap-1 px-3 py-2 rounded-xl text-brand-navy/80 hover:text-brand-navy hover:bg-slate-100 transition">
                         <span>Services</span>
                         <i class="fa-solid fa-chevron-down text-[9px] text-slate-400 group-hover:rotate-180 transition-transform"></i>
                     </button>
-                    <div class="absolute left-0 top-full pt-1.5 hidden group-hover:block z-50">
-                        <div class="min-w-[300px] bg-white rounded-2xl shadow-xl border border-slate-100 p-2 space-y-1">
-                            <a href="{{ url('/services/tenant-placement') }}" class="block px-3 py-2 rounded-xl hover:bg-brand-cyan/5 transition">
-                                <span class="font-bold text-xs text-brand-navy block">Tenant Placement</span>
-                                <span class="text-[11px] text-slate-500 block">Marketing, showings, and lease signing</span>
-                            </a>
-                            <a href="{{ url('/services/leasing-services') }}" class="block px-3 py-2 rounded-xl hover:bg-brand-cyan/5 transition">
-                                <span class="font-bold text-xs text-brand-navy block">Full Leasing Management</span>
-                                <span class="text-[11px] text-slate-500 block">End-to-end leasing for owners &amp; NRIs</span>
-                            </a>
-                            <a href="{{ url('/services/tenant-screening') }}" class="block px-3 py-2 rounded-xl hover:bg-brand-cyan/5 transition">
-                                <span class="font-bold text-xs text-brand-navy block">Tenant Screening</span>
-                                <span class="text-[11px] text-slate-500 block">75-point applicant verification</span>
-                            </a>
-                            <a href="{{ url('/services/rental-agreement-registration') }}" class="block px-3 py-2 rounded-xl hover:bg-brand-cyan/5 transition">
-                                <span class="font-bold text-xs text-brand-navy block">Rent Agreement Registration</span>
-                                <span class="text-[11px] text-slate-500 block">Legal e-stamping &amp; police verification</span>
-                            </a>
-                            <a href="{{ route('services') }}" class="block px-3 py-2 rounded-xl bg-slate-50 hover:bg-brand-cyan/10 transition mt-1 text-center">
-                                <span class="font-bold text-xs uppercase tracking-wider text-brand-cyan block">View All 14 Services &rarr;</span>
-                            </a>
+                    <div class="absolute left-1/2 -translate-x-1/2 top-full pt-1.5 hidden group-hover:block z-50">
+                        <div class="w-[960px] max-w-[95vw] bg-white rounded-3xl shadow-2xl border border-slate-100 p-6">
+                            <div class="flex items-center justify-between pb-4 mb-4 border-b border-slate-100">
+                                <div class="flex items-center gap-2">
+                                    <span class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-brand-cyan/10 text-brand-cyan text-xs">
+                                        <i class="fa-solid fa-grid-2"></i>
+                                    </span>
+                                    <div>
+                                        <h4 class="text-xs font-black uppercase tracking-wider text-brand-navy">Housing365 Unified Services Directory</h4>
+                                        <p class="text-[11px] text-slate-500">Comprehensive real estate, leasing, care &amp; commercial solutions across India</p>
+                                    </div>
+                                </div>
+                                <a href="{{ route('services') }}" class="text-xs font-bold text-brand-cyan hover:underline flex items-center gap-1">
+                                    <span>Explore All Services</span>
+                                    <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                                </a>
+                            </div>
+
+                            <div class="grid grid-cols-3 gap-6">
+                                <!-- Group 1: Rent & Lease -->
+                                <div class="p-3 rounded-2xl bg-slate-50/70 border border-slate-100/80 hover:bg-slate-50 transition">
+                                    <div class="flex items-center gap-2 mb-2 pb-1.5 border-b border-slate-200/60">
+                                        <i class="fa-solid fa-key text-xs text-brand-cyan"></i>
+                                        <h5 class="text-xs font-bold uppercase tracking-wider text-brand-navy">1. Rent &amp; Lease</h5>
+                                    </div>
+                                    <ul class="space-y-1 text-xs text-slate-600">
+                                        <li><a href="{{ route('properties.index', ['listing_type' => 'rent']) }}" class="hover:text-brand-cyan transition block py-0.5">• Residential Rentals</a></li>
+                                        <li><a href="{{ url('/services/tenant-placement') }}" class="hover:text-brand-cyan transition block py-0.5">• Tenant Placement</a></li>
+                                        <li><a href="{{ url('/services/tenant-screening') }}" class="hover:text-brand-cyan transition block py-0.5">• Tenant Verification</a></li>
+                                        <li><a href="{{ url('/services/rental-agreement-registration#police-verification') }}" class="hover:text-brand-cyan transition block py-0.5">• Police Verification Assistance</a></li>
+                                        <li><a href="{{ url('/services/rental-agreement-registration') }}" class="hover:text-brand-cyan transition block py-0.5">• Rent Agreement</a></li>
+                                        <li><a href="{{ url('/services/rental-agreement-registration#e-stamp') }}" class="hover:text-brand-cyan transition block py-0.5">• E-Stamp</a></li>
+                                        <li><a href="{{ url('/services/rental-agreement-registration#notary') }}" class="hover:text-brand-cyan transition block py-0.5">• Notary Coordination</a></li>
+                                    </ul>
+                                </div>
+
+                                <!-- Group 2: Live & Move -->
+                                <div class="p-3 rounded-2xl bg-slate-50/70 border border-slate-100/80 hover:bg-slate-50 transition">
+                                    <div class="flex items-center gap-2 mb-2 pb-1.5 border-b border-slate-200/60">
+                                        <i class="fa-solid fa-truck-moving text-xs text-brand-cyan"></i>
+                                        <h5 class="text-xs font-bold uppercase tracking-wider text-brand-navy">2. Live &amp; Move</h5>
+                                    </div>
+                                    <ul class="space-y-1 text-xs text-slate-600">
+                                        <li><a href="{{ route('properties.index', ['property_type' => 'pg']) }}" class="hover:text-brand-cyan transition block py-0.5">• PG</a></li>
+                                        <li><a href="{{ route('properties.index', ['property_type' => 'co-living']) }}" class="hover:text-brand-cyan transition block py-0.5">• Co-living</a></li>
+                                        <li><a href="{{ route('services.care') }}#furniture" class="hover:text-brand-cyan transition block py-0.5">• Furniture Rental</a></li>
+                                        <li><a href="{{ route('services.care') }}#appliance" class="hover:text-brand-cyan transition block py-0.5">• Appliance Rental</a></li>
+                                        <li><a href="{{ url('/services/rental-preparation') }}#cleaning" class="hover:text-brand-cyan transition block py-0.5">• Cleaning</a></li>
+                                        <li><a href="{{ route('services.care') }}#packers-movers" class="hover:text-brand-cyan transition block py-0.5">• Packers &amp; Movers</a></li>
+                                    </ul>
+                                </div>
+
+                                <!-- Group 3: Property Care -->
+                                <div class="p-3 rounded-2xl bg-cyan-50/40 border border-cyan-100/80 hover:bg-cyan-50/60 transition">
+                                    <div class="flex items-center gap-2 mb-2 pb-1.5 border-b border-cyan-200/60">
+                                        <i class="fa-solid fa-shield-heart text-xs text-brand-cyan"></i>
+                                        <h5 class="text-xs font-bold uppercase tracking-wider text-brand-navy">3. Property Care</h5>
+                                    </div>
+                                    <ul class="space-y-1 text-xs text-slate-600">
+                                        <li><a href="{{ route('services.care') }}" class="font-bold text-brand-navy hover:text-brand-cyan transition block py-0.5">• Housing365 Care</a></li>
+                                        <li><a href="{{ route('services.care') }}#maintenance" class="hover:text-brand-cyan transition block py-0.5">• Maintenance</a></li>
+                                        <li><a href="{{ route('services.care') }}#inspection" class="hover:text-brand-cyan transition block py-0.5">• Property Inspection</a></li>
+                                        <li><a href="{{ url('/services/rental-preparation') }}" class="hover:text-brand-cyan transition block py-0.5">• Rental Preparation</a></li>
+                                        <li>
+                                            <a href="{{ url('/services/leasing-services') }}" class="hover:text-brand-cyan transition block py-0.5">
+                                                • Property Management
+                                                <span class="text-[9px] uppercase px-1.5 py-0.2 rounded bg-amber-100 text-amber-800 font-bold ml-1">Optional</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <!-- Group 4: Commercial -->
+                                <div class="p-3 rounded-2xl bg-slate-50/70 border border-slate-100/80 hover:bg-slate-50 transition">
+                                    <div class="flex items-center gap-2 mb-2 pb-1.5 border-b border-slate-200/60">
+                                        <i class="fa-solid fa-building text-xs text-brand-cyan"></i>
+                                        <h5 class="text-xs font-bold uppercase tracking-wider text-brand-navy">4. Commercial</h5>
+                                    </div>
+                                    <ul class="space-y-1 text-xs text-slate-600">
+                                        <li><a href="{{ route('properties.index', ['property_type' => 'commercial', 'listing_type' => 'rent']) }}" class="hover:text-brand-cyan transition block py-0.5">• Commercial Rent</a></li>
+                                        <li><a href="{{ route('properties.index', ['property_type' => 'office']) }}" class="hover:text-brand-cyan transition block py-0.5">• Office Space</a></li>
+                                        <li><a href="{{ route('properties.index', ['property_type' => 'coworking']) }}" class="hover:text-brand-cyan transition block py-0.5">• Coworking</a></li>
+                                        <li><a href="{{ route('properties.index', ['property_type' => 'retail']) }}" class="hover:text-brand-cyan transition block py-0.5">• Retail Space</a></li>
+                                        <li><a href="{{ route('properties.index', ['property_type' => 'warehouse']) }}" class="hover:text-brand-cyan transition block py-0.5">• Warehouse</a></li>
+                                    </ul>
+                                </div>
+
+                                <!-- Group 5: Buy & Sell -->
+                                <div class="p-3 rounded-2xl bg-slate-50/70 border border-slate-100/80 hover:bg-slate-50 transition">
+                                    <div class="flex items-center gap-2 mb-2 pb-1.5 border-b border-slate-200/60">
+                                        <i class="fa-solid fa-handshake text-xs text-brand-cyan"></i>
+                                        <h5 class="text-xs font-bold uppercase tracking-wider text-brand-navy">5. Buy &amp; Sell</h5>
+                                    </div>
+                                    <ul class="space-y-1 text-xs text-slate-600">
+                                        <li><a href="{{ route('properties.index', ['listing_type' => 'sale']) }}" class="hover:text-brand-cyan transition block py-0.5">• Buy Property</a></li>
+                                        <li><a href="{{ route('properties.post', ['listing_type' => 'sale']) }}" class="hover:text-brand-cyan transition block py-0.5">• Sell Property</a></li>
+                                        <li><a href="{{ route('properties.index', ['property_type' => 'plot']) }}" class="hover:text-brand-cyan transition block py-0.5">• Land &amp; Plots</a></li>
+                                        <li><a href="{{ route('properties.index', ['property_type' => 'commercial']) }}" class="hover:text-brand-cyan transition block py-0.5">• Commercial Property</a></li>
+                                        <li><a href="{{ route('properties.index', ['property_type' => 'builder-project']) }}" class="hover:text-brand-cyan transition block py-0.5">• Builder Projects</a></li>
+                                    </ul>
+                                </div>
+
+                                <!-- Group 6: Professional Network -->
+                                <div class="p-3 rounded-2xl bg-slate-50/70 border border-slate-100/80 hover:bg-slate-50 transition">
+                                    <div class="flex items-center gap-2 mb-2 pb-1.5 border-b border-slate-200/60">
+                                        <i class="fa-solid fa-users text-xs text-brand-cyan"></i>
+                                        <h5 class="text-xs font-bold uppercase tracking-wider text-brand-navy">6. Professional Network</h5>
+                                    </div>
+                                    <ul class="space-y-1 text-xs text-slate-600">
+                                        <li><a href="{{ route('franchising') }}#brokers" class="hover:text-brand-cyan transition block py-0.5">• Brokers</a></li>
+                                        <li><a href="{{ route('franchising') }}#builders" class="hover:text-brand-cyan transition block py-0.5">• Builders</a></li>
+                                        <li><a href="{{ route('services.care') }}#vendors" class="hover:text-brand-cyan transition block py-0.5">• Vendors</a></li>
+                                        <li><a href="{{ route('franchising') }}" class="font-bold text-brand-navy hover:text-brand-cyan transition block py-0.5">• Franchising</a></li>
+                                        <li><a href="{{ route('refer-and-earn') }}" class="font-bold text-amber-600 hover:text-amber-700 transition block py-0.5">• Refer &amp; Earn ₹100</a></li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <a href="{{ route('pricing') }}" class="px-3.5 py-2 rounded-xl text-brand-navy/80 hover:text-brand-navy hover:bg-slate-100 transition">
+                <a href="{{ route('pricing') }}" class="px-3 py-2 rounded-xl text-brand-navy/80 hover:text-brand-navy hover:bg-slate-100 transition">
                     Pricing
                 </a>
 
-                <a href="{{ url('/india') }}" class="px-3.5 py-2 rounded-xl text-brand-navy/80 hover:text-brand-navy hover:bg-slate-100 transition">
-                    Cities
+                <a href="{{ route('resources') }}" class="px-3 py-2 rounded-xl text-brand-navy/80 hover:text-brand-navy hover:bg-slate-100 transition">
+                    Resources
+                </a>
+
+                <a href="{{ route('franchising') }}" class="px-3 py-2 rounded-xl text-brand-navy/80 hover:text-brand-navy hover:bg-slate-100 transition">
+                    Franchising
+                </a>
+
+                <a href="{{ route('about') }}" class="px-3 py-2 rounded-xl text-brand-navy/80 hover:text-brand-navy hover:bg-slate-100 transition">
+                    About
+                </a>
+
+                <a href="{{ route('contact') }}" class="px-3 py-2 rounded-xl text-brand-navy/80 hover:text-brand-navy hover:bg-slate-100 transition">
+                    Contact
                 </a>
             </nav>
 
             <!-- Right Action Hub -->
             <div class="hidden xl:flex items-center space-x-3">
-                <!-- Prime Badge Button (Single, Clean CTA) -->
-                <a href="{{ route('prime') }}" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-gradient-to-r from-amber-400 via-amber-400 to-yellow-400 hover:from-amber-500 hover:to-yellow-500 text-slate-950 font-black text-xs uppercase tracking-wider shadow-sm transition hover:-translate-y-0.5 border border-amber-300">
-                    <i class="fa-solid fa-crown text-amber-900 text-xs"></i>
-                    <span>Prime</span>
-                    <span class="bg-amber-950/15 text-slate-950 text-[9px] px-1.5 py-0.5 rounded-full font-bold">Zero Brokerage</span>
-                </a>
-
-                <!-- Post Property Free -->
-                <a href="{{ route('properties.post') }}" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-brand-navy text-white text-xs font-bold uppercase tracking-wider shadow-sm transition hover:-translate-y-0.5">
-                    <i class="fa-solid fa-circle-plus text-amber-400 text-xs"></i>
-                    <span>Post Property</span>
-                    <span class="bg-amber-400 text-slate-950 text-[9px] px-1.5 py-0.5 rounded font-black">FREE</span>
+                <!-- List my Property — Free CTA -->
+                <a href="{{ route('properties.post') }}" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-brand-navy hover:bg-brand-navy-light text-white text-xs font-bold uppercase tracking-wider shadow-sm transition hover:-translate-y-0.5">
+                    <i class="fa-solid fa-circle-plus text-brand-cyan text-xs"></i>
+                    <span>List my Property</span>
+                    <span class="bg-brand-cyan text-brand-navy text-[9px] px-1.5 py-0.5 rounded font-black">FREE</span>
                 </a>
 
                 <div class="h-5 w-px bg-slate-200"></div>
@@ -287,37 +404,39 @@
                 @auth
                     <!-- Authenticated User Menu -->
                     <div class="relative group">
-                        <a href="{{ route('my.prime') }}" class="inline-flex items-center gap-2 rounded-xl border {{ auth()->user()->isPrimeActive() ? 'border-amber-400 bg-amber-50/70 text-amber-950' : 'border-slate-200 bg-slate-50 text-slate-800' }} px-3 py-1.5 text-xs font-bold transition hover:bg-white shadow-sm">
-                            <div class="size-6 rounded-full {{ auth()->user()->isPrimeActive() ? 'bg-amber-500 text-slate-950' : 'bg-brand-navy text-white' }} flex items-center justify-center text-[10px] font-bold">
+                        <button class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 text-slate-800 px-3 py-1.5 text-xs font-bold transition hover:bg-white shadow-sm">
+                            <div class="size-6 rounded-full bg-brand-navy text-white flex items-center justify-center text-[10px] font-bold">
                                 {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
                             </div>
                             <span class="max-w-[85px] truncate">{{ auth()->user()->name }}</span>
-                            @if(auth()->user()->isPrimeActive())
-                                <i class="fa-solid fa-crown text-amber-600 text-xs"></i>
-                            @endif
                             <i class="fa-solid fa-chevron-down text-[9px] text-slate-400 group-hover:rotate-180 transition-transform"></i>
-                        </a>
+                        </button>
                         <div class="absolute right-0 top-full pt-1.5 hidden group-hover:block z-50">
                             <div class="min-w-[210px] bg-white rounded-2xl shadow-xl border border-slate-100 p-2 space-y-1">
                                 <div class="px-3 py-2 border-b border-slate-100">
                                     <span class="text-xs font-bold text-brand-navy block truncate">{{ auth()->user()->name }}</span>
                                     <span class="text-[11px] text-slate-500 block truncate">{{ auth()->user()->email }}</span>
-                                    @if(auth()->user()->isPrimeActive())
-                                        <span class="inline-flex items-center gap-1 mt-1 px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-wider bg-amber-400 text-slate-950">
-                                            <i class="fa-solid fa-crown text-[8px]"></i> {{ auth()->user()->prime_plan ?? 'Prime' }}
-                                        </span>
-                                    @endif
                                 </div>
-                                <a href="{{ route('my.prime') }}" class="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold text-slate-700 hover:bg-slate-50 hover:text-brand-navy transition">
-                                    <i class="fa-solid fa-gauge-high text-brand-cyan text-xs"></i>
-                                    <span>My Dashboard</span>
+                                <a href="{{ route('dashboard') }}" class="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold text-brand-navy bg-brand-cyan/10 hover:bg-brand-cyan/20 transition">
+                                    <i class="fa-solid fa-shapes text-brand-cyan text-xs"></i>
+                                    <span>My Workspaces</span>
                                 </a>
-                                @if(!auth()->user()->isPrimeActive())
-                                    <a href="{{ route('prime') }}" class="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold text-amber-800 hover:bg-amber-50 transition">
-                                        <i class="fa-solid fa-crown text-amber-500 text-xs"></i>
-                                        <span>Upgrade to Prime</span>
-                                    </a>
-                                @endif
+                                <a href="{{ route('properties.index') }}" class="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold text-slate-700 hover:bg-slate-50 hover:text-brand-navy transition">
+                                    <i class="fa-solid fa-building text-brand-cyan text-xs"></i>
+                                    <span>Browse Properties</span>
+                                </a>
+                                <a href="{{ route('properties.post') }}" class="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold text-slate-700 hover:bg-slate-50 hover:text-brand-navy transition">
+                                    <i class="fa-solid fa-circle-plus text-brand-cyan text-xs"></i>
+                                    <span>Post a Property</span>
+                                </a>
+                                <a href="{{ route('dashboard.referrals') }}" class="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold text-slate-700 hover:bg-slate-50 hover:text-brand-navy transition">
+                                    <i class="fa-solid fa-gift text-amber-500 text-xs"></i>
+                                    <span>Refer &amp; Earn ₹100</span>
+                                </a>
+                                <a href="{{ route('dashboard.rewards') }}" class="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold text-slate-700 hover:bg-slate-50 hover:text-brand-navy transition">
+                                    <i class="fa-solid fa-wallet text-emerald-600 text-xs"></i>
+                                    <span>My Rewards</span>
+                                </a>
                                 <form action="{{ route('logout') }}" method="POST" class="pt-1 border-t border-slate-100">
                                     @csrf
                                     <button type="submit" class="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold text-rose-600 hover:bg-rose-50 transition text-left">
@@ -343,11 +462,8 @@
 
             <!-- Mobile Hamburger Button -->
             <div class="xl:hidden flex items-center space-x-2">
-                <a href="{{ route('prime') }}" class="inline-flex items-center justify-center px-2.5 py-1.5 rounded-lg bg-gradient-to-r from-amber-500 to-yellow-500 text-slate-950 text-[11px] font-black uppercase tracking-wider shadow-sm gap-1">
-                    <i class="fa-solid fa-crown text-[10px]"></i> Prime
-                </a>
-                <a href="{{ route('properties.post') }}" class="inline-flex items-center justify-center px-2.5 py-1.5 rounded-lg bg-slate-900 text-white text-[11px] font-bold uppercase tracking-wider shadow-sm">
-                    + Post Free
+                <a href="{{ route('properties.post') }}" class="inline-flex items-center justify-center px-2.5 py-1.5 rounded-lg bg-brand-navy text-white text-[11px] font-bold uppercase tracking-wider shadow-sm">
+                    + List Free
                 </a>
                 <button id="mobile-toggle-btn" class="p-2 text-slate-700 hover:text-brand-cyan focus:outline-none">
                     <i class="fa-solid fa-bars text-xl"></i>
@@ -356,29 +472,22 @@
         </div>
 
         <!-- Mobile Drawer -->
-        <div id="mobile-drawer" class="hidden xl:hidden border-t border-slate-100 bg-white px-4 py-4 space-y-2 text-sm font-medium">
+        <div id="mobile-drawer" class="hidden xl:hidden border-t border-slate-100 bg-white px-4 py-4 space-y-2 text-sm font-medium max-h-[85vh] overflow-y-auto">
             @auth
-                <div class="p-3 mb-2 rounded-2xl bg-amber-50/80 border border-amber-300 flex items-center justify-between">
+                <div class="p-3 mb-2 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-between">
                     <div>
-                        <div class="flex items-center gap-1.5">
-                            @if(auth()->user()->isPrimeActive())
-                                <i class="fa-solid fa-crown text-amber-600 text-xs"></i>
-                            @endif
-                            <span class="text-xs font-bold text-brand-navy">{{ auth()->user()->name }}</span>
-                        </div>
-                        <span class="text-[11px] text-slate-500">{{ auth()->user()->isPrimeActive() ? (auth()->user()->prime_plan ?? 'Prime Member') : 'Standard Account' }}</span>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <a href="{{ route('my.prime') }}" class="px-2.5 py-1 rounded-lg bg-brand-navy text-white text-[11px] font-bold">
-                            Dashboard
+                        <span class="text-xs font-bold text-brand-navy block">{{ auth()->user()->name }}</span>
+                        <a href="{{ route('dashboard') }}" class="text-[11px] font-bold text-brand-cyan hover:underline flex items-center gap-1 mt-0.5">
+                            <i class="fa-solid fa-shapes text-[10px]"></i>
+                            <span>My Workspaces &rarr;</span>
                         </a>
-                        <form action="{{ route('logout') }}" method="POST" class="inline">
-                            @csrf
-                            <button type="submit" class="p-1 text-rose-600 text-xs">
-                                <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                            </button>
-                        </form>
                     </div>
+                    <form action="{{ route('logout') }}" method="POST" class="inline">
+                        @csrf
+                        <button type="submit" class="p-1 text-rose-600 text-xs font-bold">
+                            Sign Out
+                        </button>
+                    </form>
                 </div>
             @else
                 <div class="grid grid-cols-2 gap-2 mb-2">
@@ -391,31 +500,25 @@
                 </div>
             @endauth
 
-            <div class="p-1 mb-2 space-y-2">
-                <a href="{{ route('prime') }}" class="flex items-center justify-center gap-2 w-full py-3 px-4 rounded-xl bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-500 text-slate-950 font-black text-xs uppercase tracking-wider shadow-md transition">
-                    <i class="fa-solid fa-crown"></i>
-                    <span>Housing365 Prime (Zero Brokerage Membership)</span>
-                </a>
-                <a href="{{ route('properties.post') }}" class="flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-xl bg-slate-900 text-white font-bold text-xs uppercase tracking-wider shadow-sm transition">
-                    <i class="fa-solid fa-circle-plus text-amber-400"></i>
-                    <span>+ Post Free Property</span>
+            <div class="p-1 mb-2">
+                <a href="{{ route('properties.post') }}" class="flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-xl bg-brand-navy text-white font-bold text-xs uppercase tracking-wider shadow-sm transition">
+                    <i class="fa-solid fa-circle-plus text-brand-cyan"></i>
+                    <span>List my Property — Free</span>
                 </a>
             </div>
+            
             <a href="{{ route('home') }}" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50">Home</a>
-            <a href="{{ route('prime') }}" class="block px-3 py-2 rounded-lg text-amber-800 font-bold bg-amber-50/70">👑 Housing365 Prime Packages</a>
-            <a href="{{ route('properties.index') }}" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50 font-bold text-brand-navy">Properties, Plots &amp; Commercial</a>
-            <a href="{{ route('owners') }}" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50 font-bold text-brand-navy">Landlords &amp; Owners</a>
-            <a href="{{ route('tenants') }}" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50 font-bold text-brand-navy">Tenants &amp; Renters</a>
-            <a href="{{ route('property-managers') }}" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50 font-bold text-brand-navy">Property Managers</a>
-            <a href="{{ route('portal-and-technology') }}" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50">Portal &amp; Technology</a>
-            <a href="{{ route('services') }}" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50">Services (14 Sub-Services)</a>
-            <a href="{{ route('locations') }}" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50">Locations</a>
-            <a href="{{ url('/india') }}" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50 font-semibold text-brand-cyan">All India Cities &amp; States Directory</a>
+            <a href="{{ route('owners') }}" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50 font-bold text-brand-navy">Owners</a>
+            <a href="{{ route('tenants') }}" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50 font-bold text-brand-navy">Tenants</a>
+            <a href="{{ route('services') }}" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50 font-bold text-brand-navy">Services &amp; Mega Menu</a>
             <a href="{{ route('pricing') }}" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50">Pricing</a>
+            <a href="{{ route('resources') }}" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50 font-bold text-brand-navy">Resources &amp; Guides</a>
+            <a href="{{ route('franchising') }}" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50 font-bold text-brand-navy">Franchising Network</a>
+            <a href="{{ route('services.care') }}" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50 font-bold text-brand-cyan">Housing365 Care</a>
+            <a href="{{ route('properties.index') }}" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50">Browse Properties</a>
+            <a href="{{ url('/india') }}" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50 font-semibold text-brand-cyan">All India Cities Directory</a>
             <a href="{{ route('about') }}" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50">About</a>
-            <a href="{{ route('reviews') }}" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50">Reviews</a>
-            <a href="{{ route('blog.index') }}" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50">Blog</a>
-            <a href="{{ route('contact') }}" class="block px-3 py-2.5 rounded-xl bg-brand-cyan text-white text-center font-bold mt-2">Talk to an Expert</a>
+            <a href="{{ route('contact') }}" class="block px-3 py-2.5 rounded-xl bg-brand-cyan text-white text-center font-bold mt-2">Contact Us</a>
         </div>
     </header>
 
@@ -498,11 +601,7 @@
                         <a href="{{ $settings['linkedin_url'] ?? 'https://www.linkedin.com/company/housing365/' }}" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn" class="hover:text-brand-cyan transition"><i class="fa-brands fa-linkedin-in text-base"></i></a>
                         <a href="{{ $settings['tiktok_url'] ?? 'https://www.tiktok.com/@housing365' }}" target="_blank" rel="noopener noreferrer" aria-label="TikTok" title="TikTok" class="hover:text-brand-cyan transition"><i class="fa-brands fa-tiktok text-base"></i></a>
                         <a href="{{ $settings['x_url'] ?? 'https://x.com/housing365' }}" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)" title="X (Twitter)" class="hover:text-brand-cyan transition"><i class="fa-brands fa-x-twitter text-base"></i></a>
-                        <a href="{{ $settings['nextdoor_url'] ?? 'https://nextdoor.com/agency-detail/ca/ontario/city-of-ontario/' }}" target="_blank" rel="noopener noreferrer" aria-label="Nextdoor" title="Nextdoor" class="hover:text-brand-cyan transition inline-flex items-center">
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 34 30" aria-hidden="true" role="img">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M4 10.2C4 8 4.2 6.5 4.8 5.7C5.4 4.9 6.6 4.6 8.5 4.6C10.2 4.6 11 5.3 11.4 7.2C12.8 5.4 15.6 4 19.8 4C26.5 4 30 7.8 30 14V26H24.5V14.6C24.5 10.8 22.8 8.6 19.2 8.6C15.2 8.6 13.5 11.2 13.5 15.4V26H8V13.8C8 12.2 7.4 10.8 5.8 11.2C4.7 11.5 4 11 4 10.2Z"/>
-                            </svg>
-                        </a>
+                        <a href="https://youtube.com/@housing365" target="_blank" rel="noopener noreferrer" aria-label="YouTube" title="YouTube" class="hover:text-brand-cyan transition"><i class="fa-brands fa-youtube text-base"></i></a>
                     </div>
                 </div>
 
@@ -512,13 +611,11 @@
                         <h3 class="mb-4 text-xs font-semibold uppercase tracking-widest text-brand-cyan">Core Services</h3>
                         <ul class="space-y-2.5 text-sm text-slate-400">
                             <li><a href="{{ url('/services/tenant-placement') }}" class="hover:text-white transition">Tenant Placement</a></li>
-                            <li><a href="{{ url('/services/leasing-services') }}" class="hover:text-white transition">Leasing Services</a></li>
-                            <li><a href="{{ url('/services/tenant-screening') }}" class="hover:text-white transition">Tenant Screening</a></li>
-                            <li><a href="{{ url('/services/rental-agreement-registration') }}" class="hover:text-white transition">Rental Agreement &amp; Registration</a></li>
-                            <li><a href="{{ url('/services/tenant-insurance') }}" class="hover:text-white transition">Tenant Insurance</a></li>
-                            <li><a href="{{ url('/services/tenant-guarantor') }}" class="hover:text-white transition">Tenant Guarantor</a></li>
+                            <li><a href="{{ route('services.care') }}" class="hover:text-white transition">Housing365 Care</a></li>
+                            <li><a href="{{ url('/services/rental-agreement-registration') }}" class="hover:text-white transition">Rent Agreement &amp; e-Stamp</a></li>
+                            <li><a href="{{ url('/services/tenant-screening') }}" class="hover:text-white transition">Tenant Verification</a></li>
                             <li><a href="{{ url('/services/rental-preparation') }}" class="hover:text-white transition">Rental Preparation</a></li>
-                            <li><a href="{{ url('/services/institutional-lease-up') }}" class="hover:text-white transition">Institutional Lease-Up</a></li>
+                            <li><a href="{{ url('/services/leasing-services') }}" class="hover:text-white transition">Leasing Services</a></li>
                         </ul>
                     </div>
 
@@ -547,34 +644,39 @@
                     </div>
 
                     <div>
-                        <h3 class="mb-4 text-xs font-semibold uppercase tracking-widest text-brand-cyan">Owner Resources</h3>
+                        <h3 class="mb-4 text-xs font-semibold uppercase tracking-widest text-brand-cyan">Owners &amp; Landlords</h3>
                         <ul class="space-y-2.5 text-sm text-slate-400">
-                            <li><a href="{{ route('properties.post') }}" class="text-amber-400 hover:text-amber-300 font-bold flex items-center gap-1.5"><i class="fa-solid fa-circle-plus text-xs"></i> Post Free Property</a></li>
+                            <li><a href="{{ route('properties.post') }}" class="text-brand-cyan hover:text-cyan-300 font-bold flex items-center gap-1.5"><i class="fa-solid fa-circle-plus text-xs"></i> List Property Free</a></li>
                             <li><a href="{{ route('owners') }}" class="hover:text-white transition">Owner Hub</a></li>
                             <li><a href="{{ route('property-managers') }}" class="hover:text-white transition">Property Managers</a></li>
                             <li><a href="{{ route('portal-and-technology') }}" class="hover:text-white transition">Portal &amp; Technology</a></li>
-                            <li><a href="{{ route('pricing') }}" class="hover:text-white transition">Pricing Guide</a></li>
-                            <li><a href="{{ route('contact') }}" class="hover:text-white transition">Contact Us</a></li>
+                            <li><a href="{{ route('pricing') }}" class="hover:text-white transition">Transparent Pricing</a></li>
+                            <li><a href="{{ route('services.care') }}" class="hover:text-white transition">Housing365 Care</a></li>
+                            <li><a href="{{ route('refer-and-earn') }}" class="text-amber-400 hover:text-amber-300 font-bold transition">Refer &amp; Earn ₹100</a></li>
                         </ul>
                     </div>
 
                     <div>
-                        <h3 class="mb-4 text-xs font-semibold uppercase tracking-widest text-brand-cyan">Tenant Resources</h3>
+                        <h3 class="mb-4 text-xs font-semibold uppercase tracking-widest text-brand-cyan">Tenants &amp; Living</h3>
                         <ul class="space-y-2.5 text-sm text-slate-400">
                             <li><a href="{{ route('tenants') }}" class="hover:text-white transition">Tenant Hub</a></li>
-                            <li><a href="{{ route('properties.index') }}" class="hover:text-white transition">Browse Rentals &amp; Sales</a></li>
+                            <li><a href="{{ route('properties.index') }}" class="hover:text-white transition">Browse Rentals &amp; Resale</a></li>
+                            <li><a href="{{ url('/services/rental-agreement-registration') }}" class="hover:text-white transition">Rent Agreement</a></li>
+                            <li><a href="{{ url('/properties?property_type=pg') }}" class="hover:text-white transition">PG &amp; Co-Living</a></li>
                             <li><a href="{{ url('/services/tenant-insurance') }}" class="hover:text-white transition">Tenant Insurance</a></li>
-                            <li><a href="{{ url('/services/tenant-guarantor') }}" class="hover:text-white transition">Tenant Guarantor</a></li>
                         </ul>
                     </div>
 
                     <div>
-                        <h3 class="mb-4 text-xs font-semibold uppercase tracking-widest text-brand-cyan">Company</h3>
+                        <h3 class="mb-4 text-xs font-semibold uppercase tracking-widest text-brand-cyan">Company &amp; Network</h3>
                         <ul class="space-y-2.5 text-sm text-slate-400">
+                            <li><a href="{{ route('franchising') }}" class="hover:text-white transition">Franchising Network</a></li>
+                            <li><a href="{{ route('resources') }}" class="hover:text-white transition">Resources &amp; Guides</a></li>
                             <li><a href="{{ route('about') }}" class="hover:text-white transition">About Us</a></li>
-                            <li><a href="{{ route('blog.index') }}" class="hover:text-white transition">Blog & News</a></li>
-                            <li><a href="{{ route('reviews') }}" class="hover:text-white transition">Reviews</a></li>
-                            <li><a href="{{ route('contact') }}" class="hover:text-white transition">Contact</a></li>
+                            <li><a href="{{ route('blog.index') }}" class="hover:text-white transition">Blog &amp; Insights</a></li>
+                            <li><a href="{{ route('reviews') }}" class="hover:text-white transition">Client Reviews</a></li>
+                            <li><a href="{{ route('contact') }}" class="hover:text-white transition">Contact Us</a></li>
+                            <li><a href="{{ route('refer-and-earn.terms') }}" class="hover:text-white transition">Referral Terms</a></li>
                         </ul>
                     </div>
                 </div>
@@ -583,7 +685,7 @@
 
             <!-- Bottom Bar -->
             <div class="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 sm:flex-row text-sm text-slate-500">
-                <p>{{ $settings['footer_copyright'] ?? '© 2026 Housing365 Inc. All rights reserved.' }}</p>
+                <p>{{ $settings['footer_copyright'] ?? '© 2026 Housing365 India. All rights reserved.' }}</p>
                 <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 sm:justify-end">
                     <a href="{{ route('contact') }}" class="hover:text-slate-300">Privacy Policy</a>
                     <a href="{{ route('contact') }}" class="hover:text-slate-300">Terms of Service</a>
@@ -598,11 +700,11 @@
             <a href="tel:{{ $settings['contact_phone'] ?? '+916376163263' }}" class="flex items-center justify-center w-11 h-11 rounded-xl bg-slate-50 text-brand-cyan border border-slate-200 shrink-0" aria-label="Call Housing365">
                 <i class="fa-solid fa-phone text-sm"></i>
             </a>
-            <a href="{{ route('properties.post') }}" class="flex-1 flex items-center justify-center gap-1.5 h-11 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs uppercase tracking-wider shadow-sm transition">
-                <i class="fa-solid fa-plus-circle text-xs"></i>
-                <span>Post Free</span>
+            <a href="{{ route('properties.post') }}" class="flex-1 flex items-center justify-center gap-1.5 h-11 rounded-xl bg-brand-navy hover:bg-brand-navy-light text-white font-bold text-xs uppercase tracking-wider shadow-sm transition">
+                <i class="fa-solid fa-plus-circle text-brand-cyan text-xs"></i>
+                <span>List Free</span>
             </a>
-            <a href="{{ route('properties.index') }}" class="flex-1 flex items-center justify-center h-11 rounded-xl bg-brand-navy hover:bg-slate-800 text-white font-bold text-xs uppercase tracking-wider transition">
+            <a href="{{ route('properties.index') }}" class="flex-1 flex items-center justify-center h-11 rounded-xl bg-slate-100 hover:bg-slate-200 text-brand-navy font-bold text-xs uppercase tracking-wider transition">
                 Browse
             </a>
         </div>

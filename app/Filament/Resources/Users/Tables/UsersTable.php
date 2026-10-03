@@ -37,7 +37,7 @@ class UsersTable
                     ->icon('heroicon-m-phone'),
 
                 TextColumn::make('user_type')
-                    ->label('Role')
+                    ->label('Primary Role')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
                         'owner' => 'success',
@@ -47,6 +47,12 @@ class UsersTable
                         default => 'gray',
                     })
                     ->formatStateUsing(fn ($state) => ucfirst($state)),
+
+                TextColumn::make('roles.display_name')
+                    ->label('Assigned Personas')
+                    ->badge()
+                    ->color('info')
+                    ->separator(', '),
 
                 TextColumn::make('city')
                     ->label('City')
@@ -70,8 +76,11 @@ class UsersTable
                 TextColumn::make('unlocked_contacts_count')
                     ->label('Contacts Used / Limit')
                     ->formatStateUsing(function (User $record): string {
-                        if (!$record->is_prime) return '0 (Free)';
-                        $limit = $record->prime_contacts_limit >= 999 ? '∞ Unlimited' : (string)$record->prime_contacts_limit;
+                        if (! $record->is_prime) {
+                            return '0 (Free)';
+                        }
+                        $limit = $record->prime_contacts_limit >= 999 ? '∞ Unlimited' : (string) $record->prime_contacts_limit;
+
                         return "{$record->unlocked_contacts_count} / {$limit}";
                     }),
 
@@ -89,12 +98,16 @@ class UsersTable
             ])
             ->filters([
                 SelectFilter::make('user_type')
-                    ->label('Filter Role')
+                    ->label('Primary Type')
                     ->options([
                         'tenant' => 'Tenants',
-                        'buyer'  => 'Buyers',
-                        'owner'  => 'Owners / Landlords',
+                        'buyer' => 'Buyers',
+                        'owner' => 'Owners / Landlords',
                     ]),
+
+                SelectFilter::make('role')
+                    ->relationship('roles', 'display_name')
+                    ->label('Assigned Persona'),
 
                 TernaryFilter::make('is_prime')
                     ->label('Prime Membership')

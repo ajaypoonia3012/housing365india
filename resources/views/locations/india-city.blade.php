@@ -209,7 +209,7 @@
                 </div>
                 <h3 class="font-display text-xl font-bold text-brand-navy mb-2">Zero Spam Calls Guarantee</h3>
                 <p class="text-sm text-slate-600 leading-relaxed">
-                    Unlike MagicBricks and 99acres where listing your number leads to 40 aggressive broker calls every day, Housing 365 masks your phone number. All initial tour bookings are scheduled through our digital coordinator.
+                    Unlike legacy classified portals where listing your number leads to dozens of aggressive broker calls every day, Housing365 protects your privacy with direct verified messaging.
                 </p>
             </div>
             <div class="p-8 rounded-3xl bg-[#F8FAFD] border border-slate-200/80">

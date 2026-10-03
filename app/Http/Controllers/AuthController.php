@@ -2,26 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\User;
-use App\Models\Property;
 use App\Models\Inquiry;
+use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
     /**
      * Show the user registration form.
      */
+    /**
+     * Show the user registration form.
+     */
     public function showRegister(Request $request)
     {
         if (Auth::check()) {
-            return redirect()->route('my.prime');
+            return redirect()->route('properties.index');
         }
-        $selectedPlan = $request->get('plan', '');
-        return view('auth.register', compact('selectedPlan'));
+
+        return view('auth.register');
     }
 
     /**
@@ -34,49 +35,59 @@ class AuthController extends Controller
             'email' => 'required|email|max:150|unique:users,email',
             'phone' => 'required|string|max:20',
             'password' => 'required|string|min:6|confirmed',
-            'user_type' => 'required|in:tenant,buyer,owner',
             'city' => 'nullable|string|max:100',
-            'plan' => 'nullable|string|max:50',
+            'roles' => 'nullable|array',
+            'roles.*' => 'string|in:owner,tenant,buyer,seller,broker,builder,pg_operator,coliving_operator,coworking_operator,vendor',
+            'user_type' => 'nullable|string',
         ]);
+
+        // Determine personas to assign
+        $selectedRoles = $request->input('roles', []);
+        if (empty($selectedRoles) && ! empty($validated['user_type'])) {
+            $legacyType = $validated['user_type'];
+            if ($legacyType === 'operator') {
+                $selectedRoles = ['pg_operator', 'coliving_operator'];
+            } elseif (in_array($legacyType, ['owner', 'tenant', 'buyer', 'seller', 'broker', 'builder', 'vendor'])) {
+                $selectedRoles = [$legacyType];
+            } else {
+                $selectedRoles = ['tenant'];
+            }
+        }
+
+        if (empty($selectedRoles)) {
+            $selectedRoles = ['tenant'];
+        }
+
+        $selectedRoles = array_values(array_unique($selectedRoles));
+        $primaryRole = $selectedRoles[0] ?? 'tenant';
 
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'phone' => $validated['phone'],
-            'user_type' => $validated['user_type'],
+            'user_type' => $primaryRole,
+            'current_role' => $primaryRole,
             'city' => $validated['city'] ?? 'Jaipur',
             'password' => Hash::make($validated['password']),
         ]);
 
-        // If user registered with a Prime plan selected
-        if (!empty($validated['plan'])) {
-            $planLimits = [
-                'Prime Basic' => ['contacts' => 25, 'days' => 45],
-                'Prime Pro' => ['contacts' => 50, 'days' => 90],
-                'Prime VIP' => ['contacts' => 999, 'days' => 180],
-            ];
-            $plan = $validated['plan'];
-            $config = $planLimits[$plan] ?? ['contacts' => 50, 'days' => 90];
-            $user->activatePrime($plan, $config['contacts'], $config['days']);
+        foreach ($selectedRoles as $roleName) {
+            $user->assignRole($roleName);
         }
 
         Auth::login($user);
 
-        // Record inquiry/lead
+        // Record registration activity
         Inquiry::create([
             'name' => $user->name,
             'email' => $user->email,
             'phone' => $user->phone,
-            'service_type' => !empty($validated['plan']) ? 'Housing365 Prime Registration' : 'Standard User Registration',
-            'subject' => 'New User Registration (' . ucfirst($user->user_type) . ') - ' . ($user->city ?? 'Jaipur'),
-            'message' => 'User registered in ' . ($user->city ?? 'Jaipur') . '. Prime: ' . ($user->is_prime ? $user->prime_plan : 'Free Account'),
+            'service_type' => 'User Account Registration',
+            'subject' => 'New User Registration ('.implode(', ', array_map('ucfirst', $selectedRoles)).') - '.($user->city ?? 'India'),
+            'message' => 'User registered with personas: '.implode(', ', $selectedRoles).' in city: '.($user->city ?? 'India'),
         ]);
 
-        if ($user->is_prime) {
-            return redirect()->route('my.prime')->with('success', 'Welcome to Housing365 Prime! Your membership is active.');
-        }
-
-        return redirect()->route('properties.index')->with('success', 'Account registered successfully! Welcome to Housing 365.');
+        return redirect()->route('dashboard')->with('success', 'Account registered successfully! Welcome to Housing365 India.');
     }
 
     /**
@@ -85,8 +96,9 @@ class AuthController extends Controller
     public function showLogin()
     {
         if (Auth::check()) {
-            return redirect()->route('my.prime');
+            return redirect()->route('dashboard');
         }
+
         return view('auth.login');
     }
 
@@ -104,10 +116,8 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials, $remember)) {
             $request->session()->regenerate();
-            if (Auth::user()->is_prime) {
-                return redirect()->intended(route('my.prime'));
-            }
-            return redirect()->intended(route('properties.index'));
+
+            return redirect()->intended(route('dashboard'));
         }
 
         return back()->withErrors([
@@ -123,158 +133,39 @@ class AuthController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
+
         return redirect()->route('home')->with('info', 'You have been logged out successfully.');
     }
 
     /**
-     * Handle AJAX/Modal Prime Activation and User Linking.
+     * Deprecated Prime Activation endpoint for backward compatibility.
      */
     public function activatePrime(Request $request)
     {
-        $request->validate([
-            'plan' => 'required|string',
-            'name' => 'required|string|max:120',
-            'phone' => 'required|string|max:20',
-            'city' => 'nullable|string|max:100',
-            'localities' => 'nullable|string|max:255',
-            'bhk' => 'nullable|string|max:50',
-            'email' => 'nullable|email|max:150',
-            'user_type' => 'nullable|string|max:50',
-            'otp' => 'nullable|string|max:6',
-        ]);
-
-        $planLimits = [
-            // MagicBricks Rent tiers
-            'Prime Basic (Rent)' => ['contacts' => 10, 'days' => 90, 'price' => '₹1,199'],
-            'Prime Pro (Rent)'   => ['contacts' => 30, 'days' => 90, 'price' => '₹1,599'],
-            'Prime Basic'        => ['contacts' => 10, 'days' => 90, 'price' => '₹1,199'],
-            'Prime Pro'          => ['contacts' => 30, 'days' => 90, 'price' => '₹1,599'],
-            'Prime VIP'          => ['contacts' => 999, 'days' => 180, 'price' => '₹2,999'],
-            // MagicBricks Buy tiers
-            'Prime Basic (Buy)'  => ['contacts' => 10, 'days' => 180, 'price' => '₹1,599'],
-            'Prime Pro (Buy)'    => ['contacts' => 30, 'days' => 180, 'price' => '₹2,199'],
-            'Prime VIP (Buy)'    => ['contacts' => 999, 'days' => 365, 'price' => '₹4,999'],
-            'Free'               => ['contacts' => 2, 'days' => 30, 'price' => '₹0'],
-        ];
-
-        $plan = $request->plan;
-        $config = $planLimits[$plan] ?? ['contacts' => 30, 'days' => 90, 'price' => '₹1,599'];
-        $userType = $request->user_type ?? (str_contains($plan, 'Buy') ? 'buyer' : 'tenant');
-
-        if (Auth::check()) {
-            $user = Auth::user();
-            $user->phone = $request->phone;
-            $user->city = $request->city ?? $user->city;
-            $user->user_type = $userType;
-            $user->preferred_localities = $request->localities;
-            $user->preferred_bhk = $request->bhk;
-            $user->activatePrime($plan, $config['contacts'], $config['days']);
-        } else {
-            // Find or create user by email or phone
-            $cleanPhone = preg_replace('/[^0-9]/', '', $request->phone);
-            $email = $request->email ?: ($cleanPhone . '@housing365.in');
-            $user = User::where('email', $email)->orWhere('phone', $request->phone)->first();
-
-            if (!$user) {
-                $user = User::create([
-                    'name' => $request->name,
-                    'email' => $email,
-                    'phone' => $request->phone,
-                    'city' => $request->city ?? 'Jaipur',
-                    'user_type' => $userType,
-                    'preferred_localities' => $request->localities,
-                    'preferred_bhk' => $request->bhk,
-                    'password' => Hash::make(Str::random(12)),
-                ]);
-            } else {
-                $user->name = $request->name;
-                $user->user_type = $userType;
-                $user->save();
-            }
-
-            $user->activatePrime($plan, $config['contacts'], $config['days']);
-            Auth::login($user);
-        }
-
-        // Record inquiry
-        Inquiry::create([
-            'name' => $user->name,
-            'email' => $user->email,
-            'phone' => $user->phone,
-            'service_type' => 'Prime Activation (' . $plan . ')',
-            'subject' => 'Housing365 Prime Activated for ' . $user->name . ' (' . ($user->city ?? 'Jaipur') . ')',
-            'message' => "City: " . ($user->city ?? 'Jaipur') . "\nPlan: {$plan} ({$config['price']})\nLocalities: {$request->localities}\nBHK: {$request->bhk}",
-        ]);
-
-        $waMsg = "Hi Housing365, I have activated {$plan} ({$config['price']}). Name: {$user->name}, Phone: {$user->phone}, City: {$user->city}. Please assign my Relationship Manager!";
-        $waUrl = "https://wa.me/916376163263?text=" . urlencode($waMsg);
-
         if ($request->wantsJson() || $request->ajax()) {
             return response()->json([
                 'success' => true,
-                'message' => 'Prime Membership Activated!',
-                'redirect_url' => route('my.prime'),
-                'whatsapp_url' => $waUrl,
+                'message' => 'Housing365 standard free account active.',
+                'redirect_url' => route('properties.index'),
             ]);
         }
 
-        return redirect()->route('my.prime')->with('success', 'Housing365 Prime Membership Activated successfully!');
+        return redirect()->route('properties.index');
     }
 
     /**
-     * Show User's Prime Dashboard (/my-prime).
+     * Deprecated Prime Dashboard redirect.
      */
     public function myPrime()
     {
-        if (!Auth::check()) {
-            return redirect()->route('login')->with('info', 'Please log in to view your Prime Membership.');
-        }
-
-        $user = Auth::user();
-        $recommendedProperties = Property::where('status', 'Available')
-            ->when(!empty($user->city), fn($q) => $q->where('city', $user->city))
-            ->latest()
-            ->take(6)
-            ->get();
-
-        return view('prime.dashboard', compact('user', 'recommendedProperties'));
+        return redirect()->route('properties.index');
     }
 
     /**
-     * Unlock direct owner contact on a property for a Prime member.
+     * Direct owner contact unlock with Contact Access Paywall enforcement.
      */
     public function unlockOwnerContact(Request $request, $propertyId)
     {
-        if (!Auth::check()) {
-            return response()->json([
-                'success' => false,
-                'require_login' => true,
-                'message' => 'Please log in to view direct owner contact details.',
-            ], 401);
-        }
-
-        $user = Auth::user();
-        if (!$user->isPrimeActive()) {
-            return response()->json([
-                'success' => false,
-                'require_prime' => true,
-                'message' => 'Housing365 Prime membership required to unlock direct owner numbers.',
-            ], 403);
-        }
-
-        $property = Property::findOrFail($propertyId);
-
-        // Increment unlocked contacts count if not unlimited
-        if ($user->prime_contacts_limit < 999) {
-            $user->increment('unlocked_contacts_count');
-        }
-
-        return response()->json([
-            'success' => true,
-            'owner_name' => $property->seller_name ?? 'Property Owner',
-            'owner_phone' => $property->seller_phone ?? '+91 63761 63263',
-            'remaining_contacts' => $user->remainingContacts(),
-            'message' => 'Owner phone unlocked successfully!',
-        ]);
+        return app(ContactAccessController::class)->unlockContact($request, $propertyId);
     }
 }

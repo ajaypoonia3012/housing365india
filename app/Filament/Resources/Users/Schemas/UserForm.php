@@ -31,15 +31,26 @@ class UserForm
                     ->maxLength(20),
 
                 Select::make('user_type')
-                    ->label('Account Persona / Role')
+                    ->label('Primary Default Persona')
                     ->options([
                         'tenant' => 'Tenant (Looking to Rent)',
-                        'buyer'  => 'Buyer (Looking to Purchase)',
-                        'owner'  => 'Property Owner / Landlord',
-                        'admin'  => 'Platform Administrator',
+                        'buyer' => 'Buyer (Looking to Purchase)',
+                        'owner' => 'Property Owner / Landlord',
+                        'broker' => 'Real Estate Broker',
+                        'builder' => 'Builder / Developer',
+                        'vendor' => 'Property Service Vendor',
+                        'admin' => 'Platform Administrator',
                     ])
                     ->default('tenant')
                     ->required(),
+
+                Select::make('roles')
+                    ->label('Assigned Multi-Role Personas')
+                    ->relationship('roles', 'display_name')
+                    ->multiple()
+                    ->preload()
+                    ->helperText('Users can hold multiple concurrent personas with server-side authorization.')
+                    ->columnSpanFull(),
 
                 TextInput::make('city')
                     ->label('Primary City')
@@ -61,12 +72,12 @@ class UserForm
                     ->label('Active Prime Package')
                     ->options([
                         'Prime Basic (Rent)' => 'Prime Basic (Rent) - 10 Contacts / 90 Days',
-                        'Prime Pro (Rent)'   => 'Prime Pro (Rent) - 30 Contacts / 90 Days',
-                        'Prime VIP'          => 'Prime VIP (Rent) - Unlimited / 180 Days',
-                        'Prime Basic (Buy)'  => 'Prime Basic (Buy) - 10 Contacts / 180 Days',
-                        'Prime Pro (Buy)'    => 'Prime Pro (Buy) - 30 Contacts / 180 Days',
-                        'Prime VIP (Buy)'    => 'Prime VIP (Buy) - Unlimited / 365 Days',
-                        'Free'               => 'Standard Free Account',
+                        'Prime Pro (Rent)' => 'Prime Pro (Rent) - 30 Contacts / 90 Days',
+                        'Prime VIP' => 'Prime VIP (Rent) - Unlimited / 180 Days',
+                        'Prime Basic (Buy)' => 'Prime Basic (Buy) - 10 Contacts / 180 Days',
+                        'Prime Pro (Buy)' => 'Prime Pro (Buy) - 30 Contacts / 180 Days',
+                        'Prime VIP (Buy)' => 'Prime VIP (Buy) - Unlimited / 365 Days',
+                        'Free' => 'Standard Free Account',
                     ])
                     ->nullable(),
 

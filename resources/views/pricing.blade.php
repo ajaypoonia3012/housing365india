@@ -728,7 +728,7 @@
             <div class="grid grid-cols-12 items-baseline gap-4 border-b border-brand-navy/10 py-5">
                 <div class="col-span-6">
                     <p class="text-base sm:text-lg font-bold text-brand-navy">MLS + 40+ portal syndication</p>
-                    <p class="mt-1 text-sm leading-relaxed text-slate-500">Housing 365 Direct Verified Network, MagicBricks, 99acres, LinkedIn Expat Network, and our agent network.</p>
+                    <p class="mt-1 text-sm leading-relaxed text-slate-500">Housing365 Direct Verified Network, targeted multi-channel distribution, corporate relocation networks, and certified agent partners.</p>
                 </div>
                 <div class="col-span-6 text-right">
                     <p class="text-sm sm:text-base font-bold text-brand-navy">Included in success fee</p>
@@ -833,7 +833,7 @@
             </div>
             <div class="border-b border-brand-navy/10 py-5">
                 <p class="text-base font-bold text-brand-navy">MLS + 40+ portal syndication</p>
-                <p class="mt-1 text-sm leading-relaxed text-slate-500">Housing 365 Direct Verified Network, MagicBricks, 99acres, LinkedIn Expat Network, and our agent network.</p>
+                <p class="mt-1 text-sm leading-relaxed text-slate-500">Housing365 Direct Verified Network, targeted multi-channel distribution, corporate relocation networks, and certified agent partners.</p>
                 <p class="mt-2 text-base font-bold text-brand-navy">Included in success fee</p>
                 <p class="mt-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[#047857]">[ INCLUDED ]</p>
             </div>

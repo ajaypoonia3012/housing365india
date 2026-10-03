@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', ($service['title'] ?? 'Service') . ' | Housing 365')
-@section('meta_description', $service['metaDescription'] ?? 'Housing 365 professional leasing and tenant placement services across Canada and the US.')
+@section('title', ($service['title'] ?? 'Service') . ' | Housing365 India')
+@section('meta_description', $service['metaDescription'] ?? 'Housing365 India professional leasing, verification, and property care services across Indian cities.')
 
 @section('content')
 

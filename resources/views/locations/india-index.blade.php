@@ -30,7 +30,7 @@
                 <span class="text-brand-cyan">Zero Spam. 100% Verified.</span>
             </h1>
             <p class="mt-6 text-base sm:text-xl text-slate-600 leading-relaxed max-w-3xl mx-auto">
-                Tired of fake broker listings on MagicBricks and 99acres, aggressive sales calls from NoBroker, or advance payment scams on OLX? Housing 365 delivers verified owners, digital 11-month registered agreements, and legal peace of mind across every major Indian city.
+                Tired of fake broker listings, endless telemarketing spam calls, and advance payment fraud on legacy classifieds? Housing365 delivers 100% verified owners, digital 11-month registered agreements, and legal peace of mind across every major Indian city.
             </p>
         </div>
 
@@ -48,8 +48,8 @@
             </div>
             <div class="p-5 rounded-2xl bg-white border border-slate-200/80 shadow-sm">
                 <span class="font-display text-3xl font-extrabold text-brand-cyan">₹0</span>
-                <span class="text-sm font-bold text-brand-navy block mt-1">Monthly Retainer</span>
-                <span class="text-xs text-slate-500">Pure performance leasing</span>
+                <span class="text-sm font-bold text-brand-navy block mt-1">Owner Listing Fee</span>
+                <span class="text-xs text-slate-500">Standard residential leasing</span>
             </div>
             <div class="p-5 rounded-2xl bg-white border border-slate-200/80 shadow-sm">
                 <span class="font-display text-3xl font-extrabold text-emerald-600">Legal</span>
@@ -60,15 +60,15 @@
     </div>
 </section>
 
-<!-- ── SECTION 2: WHY WE OUTSMART COMPETITORS ── -->
+<!-- ── SECTION 2: WHY WE OUTPERFORM TRADITIONAL MODELS ── -->
 <section class="py-16 sm:py-20 bg-white border-b border-slate-100">
     <div class="mx-auto w-full max-w-[1720px] px-4 sm:px-8 lg:px-12 xl:px-16">
         <div class="text-center max-w-3xl mx-auto mb-14">
             <span class="text-xs font-bold uppercase tracking-widest text-brand-cyan">MARKET COMPARISON</span>
             <h2 class="font-display text-3xl sm:text-4xl text-brand-navy font-extrabold mt-2">
-                How Housing 365 Outperforms Traditional Portals
+                How Housing365 Outperforms Traditional Portals
             </h2>
-            <p class="text-slate-600 text-base mt-3">Compare our verified institutional standard with MagicBricks, 99acres, NoBroker, and OLX.</p>
+            <p class="text-slate-600 text-base mt-3">Compare our verified institutional standard with legacy classifieds, aggregator apps, and unverified groups.</p>
         </div>
 
         <div class="overflow-x-auto rounded-3xl border border-slate-200 shadow-sm">
@@ -76,10 +76,10 @@
                 <thead class="bg-slate-50 text-xs font-bold uppercase text-slate-500 border-b border-slate-200">
                     <tr>
                         <th class="p-5">Feature / Guarantee</th>
-                        <th class="p-5 bg-sky-50 text-brand-navy">Housing 365 India</th>
-                        <th class="p-5">MagicBricks &amp; 99acres</th>
-                        <th class="p-5">NoBroker</th>
-                        <th class="p-5">OLX &amp; Quikr</th>
+                        <th class="p-5 bg-sky-50 text-brand-navy">Housing365 Institutional Standard</th>
+                        <th class="p-5">Legacy Classified Portals</th>
+                        <th class="p-5">Aggregator Apps</th>
+                        <th class="p-5">Unverified Social Groups</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-100">

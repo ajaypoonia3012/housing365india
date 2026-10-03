@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\Property;
+use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
 class MarketplacePropertiesSeeder extends Seeder
@@ -505,7 +505,7 @@ class MarketplacePropertiesSeeder extends Seeder
         ];
 
         foreach ($marketplaceListings as $listing) {
-            $slug = Str::slug($listing['title'] . '-' . $listing['city'] . '-' . Str::random(5));
+            $slug = Str::slug($listing['title'].'-'.$listing['city'].'-'.Str::random(5));
             $listing['slug'] = $slug;
             $listing['status'] = 'Available';
             $listing['country'] = 'IN';

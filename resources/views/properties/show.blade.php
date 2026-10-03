@@ -1,7 +1,34 @@
 @extends('layouts.app')
 
-@section('title', $property->title . ' | Housing 365')
-@section('meta_description', Str::limit(strip_tags($property->description), 150))
+@section('title', $property->title . ' in ' . ($property->locality ? $property->locality . ', ' : '') . $property->city . ' | Housing365 India')
+@section('meta_description', Str::limit(strip_tags($property->description ?: ($property->title . ' for ' . $property->purpose . ' in ' . $property->city)), 160))
+@section('canonical', url('/properties/' . $property->slug))
+
+@push('schema')
+<script type="application/ld+json">
+{!! json_encode([
+    '@context' => 'https://schema.org',
+    '@type' => 'RealEstateListing',
+    'name' => $property->title,
+    'description' => Str::limit(strip_tags($property->description ?: $property->title), 200),
+    'url' => url('/properties/' . $property->slug),
+    'datePosted' => $property->created_at?->toIso8601String() ?: now()->toIso8601String(),
+    'address' => [
+        '@type' => 'PostalAddress',
+        'addressLocality' => $property->locality ?: $property->city,
+        'addressRegion' => $property->state,
+        'addressCountry' => 'IN',
+    ],
+    'offers' => [
+        '@type' => 'Offer',
+        'price' => (float) $property->price,
+        'priceCurrency' => 'INR',
+        'availability' => 'https://schema.org/InStock',
+    ],
+], JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}
+</script>
+@endpush
+
 
 @section('content')
 
@@ -56,9 +83,11 @@
                         Zero Brokerage
                     </span>
 
-                    <span class="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-emerald-50 text-emerald-700">
-                        <i class="fa-solid fa-circle-check text-[10px] mr-1"></i> Verified
-                    </span>
+                    @if($property->is_verified || $property->subjectBadges()->active()->exists())
+                        <span class="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-emerald-50 text-emerald-700">
+                            <i class="fa-solid fa-circle-check text-[10px] mr-1"></i> Verified
+                        </span>
+                    @endif
 
                     <span class="text-xs text-slate-400 font-semibold">&bull; Property ID: H365-{{ $property->id + 1000 }}</span>
                 </div>
@@ -86,7 +115,7 @@
                         <i class="fa-solid fa-circle-check text-xs"></i> 100% Direct Owner &bull; No Brokerage
                     </span>
                 </div>
-                <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $property->seller_phone ?? '916376163263') }}?text=Hi,%20I%20am%20interested%20in%20your%20listing:%20{{ urlencode($property->title) }}%20({{ urlencode(url()->current()) }})" target="_blank" class="w-full sm:w-auto px-6 py-4 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold uppercase tracking-wider shadow-lg shadow-emerald-600/30 flex items-center justify-center gap-2 transition hover:-translate-y-0.5">
+                <a href="https://wa.me/{{ $isUnlocked && !empty($unmaskedPhone) ? preg_replace('/[^0-9]/', '', $unmaskedPhone) : '916376163263' }}?text=Hi,%20I%20am%20interested%20in%20your%20listing:%20{{ urlencode($property->title) }}%20({{ urlencode(url()->current()) }})" target="_blank" class="w-full sm:w-auto px-6 py-4 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold uppercase tracking-wider shadow-lg shadow-emerald-600/30 flex items-center justify-center gap-2 transition hover:-translate-y-0.5">
                     <i class="fa-brands fa-whatsapp text-lg"></i>
                     Chat on WhatsApp
                 </a>
@@ -608,6 +637,156 @@
                         In India, property purchases attract state stamp duty (typically 5%–6% depending on state and gender concessions) plus a 1% registration charge. For rental agreements, nominal e-stamp duty (~₹100–₹500) and registration apply. Housing 365 offers complete digital document execution support.
                     </p>
                 </div>
+
+                <!-- ── VERIFIED TRUST CREDENTIALS & COMPLIANCE ── -->
+                @php
+                    $propertyBadges = $property->activeBadges()->get();
+                @endphp
+                @if($propertyBadges->isNotEmpty())
+                    <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200/80 shadow-sm space-y-4">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-display text-lg sm:text-xl font-bold text-brand-navy flex items-center gap-2">
+                                <i class="fa-solid fa-shield-halved text-[#00AEEF]"></i>
+                                <span>Verified Trust Credentials</span>
+                            </h3>
+                            <span class="text-xs text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full font-bold">100% Genuine</span>
+                        </div>
+                        <p class="text-xs text-slate-500">The following credentials have been validated through Housing365 verification protocol.</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                            @foreach($propertyBadges as $pb)
+                                <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-100 flex items-start gap-3">
+                                    <div class="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center text-xs font-bold shrink-0">
+                                        <i class="fa-solid fa-check"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-xs font-bold text-brand-navy">{{ $pb->trustBadge->name }}</h4>
+                                        <p class="text-[11px] text-slate-500 mt-0.5">{{ $pb->trustBadge->description }}</p>
+                                        <span class="text-[10px] text-slate-400 mt-1 block">Validated: {{ $pb->assigned_at->format('M Y') }}</span>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
+
+                <!-- ── VERIFIED CUSTOMER REVIEWS & RATINGS ── -->
+                @php
+                    $reviews = $property->publishedReviews()->with(['user', 'publishedResponses.responder'])->latest('published_at')->get();
+                    $avgRating = $property->verifiedRating();
+                    $reviewCount = $property->verifiedReviewCount();
+                @endphp
+                <div id="reviews-section" class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200/80 shadow-sm space-y-6">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-slate-100">
+                        <div>
+                            <h3 class="font-display text-lg sm:text-xl font-bold text-brand-navy flex items-center gap-2">
+                                <i class="fa-solid fa-star text-amber-400"></i>
+                                <span>Verified Resident &amp; Visitor Reviews</span>
+                            </h3>
+                            <p class="text-xs text-slate-500 mt-0.5">Authentic reviews from verified tenant leases, completed viewings, or bookings.</p>
+                        </div>
+                        @if($reviewCount > 0)
+                            <div class="flex items-center gap-3">
+                                <div class="text-right">
+                                    <div class="text-2xl font-black text-brand-navy leading-none">{{ number_format($avgRating, 1) }}</div>
+                                    <span class="text-[10px] text-slate-400 uppercase font-bold">{{ $reviewCount }} {{ Str::plural('review', $reviewCount) }}</span>
+                                </div>
+                                <div class="flex text-amber-400 text-xs">
+                                    @for($i = 1; $i <= 5; $i++)
+                                        <i class="fa-{{ $i <= round($avgRating) ? 'solid' : 'regular' }} fa-star"></i>
+                                    @endfor
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+
+                    @if($reviews->isEmpty())
+                        <div class="text-center py-8 bg-slate-50 rounded-2xl border border-dashed border-slate-200">
+                            <i class="fa-regular fa-comment-dots text-3xl text-slate-300 mb-2 block"></i>
+                            <h4 class="text-xs font-bold text-slate-700">No Customer Reviews Yet</h4>
+                            <p class="text-[11px] text-slate-400 max-w-sm mx-auto mt-1">To maintain marketplace integrity, reviews require a verified qualifying interaction such as an in-person tour, tenancy lease, or booking.</p>
+                        </div>
+                    @else
+                        <div class="space-y-4">
+                            @foreach($reviews as $rev)
+                                <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100 space-y-2">
+                                    <div class="flex items-start justify-between gap-2">
+                                        <div>
+                                            <div class="flex items-center gap-2">
+                                                <span class="text-xs font-bold text-brand-navy">{{ Str::mask($rev->user?->name ?? 'Verified Visitor', '*', 2, 4) }}</span>
+                                                <span class="px-2 py-0.5 rounded-full text-[9px] font-extrabold uppercase bg-emerald-50 text-emerald-700 border border-emerald-100">
+                                                    Verified {{ ucfirst($rev->interaction_type ?? 'Interaction') }}
+                                                </span>
+                                            </div>
+                                            <div class="flex items-center gap-1.5 mt-1">
+                                                <div class="flex text-amber-400 text-[10px]">
+                                                    @for($s = 1; $s <= 5; $s++)
+                                                        <i class="fa-{{ $s <= $rev->rating ? 'solid' : 'regular' }} fa-star"></i>
+                                                    @endfor
+                                                </div>
+                                                <span class="text-[10px] text-slate-400 font-medium">&bull; {{ $rev->published_at?->diffForHumans() ?? $rev->created_at->diffForHumans() }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h5 class="text-xs font-bold text-slate-800">{{ $rev->title }}</h5>
+                                    <p class="text-xs text-slate-600 leading-relaxed">{{ $rev->body }}</p>
+
+                                    <!-- Owner Responses -->
+                                    @if($rev->publishedResponses->isNotEmpty())
+                                        @foreach($rev->publishedResponses as $resp)
+                                            <div class="mt-3 pl-3 py-2 border-l-2 border-[#00AEEF] bg-white rounded-r-xl text-xs space-y-1">
+                                                <div class="flex items-center gap-1.5 text-[#03234B] font-bold text-[11px]">
+                                                    <i class="fa-solid fa-reply text-[#00AEEF]"></i>
+                                                    <span>Owner Response</span>
+                                                </div>
+                                                <p class="text-slate-600 text-[11px]">{{ $resp->body }}</p>
+                                            </div>
+                                        @endforeach
+                                    @endif
+                                </div>
+                            @endforeach
+                        </div>
+                    @endif
+
+                    <!-- Review Submission Block for Authenticated Verified Visitors -->
+                    @auth
+                        @if($property->user_id !== auth()->id())
+                            <div class="pt-4 border-t border-slate-100">
+                                <h4 class="text-xs font-bold text-brand-navy mb-2">Have you visited or leased this property?</h4>
+                                <form action="{{ route('reviews.property.store', $property) }}" method="POST" class="space-y-3 bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                                    @csrf
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                        <div>
+                                            <label class="block text-[11px] font-bold text-slate-700 mb-1">Your Rating</label>
+                                            <select name="rating" class="w-full text-xs rounded-xl border-slate-300 shadow-sm focus:border-[#00AEEF] focus:ring-[#00AEEF]" required>
+                                                <option value="5">★★★★★ (5 - Excellent)</option>
+                                                <option value="4">★★★★☆ (4 - Very Good)</option>
+                                                <option value="3">★★★☆☆ (3 - Average)</option>
+                                                <option value="2">★★☆☆☆ (2 - Poor)</option>
+                                                <option value="1">★☆☆☆☆ (1 - Terrible)</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label class="block text-[11px] font-bold text-slate-700 mb-1">Review Headline</label>
+                                            <input type="text" name="title" placeholder="Summary of your experience..." class="w-full text-xs rounded-xl border-slate-300 shadow-sm focus:border-[#00AEEF] focus:ring-[#00AEEF]" required>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="block text-[11px] font-bold text-slate-700 mb-1">Detailed Review</label>
+                                        <textarea name="body" rows="3" placeholder="Share details about the property condition, neighborhood, and landlord..." class="w-full text-xs rounded-xl border-slate-300 shadow-sm focus:border-[#00AEEF] focus:ring-[#00AEEF]" required></textarea>
+                                    </div>
+                                    <button type="submit" class="px-4 py-2 bg-[#03234B] hover:bg-[#00AEEF] text-white text-xs font-bold rounded-xl transition shadow-sm">
+                                        Submit Verified Review
+                                    </button>
+                                </form>
+                            </div>
+                        @endif
+                    @else
+                        <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+                            <span>Have you visited this property?</span>
+                            <a href="{{ route('login') }}" class="font-bold text-[#00AEEF] hover:underline">Log in to leave a review &rarr;</a>
+                        </div>
+                    @endauth
+                </div>
             </div>
 
             <!-- Right 4 Cols: Seller Card & Inquiry Form -->
@@ -623,7 +802,9 @@
                             <div class="min-w-0">
                                 <div class="flex items-center gap-1.5">
                                     <h4 class="font-bold text-white text-base truncate">{{ $property->seller_name ?? 'Property Owner' }}</h4>
-                                    <i class="fa-solid fa-circle-check text-emerald-400 text-xs shrink-0" title="Verified Owner"></i>
+                                    @if($property->owner?->activeBadges()->exists() || $property->owner?->verifications()->where('status', 'VERIFIED')->exists())
+                                        <i class="fa-solid fa-circle-check text-emerald-400 text-xs shrink-0" title="Verified Owner Identity"></i>
+                                    @endif
                                 </div>
                                 <span class="text-xs text-slate-300 font-medium block">Posted by {{ ucfirst($property->posted_by ?? 'Owner') }} &bull; Direct Deal</span>
                             </div>
@@ -641,8 +822,8 @@
                             <div class="flex items-center justify-between text-xs bg-white/10 px-3.5 py-2 rounded-xl backdrop-blur-sm">
                                 <span class="text-slate-300">Direct Contact</span>
                                 <span id="ownerPhoneDisplay" class="font-bold text-white tracking-wider">
-                                    @if($isPrime)
-                                        {{ $property->seller_phone ?? '+91 63761 63263' }}
+                                    @if($isUnlocked && !empty($unmaskedPhone))
+                                        {{ $unmaskedPhone }}
                                     @else
                                         +91 63761 •••••
                                     @endif
@@ -652,38 +833,37 @@
 
                         <!-- Direct Contact Actions -->
                         <div id="ownerContactActionContainer">
-                            @if($isPrime)
+                            @if($isUnlocked && !empty($unmaskedPhone))
                                 <div class="grid grid-cols-2 gap-2.5">
-                                    <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $property->seller_phone ?? '916376163263') }}?text=Hi,%20I%20am%20a%20Housing365%20Prime%20member%20interested%20in%20your%20property%20listing:%20{{ urlencode($property->title) }}" 
+                                    <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $unmaskedPhone) }}?text=Hi,%20I%20am%20interested%20in%20your%20property%20listing:%20{{ urlencode($property->title) }}" 
                                        target="_blank" 
                                        class="flex items-center justify-center gap-2 py-3 px-3 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs uppercase tracking-wider transition shadow-md shadow-emerald-500/20">
                                         <i class="fa-brands fa-whatsapp text-sm"></i>
                                         <span>WhatsApp</span>
                                     </a>
-                                    <a href="tel:{{ $property->seller_phone ?? '+916376163263' }}" 
+                                    <a href="tel:{{ $unmaskedPhone }}" 
                                        class="flex items-center justify-center gap-2 py-3 px-3 rounded-xl bg-brand-cyan hover:bg-brand-cyan-hover text-white font-bold text-xs uppercase tracking-wider transition shadow-md shadow-brand-cyan/20">
                                         <i class="fa-solid fa-phone text-xs"></i>
                                         <span>Call Now</span>
                                     </a>
                                 </div>
                                 <div class="mt-2.5 text-center">
-                                    <span class="text-[10px] text-amber-300 font-bold flex items-center justify-center gap-1">
-                                        <i class="fa-solid fa-crown text-[9px]"></i> Prime Active &bull; {{ auth()->user()->remainingContacts() }} Contact Unlocks Left
+                                    <span class="text-[10px] text-emerald-300 font-bold flex items-center justify-center gap-1">
+                                        <i class="fa-solid fa-circle-check text-[9px]"></i> Contact Unlocked &bull; Direct Deal
                                     </span>
                                 </div>
                             @elseif(auth()->check())
                                 <button type="button" onclick="unlockContact({{ $property->id }})" class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-slate-950 font-black text-xs uppercase tracking-wider shadow-md transition flex items-center justify-center gap-2">
-                                    <i class="fa-solid fa-crown text-xs"></i>
-                                    <span>Unlock Direct Owner Number</span>
+                                    <i class="fa-solid fa-lock text-xs"></i>
+                                    <span>Unlock Owner Contact</span>
                                 </button>
                             @else
-                                <a href="{{ route('prime') }}" class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-slate-950 font-black text-xs uppercase tracking-wider shadow-md transition flex items-center justify-center gap-2 text-center">
-                                    <i class="fa-solid fa-crown text-xs"></i>
-                                    <span>Unlock Owner Number with Prime</span>
+                                <a href="{{ route('login') }}" class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-slate-950 font-black text-xs uppercase tracking-wider shadow-md transition flex items-center justify-center gap-2 text-center">
+                                    <i class="fa-solid fa-lock text-xs"></i>
+                                    <span>Unlock Owner Contact</span>
                                 </a>
                                 <div class="mt-2 flex items-center justify-center gap-1.5 text-[11px] text-slate-300">
-                                    <span>Already Prime Member?</span>
-                                    <a href="{{ route('login') }}" class="text-amber-400 font-bold underline">Sign In</a>
+                                    <span>Sign in to unlock verified phone & email</span>
                                 </div>
                             @endif
                         </div>
@@ -828,7 +1008,7 @@
                     </div>
                     <div>
                         <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Phone Number *</label>
-                        <input type="tel" id="tourPhone" required class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-3.5 py-2 text-xs focus:ring-2 focus:ring-brand-cyan outline-none" placeholder="+91 98765 43210">
+                        <input type="tel" id="tourPhone" required class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-3.5 py-2 text-xs focus:ring-2 focus:ring-brand-cyan outline-none" placeholder="+91 98000 00000">
                     </div>
                 </div>
 
@@ -1271,7 +1451,7 @@ document.addEventListener('keydown', function(e) {
         </span>
     </div>
     <div class="flex items-center gap-2">
-        <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $property->seller_phone ?? '916376163263') }}?text=Hi,%20I%20am%20interested%20in:%20{{ urlencode($property->title) }}" 
+        <a href="https://wa.me/{{ $isUnlocked && !empty($unmaskedPhone) ? preg_replace('/[^0-9]/', '', $unmaskedPhone) : '916376163263' }}?text=Hi,%20I%20am%20interested%20in:%20{{ urlencode($property->title) }}" 
            target="_blank" 
            class="px-4 py-2.5 rounded-xl bg-emerald-600 text-white font-bold text-xs uppercase tracking-wider flex items-center gap-1.5 shadow-md">
             <i class="fa-brands fa-whatsapp text-sm"></i>

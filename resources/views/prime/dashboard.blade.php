@@ -243,26 +243,13 @@
                             <div class="p-5 pt-0">
                                 <div class="p-3 rounded-2xl bg-amber-50/60 border border-amber-200/80 flex items-center justify-between">
                                     <div>
-                                        <span class="text-[10px] font-bold text-amber-800 uppercase block">Owner Contact</span>
-                                        @if($user->isPrimeActive())
-                                            <a href="tel:{{ $property->seller_phone ?? '+916376163263' }}" class="text-xs font-bold text-slate-900 flex items-center gap-1 hover:text-brand-cyan">
-                                                <i class="fa-solid fa-phone text-[10px] text-emerald-600"></i>
-                                                <span>{{ $property->seller_phone ?? '+91 63761 63263' }}</span>
-                                            </a>
-                                        @else
-                                            <span class="text-xs font-bold text-slate-700 tracking-wider">+91 63761 •••••</span>
-                                        @endif
+                                        <span class="text-[10px] font-bold text-slate-500 uppercase block">Owner Contact</span>
+                                        <span class="text-xs font-bold text-slate-700 tracking-wider">+91 ••••• •••••</span>
                                     </div>
 
-                                    @if($user->isPrimeActive())
-                                        <a href="{{ route('properties.show', $property->slug) }}" class="px-3 py-1.5 rounded-xl bg-brand-navy hover:bg-slate-800 text-white font-bold text-xs uppercase tracking-wider transition">
-                                            View Details
-                                        </a>
-                                    @else
-                                        <a href="{{ route('prime') }}" class="px-3 py-1.5 rounded-xl bg-amber-400 hover:bg-amber-500 text-slate-950 font-black text-xs uppercase tracking-wider transition flex items-center gap-1">
-                                            <i class="fa-solid fa-crown text-[10px]"></i> Unlock
-                                        </a>
-                                    @endif
+                                    <a href="{{ route('properties.show', $property->slug) }}" class="px-3 py-1.5 rounded-xl bg-brand-navy hover:bg-slate-800 text-white font-bold text-xs uppercase tracking-wider transition">
+                                        View Details
+                                    </a>
                                 </div>
                             </div>
                         </div>
