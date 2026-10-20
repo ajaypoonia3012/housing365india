@@ -28,10 +28,17 @@ class StateResource extends Resource
             ->components([
                 TextInput::make('name')
                     ->label('State / UT Name')
-                    ->required(),
+                    ->required()
+                    ->live(onBlur: true)
+                    ->afterStateUpdated(function ($state, callable $set, string $operation) {
+                        if ($operation === 'create' || empty($state)) {
+                            $set('slug', \Illuminate\Support\Str::slug($state));
+                        }
+                    }),
                 TextInput::make('slug')
                     ->label('URL Slug')
-                    ->required(),
+                    ->required()
+                    ->helperText('Auto-generated from state name.'),
                 TextInput::make('code')
                     ->label('State Code (e.g. RJ, MH, DL)'),
                 TextInput::make('region')

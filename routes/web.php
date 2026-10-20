@@ -39,6 +39,9 @@ Route::get('/resources', [FrontendController::class, 'resources'])->name('resour
 Route::get('/franchising', [FrontendController::class, 'franchising'])->name('franchising');
 Route::get('/reviews', [FrontendController::class, 'reviews'])->name('reviews');
 Route::get('/contact', [FrontendController::class, 'contact'])->name('contact');
+Route::get('/privacy-policy', [FrontendController::class, 'privacyPolicy'])->name('privacy-policy');
+Route::get('/terms', [FrontendController::class, 'termsOfService'])->name('terms');
+Route::redirect('/terms-of-service', '/terms', 301);
 Route::post('/inquiry', [FrontendController::class, 'storeInquiry'])->name('inquiry.store')->middleware('throttle:5,1');
 
 // Authentication
@@ -144,6 +147,7 @@ Route::redirect('/my-prime', '/properties', 301)->name('my.prime');
 Route::redirect('/mbprime', '/pricing', 301);
 Route::redirect('/mbprime/primePackages', '/pricing', 301);
 Route::redirect('/prime-packages', '/pricing', 301);
+Route::post('/prime/activate', [FrontendController::class, 'activatePrime'])->name('prime.activate');
 Route::redirect('/us', '/india', 301);
 Route::redirect('/us/{any}', '/india', 301)->where('any', '.*');
 

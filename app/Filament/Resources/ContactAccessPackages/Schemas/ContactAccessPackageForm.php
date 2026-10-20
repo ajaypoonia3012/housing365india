@@ -16,11 +16,18 @@ class ContactAccessPackageForm
                 TextInput::make('name')
                     ->label('Package Name')
                     ->required()
-                    ->placeholder('e.g. Starter Contact Pass'),
+                    ->placeholder('e.g. Starter Contact Pass')
+                    ->live(onBlur: true)
+                    ->afterStateUpdated(function ($state, callable $set, string $operation) {
+                        if ($operation === 'create' || empty($state)) {
+                            $set('slug', \Illuminate\Support\Str::slug($state));
+                        }
+                    }),
                 TextInput::make('slug')
                     ->label('Slug')
                     ->required()
-                    ->placeholder('e.g. starter-pass'),
+                    ->placeholder('e.g. starter-pass')
+                    ->helperText('Auto-generated from name.'),
                 TextInput::make('credits')
                     ->label('Contact Credits (Number of Unlocks)')
                     ->required()

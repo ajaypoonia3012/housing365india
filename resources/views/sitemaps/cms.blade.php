@@ -17,6 +17,8 @@
             '/blog' => ['freq' => 'daily', 'prio' => '0.7'],
             '/refer-and-earn' => ['freq' => 'weekly', 'prio' => '0.8'],
             '/refer-and-earn/terms' => ['freq' => 'monthly', 'prio' => '0.5'],
+            '/privacy-policy' => ['freq' => 'monthly', 'prio' => '0.5'],
+            '/terms' => ['freq' => 'monthly', 'prio' => '0.5'],
         ];
     @endphp
 

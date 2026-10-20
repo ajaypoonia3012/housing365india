@@ -16,9 +16,16 @@ class BlogPostForm
         return $schema
             ->components([
                 TextInput::make('title')
-                    ->required(),
+                    ->required()
+                    ->live(onBlur: true)
+                    ->afterStateUpdated(function ($state, callable $set, string $operation) {
+                        if ($operation === 'create' || empty($state)) {
+                            $set('slug', \Illuminate\Support\Str::slug($state));
+                        }
+                    }),
                 TextInput::make('slug')
-                    ->required(),
+                    ->required()
+                    ->helperText('Auto-generated from title, or customize if needed.'),
                 TextInput::make('category')
                     ->required()
                     ->default('Rental Guide'),

@@ -13,17 +13,24 @@ class PageForm
     {
         return $schema
             ->components([
-                TextInput::make('slug')
-                    ->label('Page Slug')
-                    ->placeholder('e.g. home, about, owners')
-                    ->required()
-                    ->maxLength(100),
-
                 TextInput::make('title')
                     ->label('Page Title')
                     ->placeholder('e.g. Home, About Us, Owner Solutions')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->live(onBlur: true)
+                    ->afterStateUpdated(function ($state, callable $set, string $operation) {
+                        if ($operation === 'create' || empty($state)) {
+                            $set('slug', \Illuminate\Support\Str::slug($state));
+                        }
+                    }),
+
+                TextInput::make('slug')
+                    ->label('Page Slug')
+                    ->placeholder('e.g. home, about, owners')
+                    ->required()
+                    ->maxLength(100)
+                    ->helperText('Auto-generated from title, or enter custom URL slug.'),
 
                 Toggle::make('is_published')
                     ->label('Published')

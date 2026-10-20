@@ -16,10 +16,17 @@ class CityLocationForm
             ->components([
                 TextInput::make('name')
                     ->label('City Name')
-                    ->required(),
+                    ->required()
+                    ->live(onBlur: true)
+                    ->afterStateUpdated(function ($state, callable $set, string $operation) {
+                        if ($operation === 'create' || empty($state)) {
+                            $set('slug', \Illuminate\Support\Str::slug($state));
+                        }
+                    }),
                 TextInput::make('slug')
                     ->label('URL Slug')
-                    ->required(),
+                    ->required()
+                    ->helperText('Auto-generated from city name.'),
                 TextInput::make('province_or_state')
                     ->label('Indian State / Union Territory')
                     ->placeholder('e.g. Rajasthan, Maharashtra, Karnataka')

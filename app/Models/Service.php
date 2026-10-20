@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\HasAutoSlug;
 use Illuminate\Database\Eloquent\Model;
 
 class Service extends Model
 {
+    use HasAutoSlug;
+
     protected $guarded = [];
 
     protected $casts = [

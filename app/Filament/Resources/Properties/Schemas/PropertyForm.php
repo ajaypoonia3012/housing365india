@@ -18,12 +18,19 @@ class PropertyForm
                     ->label('Listing Title')
                     ->placeholder('e.g. Luxury 3 BHK High-Rise Apartment in Malviya Nagar')
                     ->required()
-                    ->maxLength(180),
+                    ->maxLength(180)
+                    ->live(onBlur: true)
+                    ->afterStateUpdated(function ($state, callable $set, string $operation) {
+                        if ($operation === 'create' || empty($state)) {
+                            $set('slug', \Illuminate\Support\Str::slug($state));
+                        }
+                    }),
 
                 TextInput::make('slug')
                     ->label('URL Slug')
                     ->required()
-                    ->unique(ignoreRecord: true),
+                    ->unique(ignoreRecord: true)
+                    ->helperText('Auto-generated from listing title. Used in public URLs.'),
 
                 Select::make('purpose')
                     ->label('Listing Purpose')

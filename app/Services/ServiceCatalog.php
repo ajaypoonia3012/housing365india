@@ -17,6 +17,10 @@ class ServiceCatalog
             } else {
                 self::$services = [];
             }
+
+            if (! isset(self::$services['rental-agreement-registration'])) {
+                self::$services['rental-agreement-registration'] = self::getRentalAgreementDefinition();
+            }
         }
 
         return self::$services;
@@ -59,7 +63,14 @@ class ServiceCatalog
     public static function find(string $slug): ?array
     {
         $services = self::load();
+        $slug = match ($slug) {
+            'rent-agreement', 'rental-agreement' => 'rental-agreement-registration',
+            default => $slug,
+        };
         $base = $services[$slug] ?? null;
+        if (! $base && $slug === 'rental-agreement-registration') {
+            $base = self::getRentalAgreementDefinition();
+        }
 
         try {
             $db = Service::where('slug', $slug)->first();
@@ -136,7 +147,11 @@ class ServiceCatalog
             ],
             'leasing-services' => [
                 'url' => 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=2400&q=80',
-                'alt' => 'Modern Canadian rental living room staged for showings',
+                'alt' => 'Modern Indian apartment living room staged for showings',
+            ],
+            'rental-agreement-registration' => [
+                'url' => 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=2400&q=80',
+                'alt' => 'Legal e-stamped tenancy agreement signing and registration',
             ],
             'tenant-screening' => [
                 'url' => 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=2400&q=80',
@@ -156,7 +171,7 @@ class ServiceCatalog
             ],
             'rental-preparation' => [
                 'url' => 'https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=2400&q=80',
-                'alt' => 'Bright, prepped condo unit ready for listing photography',
+                'alt' => 'Bright, prepped apartment unit ready for listing photography',
             ],
             'portal-and-technology' => [
                 'url' => 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=2400&q=80',
@@ -190,7 +205,116 @@ class ServiceCatalog
 
         return $backdrops[$slug] ?? [
             'url' => 'https://images.unsplash.com/photo-1517090504586-fde19ea6066f?auto=format&fit=crop&w=2400&q=80',
-            'alt' => 'Canadian skyline at dusk - Housing365 leasing markets',
+            'alt' => 'City skyline at dusk - Housing365 Indian real estate markets',
+        ];
+    }
+
+    public static function getRentalAgreementDefinition(): array
+    {
+        return [
+            'slug' => 'rental-agreement-registration',
+            'title' => 'Rent Agreement & e-Stamping Registration',
+            'metaDescription' => 'Legally enforceable 11-month rental agreements with state e-stamping, biometric Aadhaar e-sign, police verification assistance, and Model Tenancy Act compliance across India.',
+            'heroEyebrow' => 'LEGAL DOCUMENTATION & COMPLIANCE',
+            'heroKicker' => 'Services',
+            'heroHeadline' => 'Online Rent Agreement & e-Stamping Registration',
+            'heroLede' => 'Draft, e-stamp, and legally register your 11-month tenancy agreement from the comfort of your home. 100% compliant with state stamp acts, Model Tenancy Act, and local police verification standards.',
+            'cta1Label' => 'Draft Agreement Now',
+            'cta2Label' => 'Talk to Legal Team',
+            'problemTitle' => 'Risks of poorly drafted or unregistered rental agreements',
+            'problemPoints' => [
+                [
+                    'title' => 'Unstamped agreements are inadmissible in Indian courts',
+                    'body' => 'Under the Indian Stamp Act and State Stamp Acts, an agreement without proper stamp duty cannot be accepted as evidence during disputes.',
+                ],
+                [
+                    'title' => 'Police verification non-compliance penalties',
+                    'body' => 'Most metropolitan police jurisdictions (Delhi, Mumbai, Bengaluru, Gurugram) mandate tenant verification under Section 188 IPC. Failure can lead to legal summons and penalties.',
+                ],
+                [
+                    'title' => 'Arbitrary security deposit disputes',
+                    'body' => 'Agreements lacking clear wear-and-tear clauses, move-out notice stipulations, and inspection timelines often result in bitter deposit withholding disputes.',
+                ],
+                [
+                    'title' => 'Ambiguous utility and maintenance division',
+                    'body' => 'Without explicit demarcation of landlord vs tenant responsibilities for society maintenance, major repairs, and property tax, conflicts arise quickly.',
+                ],
+            ],
+            'solutionTitle' => 'Seamless, legal, and paperless rent agreement execution',
+            'solutionLede' => 'Housing365 handles the entire workflow: lawyer-vetted drafting, government e-stamp paper generation, Aadhaar e-sign / biometric coordination, and police verification filing.',
+            'scope' => [
+                [
+                    'title' => 'Custom Lawyer-Vetted Drafting',
+                    'body' => 'Comprehensive clauses tailored to your property: lock-in period, notice terms, rent escalation, security deposit refund, and society rules.',
+                ],
+                [
+                    'title' => 'Government e-Stamping (SHCIL)',
+                    'body' => 'Procurement of official government e-stamp certificate in accordance with your state\'s prescribed stamp duty rate.',
+                ],
+                [
+                    'title' => 'Aadhaar e-Sign / Biometric Verification',
+                    'body' => 'Legally valid electronic signatures with time-stamped audit trails, eliminating physical meetings.',
+                ],
+                [
+                    'title' => 'Police Verification Assistance',
+                    'body' => 'Preparation and online submission of tenant verification forms to the local jurisdiction police portal.',
+                ],
+            ],
+            'howItWorks' => [
+                [
+                    'step' => '01',
+                    'title' => 'Enter Tenancy Details',
+                    'body' => 'Submit landlord, tenant, property address, rent amount, and security deposit details in 5 minutes.',
+                ],
+                [
+                    'step' => '02',
+                    'title' => 'Review & Customize Draft',
+                    'body' => 'Our legal system generates an optimized draft. You and your tenant can review and approve terms online.',
+                ],
+                [
+                    'step' => '03',
+                    'title' => 'e-Stamping & Digital Signing',
+                    'body' => 'We attach official state e-stamp certificates and execute digital signatures via UIDAI Aadhaar OTP.',
+                ],
+                [
+                    'step' => '04',
+                    'title' => 'Instant Download & Police Submission',
+                    'body' => 'Download the legally binding PDF agreement and receive assistance with police tenant verification submission.',
+                ],
+            ],
+            'whoItsFor' => [
+                [
+                    'audience' => 'Independent Landlords',
+                    'fitNote' => 'Eliminate courthouse and notary visits while ensuring ironclad legal protection.',
+                ],
+                [
+                    'audience' => 'NRI & Remote Property Owners',
+                    'fitNote' => 'Execute enforceable Indian tenancy agreements from anywhere in the world without Power of Attorney hurdles.',
+                ],
+                [
+                    'audience' => 'Tenants & Working Professionals',
+                    'fitNote' => 'Get immediate valid proof of address and HRA-compliant rent agreement for company tax deductions.',
+                ],
+            ],
+            'pricingNote' => 'Transparent government stamp duty plus nominal flat processing fee. Zero hidden broker markups.',
+            'faqItems' => [
+                [
+                    'question' => 'Is an 11-month agreement required to be registered under Indian law?',
+                    'answer' => 'Under the Registration Act 1908, leases exceeding 11 months must be mandatorily registered at the Sub-Registrar Office. An 11-month agreement with state e-stamp duty and notarization/e-sign is widely used for residential rentals and is legally admissible.',
+                ],
+                [
+                    'question' => 'How does Aadhaar e-Sign work for rent agreements?',
+                    'answer' => 'Both landlord and tenant receive a secure link. Using their Aadhaar-linked mobile number, they verify their identity via OTP, which generates a cryptographically signed signature under the Information Technology Act 2000.',
+                ],
+                [
+                    'question' => 'Can I use this rent agreement to claim HRA tax exemption?',
+                    'answer' => 'Yes. The generated agreement contains the landlord PAN, complete address, and rent amount required by employers and the Income Tax Department for claiming HRA under Section 10(13A).',
+                ],
+                [
+                    'question' => 'How is police verification completed?',
+                    'answer' => 'We generate the standard tenant verification dossier and assist you in filing it on the relevant state police citizen portal (e.g., Delhi Police, Mumbai Police, Karnataka Police Seva Sindhu).',
+                ],
+            ],
         ];
     }
 }

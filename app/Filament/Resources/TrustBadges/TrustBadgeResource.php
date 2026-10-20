@@ -57,8 +57,18 @@ class TrustBadgeResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return $schema->components([
-            TextInput::make('name')->required(),
-            TextInput::make('slug')->required()->unique(ignoreRecord: true),
+            TextInput::make('name')
+                ->required()
+                ->live(onBlur: true)
+                ->afterStateUpdated(function ($state, callable $set, string $operation) {
+                    if ($operation === 'create' || empty($state)) {
+                        $set('slug', \Illuminate\Support\Str::slug($state));
+                    }
+                }),
+            TextInput::make('slug')
+                ->required()
+                ->unique(ignoreRecord: true)
+                ->helperText('Auto-generated from badge name.'),
             Textarea::make('description')->rows(2),
             Textarea::make('criteria')->rows(2),
             Toggle::make('is_active')->default(true),

@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             CareAndManagementSeeder::class,
             Phase9MonetizationAndLeadsSeeder::class,
             Phase10TrustAndFraudSeeder::class,
+            IndianRealEstateBlogsSeeder::class,
         ]);
 
         Schema::enableForeignKeyConstraints();

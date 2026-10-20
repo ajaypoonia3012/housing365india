@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\HasAutoSlug;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -9,6 +10,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class CityLocation extends Model
 {
+    use HasAutoSlug;
+
     protected $guarded = [];
 
     protected $casts = [

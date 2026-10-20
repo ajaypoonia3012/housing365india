@@ -64,8 +64,8 @@
                         </div>
                     @endif
 
-                    <div class="text-base sm:text-[17px] text-slate-700 leading-relaxed space-y-5">
-                        {!! nl2br(e($post->content)) !!}
+                    <div class="prose prose-slate max-w-none text-base sm:text-[17px] text-slate-700 leading-relaxed space-y-5">
+                        {!! $post->content !!}
                     </div>
                 </div>
 

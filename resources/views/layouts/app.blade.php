@@ -758,8 +758,8 @@
             <div class="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 sm:flex-row text-sm text-slate-500">
                 <p>{{ $settings['footer_copyright'] ?? '© 2026 Housing365 India. All rights reserved.' }}</p>
                 <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 sm:justify-end">
-                    <a href="{{ route('contact') }}" class="hover:text-slate-300">Privacy Policy</a>
-                    <a href="{{ route('contact') }}" class="hover:text-slate-300">Terms of Service</a>
+                    <a href="{{ route('privacy-policy') }}" class="hover:text-slate-300">Privacy Policy</a>
+                    <a href="{{ route('terms') }}" class="hover:text-slate-300">Terms of Service</a>
                 </div>
             </div>
         </div>

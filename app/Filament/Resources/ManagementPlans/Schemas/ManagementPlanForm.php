@@ -17,11 +17,18 @@ class ManagementPlanForm
                 TextInput::make('name')
                     ->label('Plan Name')
                     ->required()
-                    ->placeholder('e.g. Standard Property Management'),
+                    ->placeholder('e.g. Standard Property Management')
+                    ->live(onBlur: true)
+                    ->afterStateUpdated(function ($state, callable $set, string $operation) {
+                        if ($operation === 'create' || empty($state)) {
+                            $set('slug', \Illuminate\Support\Str::slug($state));
+                        }
+                    }),
                 TextInput::make('slug')
                     ->label('Slug')
                     ->required()
-                    ->placeholder('e.g. standard-management'),
+                    ->placeholder('e.g. standard-management')
+                    ->helperText('Auto-generated from name.'),
                 Select::make('fee_type')
                     ->label('Fee Structure')
                     ->options([

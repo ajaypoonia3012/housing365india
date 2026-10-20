@@ -34,10 +34,17 @@ class LocalityResource extends Resource
                     ->required(),
                 TextInput::make('name')
                     ->label('Locality Name')
-                    ->required(),
+                    ->required()
+                    ->live(onBlur: true)
+                    ->afterStateUpdated(function ($state, callable $set, string $operation) {
+                        if ($operation === 'create' || empty($state)) {
+                            $set('slug', \Illuminate\Support\Str::slug($state));
+                        }
+                    }),
                 TextInput::make('slug')
                     ->label('URL Slug')
-                    ->required(),
+                    ->required()
+                    ->helperText('Auto-generated from locality name.'),
                 TextInput::make('pincode')
                     ->label('Postal Pincode'),
                 TextInput::make('meta_title')

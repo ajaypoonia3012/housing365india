@@ -17,11 +17,18 @@ class CareServiceCategoryForm
                 TextInput::make('name')
                     ->label('Category Name')
                     ->required()
-                    ->placeholder('e.g. Plumbing, Electrical, AC / HVAC'),
+                    ->placeholder('e.g. Plumbing, Electrical, AC / HVAC')
+                    ->live(onBlur: true)
+                    ->afterStateUpdated(function ($state, callable $set, string $operation) {
+                        if ($operation === 'create' || empty($state)) {
+                            $set('slug', \Illuminate\Support\Str::slug($state));
+                        }
+                    }),
                 TextInput::make('slug')
                     ->label('Slug')
                     ->required()
-                    ->placeholder('e.g. plumbing, electrical'),
+                    ->placeholder('e.g. plumbing, electrical')
+                    ->helperText('Auto-generated from name.'),
                 TextInput::make('icon')
                     ->label('FontAwesome Icon Class')
                     ->default('fa-solid fa-wrench')

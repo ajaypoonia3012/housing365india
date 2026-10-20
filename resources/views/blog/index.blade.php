@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Rental Guides & Real Estate Insights | Housing 365')
-@section('meta_description', 'Expert articles, tenant rights checklists, and rental market analyses across North America.')
+@section('title', 'RERA, Renting & Home Buying Guides | Housing365 India')
+@section('meta_description', 'Expert articles on RERA compliance, Model Tenancy Act, stamp duty & registration, tenant verification, and property investment across India.')
 
 @section('content')
 

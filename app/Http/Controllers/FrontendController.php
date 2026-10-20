@@ -189,6 +189,26 @@ class FrontendController extends Controller
         return view('franchising');
     }
 
+    public function privacyPolicy()
+    {
+        return view('privacy-policy');
+    }
+
+    public function termsOfService()
+    {
+        return view('terms');
+    }
+
+    public function activatePrime(Request $request)
+    {
+        return response()->json([
+            'success' => true,
+            'message' => 'Prime membership activated successfully.',
+            'whatsapp_url' => 'https://wa.me/916376163263?text=' . urlencode('Hi Housing365, I have activated Prime membership for ' . $request->input('plan', 'Prime')),
+            'redirect_url' => route('pricing'),
+        ]);
+    }
+
     public function housing365Care()
     {
         return view('services.care');
