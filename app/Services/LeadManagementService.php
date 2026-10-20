@@ -80,6 +80,15 @@ class LeadManagementService
             // Route lead automatically
             $this->routeLead($lead, $property);
 
+            // Send automated acknowledgment email to lead if valid email exists
+            if (! empty($lead->email) && filter_var($lead->email, FILTER_VALIDATE_EMAIL) && ! str_contains($lead->email, '@housing365.in')) {
+                try {
+                    \Illuminate\Support\Facades\Mail::to($lead->email)->send(new \App\Mail\LeadReceivedAcknowledgmentMail($lead));
+                } catch (\Throwable $e) {
+                    // Fail silently so customer flow is never blocked
+                }
+            }
+
             return $lead->fresh(['assignments', 'statusHistories', 'activities']);
         });
     }
@@ -354,5 +363,141 @@ class LeadManagementService
         }
 
         return 'residential_rental';
+    }
+
+    /**
+     * Send an email reply to a lead from CRM with optional document attachment.
+     */
+    public function sendEmailReply(Lead $lead, string $subject, string $body, ?string $attachmentPath = null, ?User $sender = null): bool
+    {
+        $recipient = $lead->email ?: $lead->contact_email;
+        if (empty($recipient) || ! filter_var($recipient, FILTER_VALIDATE_EMAIL)) {
+            throw new \InvalidArgumentException('Lead does not have a valid email address.');
+        }
+
+        // Send email via Laravel Mailer
+        \Illuminate\Support\Facades\Mail::to($recipient)->send(
+            new \App\Mail\LeadReplyMail(
+                lead: $lead,
+                emailSubject: $subject,
+                emailMessage: $body,
+                attachmentPath: $attachmentPath,
+                senderName: $sender ? $sender->name : 'Housing365 India Support'
+            )
+        );
+
+        // Update last contacted timestamp
+        $lead->update([
+            'last_contacted_at' => Carbon::now(),
+        ]);
+
+        // If lead was still NEW or ASSIGNED, automatically advance to CONTACTED
+        if (in_array($lead->status, [Lead::STATUS_NEW, Lead::STATUS_ASSIGNED])) {
+            $this->updateStatus($lead, Lead::STATUS_CONTACTED, $sender, "Email reply sent: {$subject}");
+        }
+
+        // Log in LeadActivity timeline
+        LeadActivity::create([
+            'lead_id' => $lead->id,
+            'user_id' => $sender?->id,
+            'activity_type' => 'email',
+            'title' => "Email Sent: {$subject}",
+            'description' => $body,
+            'metadata' => [
+                'recipient' => $recipient,
+                'has_attachment' => ! empty($attachmentPath),
+                'attachment_path' => $attachmentPath,
+            ],
+        ]);
+
+        return true;
+    }
+
+    /**
+     * Convert Lead into a Closed Deal / Executed Tenancy.
+     */
+    public function convertLead(Lead $lead, array $data, ?User $actor = null): Lead
+    {
+        return DB::transaction(function () use ($lead, $data, $actor) {
+            $oldStatus = $lead->status;
+            $dealValue = ! empty($data['deal_value']) ? (float) $data['deal_value'] : null;
+            $dealType = $data['deal_type'] ?? 'residential_rental_executed';
+            $notes = $data['notes'] ?? 'Lead successfully converted in CRM.';
+
+            $lead->update([
+                'status' => Lead::STATUS_CONVERTED,
+                'converted_deal_value' => $dealValue,
+                'converted_deal_type' => $dealType,
+                'conversion_notes' => $notes,
+                'converted_at' => Carbon::now(),
+            ]);
+
+            // Audit history
+            LeadStatusHistory::create([
+                'lead_id' => $lead->id,
+                'from_status' => $oldStatus,
+                'to_status' => Lead::STATUS_CONVERTED,
+                'changed_by_id' => $actor?->id,
+                'changed_by_user_id' => $actor?->id,
+                'reason' => "Deal Converted: {$dealType}. Notes: {$notes}",
+            ]);
+
+            // Activity timeline
+            $valueFormatted = $dealValue ? ' (₹'.number_format($dealValue).')' : '';
+            LeadActivity::create([
+                'lead_id' => $lead->id,
+                'user_id' => $actor?->id,
+                'activity_type' => 'status_change',
+                'title' => "Deal Converted & Won{$valueFormatted}",
+                'description' => "Converted to {$dealType}. {$notes}",
+                'metadata' => [
+                    'deal_value' => $dealValue,
+                    'deal_type' => $dealType,
+                    'converted_by' => $actor?->name,
+                ],
+            ]);
+
+            return $lead->fresh(['statusHistories', 'activities']);
+        });
+    }
+
+    /**
+     * Attach a document (Agreement, KYC, Police verification) to a Lead.
+     */
+    public function uploadDocument(Lead $lead, array $data, ?User $actor = null): \App\Models\LeadDocument
+    {
+        return DB::transaction(function () use ($lead, $data, $actor) {
+            $document = $lead->documents()->create([
+                'uploaded_by_user_id' => $actor?->id,
+                'title' => $data['title'],
+                'document_type' => $data['document_type'] ?? 'other',
+                'file_path' => $data['file_path'],
+                'file_name' => $data['file_name'] ?? basename($data['file_path']),
+                'file_size' => $data['file_size'] ?? null,
+                'mime_type' => $data['mime_type'] ?? null,
+                'notes' => $data['notes'] ?? null,
+            ]);
+
+            // If agreement drafted, transition to AGREEMENT_DRAFTED stage if currently before it
+            if (in_array($data['document_type'], ['agreement_draft', 'signed_agreement']) && in_array($lead->status, [Lead::STATUS_NEW, Lead::STATUS_CONTACTED, Lead::STATUS_QUALIFIED, Lead::STATUS_VIEWING_COMPLETED, Lead::STATUS_APPLICATION_SUBMITTED])) {
+                $this->updateStatus($lead, Lead::STATUS_AGREEMENT_DRAFTED, $actor, "Agreement uploaded: {$data['title']}");
+            }
+
+            // Log activity
+            LeadActivity::create([
+                'lead_id' => $lead->id,
+                'user_id' => $actor?->id,
+                'activity_type' => 'document_upload',
+                'title' => "Document Uploaded: {$data['title']}",
+                'description' => "Type: {$data['document_type']}. Notes: ".($data['notes'] ?? 'None'),
+                'metadata' => [
+                    'document_id' => $document->id,
+                    'document_type' => $data['document_type'],
+                    'file_path' => $data['file_path'],
+                ],
+            ]);
+
+            return $document;
+        });
     }
 }

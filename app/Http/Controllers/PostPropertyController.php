@@ -297,7 +297,7 @@ class PostPropertyController extends Controller
             'phone' => 'required|string|max:25',
         ]);
 
-        Inquiry::create([
+        $inquiry = Inquiry::create([
             'name' => 'Free Listing Assistance Request',
             'email' => 'expert-post@housing365.in',
             'phone' => strip_tags(trim($validated['phone'])),
@@ -306,6 +306,15 @@ class PostPropertyController extends Controller
             'message' => 'User requested dedicated Property Expert callback on phone: '.$validated['phone'],
             'status' => 'new',
         ]);
+
+        try {
+            app(\App\Services\LeadManagementService::class)->ingestFromInquiry($inquiry, [
+                'source' => 'post_property_assistance',
+                'priority' => 'high',
+            ]);
+        } catch (\Throwable $e) {
+            // Graceful fallback
+        }
 
         if ($request->expectsJson() || $request->ajax()) {
             return response()->json([
