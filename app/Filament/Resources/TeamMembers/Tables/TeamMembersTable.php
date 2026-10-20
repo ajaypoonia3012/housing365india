@@ -5,6 +5,7 @@ namespace App\Filament\Resources\TeamMembers\Tables;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -18,8 +19,11 @@ class TeamMembersTable
                     ->searchable(),
                 TextColumn::make('role')
                     ->searchable(),
-                TextColumn::make('avatar')
-                    ->searchable(),
+                ImageColumn::make('avatar')
+                    ->label('Photo')
+                    ->circular()
+                    ->checkFileExistence(false)
+                    ->defaultImageUrl('https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80'),
                 TextColumn::make('email')
                     ->label('Email address')
                     ->searchable(),

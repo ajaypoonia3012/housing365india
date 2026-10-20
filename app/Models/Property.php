@@ -27,6 +27,10 @@ class Property extends Model
         'bathrooms' => 'float',
     ];
 
+    protected $attributes = [
+        'country' => 'IN',
+    ];
+
     /**
      * Owner user account (normalized in Phase 3, nullable for legacy compatibility).
      */

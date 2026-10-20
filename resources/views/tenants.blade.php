@@ -203,7 +203,7 @@
                         <div class="size-8 rounded-xl bg-sky-50 text-brand-cyan flex items-center justify-center font-bold text-sm shrink-0">1</div>
                         <div>
                             <h4 class="font-bold text-sm text-brand-navy">Government-Issued Photo ID</h4>
-                            <p class="text-xs text-slate-500 mt-0.5">Driver's License, Canadian/US Passport, PR Card, or Provincial Photo ID.</p>
+                            <p class="text-xs text-slate-500 mt-0.5">Aadhaar Card, PAN Card, Passport, Voter ID, or Indian Driving License.</p>
                         </div>
                     </div>
 
@@ -211,7 +211,7 @@
                         <div class="size-8 rounded-xl bg-sky-50 text-brand-cyan flex items-center justify-center font-bold text-sm shrink-0">2</div>
                         <div>
                             <h4 class="font-bold text-sm text-brand-navy">Proof of Income &amp; Employment</h4>
-                            <p class="text-xs text-slate-500 mt-0.5">Recent 2-3 paystubs, formal letter of employment, or Notice of Assessment (NOA) for self-employed individuals.</p>
+                            <p class="text-xs text-slate-500 mt-0.5">Recent 2-3 salary slips, formal employment offer/appointment letter, or Form 16 / ITR for self-employed individuals.</p>
                         </div>
                     </div>
 

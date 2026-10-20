@@ -205,10 +205,9 @@
         color: #03234B !important;
     }
 
-    /* ── CRITICAL: PREVENT GIANT SVGS ── */
+    /* ── SVG SIZING & ICON CONTROLS ── */
     svg {
-        max-width: 100% !important;
-        display: inline-block !important;
+        max-width: 100%;
     }
 
     .fi-icon,
@@ -222,6 +221,25 @@
         flex-shrink: 0 !important;
     }
 
+    /* ── FIX: HIDE ALL IDLE WIRE:LOADING SPINNERS IN TABLE HEADERS, SEARCH & BUTTONS ── */
+    [wire\:loading]:not([style*="display: inline"]):not([style*="display: block"]):not([style*="display:inline"]):not([style*="display:block"]),
+    [wire\:loading\.delay]:not([style*="display: inline"]):not([style*="display: block"]):not([style*="display:inline"]):not([style*="display:block"]),
+    [wire\:loading\.delay\.default]:not([style*="display: inline"]):not([style*="display: block"]):not([style*="display:inline"]):not([style*="display:block"]),
+    [wire\:loading\.delay\.shortest]:not([style*="display: inline"]):not([style*="display: block"]):not([style*="display:inline"]):not([style*="display:block"]),
+    [wire\:loading\.delay\.shorter]:not([style*="display: inline"]):not([style*="display: block"]):not([style*="display:inline"]):not([style*="display:block"]),
+    [wire\:loading\.delay\.short]:not([style*="display: inline"]):not([style*="display: block"]):not([style*="display:inline"]):not([style*="display:block"]),
+    [wire\:loading\.delay\.long]:not([style*="display: inline"]):not([style*="display: block"]):not([style*="display:inline"]):not([style*="display:block"]),
+    [wire\:loading\.delay\.longer]:not([style*="display: inline"]):not([style*="display: block"]):not([style*="display:inline"]):not([style*="display:block"]),
+    [wire\:loading\.delay\.longest]:not([style*="display: inline"]):not([style*="display: block"]):not([style*="display:inline"]):not([style*="display:block"]),
+    .fi-loading-indicator:not([style*="display: inline"]):not([style*="display: block"]):not([style*="display:inline"]):not([style*="display:block"]) {
+        display: none !important;
+    }
+
+    /* Prevent duplicate loading indicator circles when both Livewire and Alpine indicators activate */
+    .fi-btn .fi-loading-indicator + .fi-loading-indicator {
+        display: none !important;
+    }
+
     /* Global link styling */
     a.text-primary-600,
     a.text-brand-cyan,
@@ -233,5 +251,38 @@
     a.text-brand-cyan:hover,
     .fi-link:hover {
         color: #0096C7 !important;
+    }
+
+    /* ── FILAMENT TABLES (LUXURY HOUSING365 MODERN STYLING) ── */
+    .fi-ta-ctn {
+        border-radius: 1rem !important;
+        border: 1px solid #E2E8F0 !important;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 6px 16px rgba(0, 0, 0, 0.02) !important;
+        background-color: #FFFFFF !important;
+        overflow: hidden !important;
+    }
+
+    .fi-ta-header-cell,
+    th.fi-ta-header-cell {
+        background-color: #F8FAFC !important;
+        font-family: var(--font-heading) !important;
+        font-weight: 700 !important;
+        font-size: 0.75rem !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.05em !important;
+        color: #475569 !important;
+        border-bottom: 1px solid #E2E8F0 !important;
+        padding-top: 0.85rem !important;
+        padding-bottom: 0.85rem !important;
+    }
+
+    .fi-ta-record:hover {
+        background-color: #F8FAFC !important;
+    }
+
+    /* Soft Brand-Cyan Text Selection instead of harsh browser blue blocks */
+    ::selection {
+        background-color: rgba(0, 174, 239, 0.22) !important;
+        color: #03234B !important;
     }
 </style>

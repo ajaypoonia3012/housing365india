@@ -25,3 +25,6 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+*.sql
+/storage/backups
+*.patch

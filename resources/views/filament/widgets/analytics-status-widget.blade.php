@@ -64,7 +64,7 @@
                             @if($gscActive)
                                 Site verification meta tag is active in public layout head.
                             @else
-                                Paste your Google site verification token or meta tag to index and rank Indian state and metro city pages across Google search.
+                                Paste your Google site verification token or meta tag to index and rank Indian states, metro cities, and verified property landing pages across Google Search.
                             @endif
                         </p>
                     </div>

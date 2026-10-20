@@ -22,6 +22,20 @@ class PropertiesTable
                 ImageColumn::make('image')
                     ->label('Photo')
                     ->circular()
+                    ->checkFileExistence(false)
+                    ->state(function (Property $record): ?string {
+                        $img = $record->image;
+                        if (empty($img)) {
+                            return 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=100&auto=format&fit=crop&q=80';
+                        }
+                        if (str_starts_with($img, 'http://') || str_starts_with($img, 'https://')) {
+                            return $img;
+                        }
+                        if (str_starts_with($img, '/storage/')) {
+                            return substr($img, 9);
+                        }
+                        return $img;
+                    })
                     ->defaultImageUrl('https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=100&auto=format&fit=crop&q=80'),
 
                 TextColumn::make('title')

@@ -3,23 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Housing365 India | Everything Property. One Platform. Verified Owners, Zero Brokerage & Legal Leasing')</title>
-    <meta name="description" content="@yield('meta_description', 'India\'s unified property platform for leasing, verification, property care, management, buy & sell. 100% verified owners, ₹0 standard owner listing fee, legal e-stamped agreements, and end-to-end property solutions across all Indian cities.')">
-    <meta name="robots" content="@yield('meta_robots', 'index, follow')">
+    @php
+        $rawPath = request()->getPathInfo() ?: '/';
+        $normalizedPath = '/' . ltrim(rtrim($rawPath, '/'), '/');
+        if ($rawPath === '/' || $normalizedPath === '') {
+            $normalizedPath = '/';
+        }
 
-    @if(trim($__env->yieldContent('canonical')))
-        <link rel="canonical" href="@yield('canonical')">
-    @endif
+        $seoOverride = \App\Models\SeoMetaOverride::findByPath($normalizedPath);
+        $seoIndexService = app(\App\Services\SeoIndexabilityService::class);
+
+        $yieldedTitle = trim($__env->yieldContent('title'));
+        $pageTitle = $seoOverride?->meta_title
+            ?: ($yieldedTitle ?: 'Housing365 India | Everything Property. One Platform. Verified Owners, Zero Brokerage & Legal Leasing');
+
+        $yieldedDesc = trim($__env->yieldContent('meta_description'));
+        $pageDescription = $seoOverride?->meta_description
+            ?: ($yieldedDesc ?: 'India\'s unified property platform for leasing, verification, property care, management, buy & sell. 100% verified owners, ₹0 standard owner listing fee, legal e-stamped agreements, and end-to-end property solutions across all Indian cities.');
+
+        $yieldedCanonical = trim($__env->yieldContent('canonical'));
+        $pageCanonical = $seoOverride?->canonical_url
+            ?: ($yieldedCanonical ?: $seoIndexService->buildCanonicalUrl(url()->current()));
+
+        $yieldedRobots = trim($__env->yieldContent('meta_robots'));
+        if ($seoOverride && $seoOverride->is_indexable !== null) {
+            $pageRobots = $seoOverride->is_indexable ? 'index, follow' : 'noindex, follow';
+        } elseif (!empty($yieldedRobots)) {
+            $pageRobots = $yieldedRobots;
+        } else {
+            $shouldIndex = $seoIndexService->shouldIndex($normalizedPath);
+            $pageRobots = $shouldIndex ? 'index, follow' : 'noindex, follow';
+        }
+
+        $seoH1 = $seoOverride?->h1;
+        view()->share('seoH1', $seoH1);
+        view()->share('seoOverride', $seoOverride);
+    @endphp
+    <title>{{ $pageTitle }}</title>
+    <meta name="description" content="{{ $pageDescription }}">
+    <meta name="robots" content="{{ $pageRobots }}">
+    <link rel="canonical" href="{{ $pageCanonical }}">
 
     <!-- OpenGraph & Twitter/X Cards -->
     <meta property="og:site_name" content="Housing365 India">
-    <meta property="og:title" content="@yield('title', 'Housing365 India')">
-    <meta property="og:description" content="@yield('meta_description', 'India\'s unified property lifecycle platform.')">
+    <meta property="og:title" content="{{ $pageTitle }}">
+    <meta property="og:description" content="{{ $pageDescription }}">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="@yield('canonical', url()->current())">
+    <meta property="og:url" content="{{ $pageCanonical }}">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="@yield('title', 'Housing365 India')">
-    <meta name="twitter:description" content="@yield('meta_description', 'India\'s unified property lifecycle platform.')">
+    <meta name="twitter:title" content="{{ $pageTitle }}">
+    <meta name="twitter:description" content="{{ $pageDescription }}">
+
+    @if(!empty($seoOverride?->schema_json))
+        @php
+            $customSchema = is_string($seoOverride->schema_json)
+                ? json_decode($seoOverride->schema_json, true)
+                : $seoOverride->schema_json;
+        @endphp
+        @if(!empty($customSchema) && (is_array($customSchema) || is_object($customSchema)))
+            <script type="application/ld+json">
+            {!! json_encode($customSchema, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) !!}
+            </script>
+        @endif
+    @endif
+
+    @if(!empty($seoOverride?->faqs))
+        @php
+            $rawFaqs = is_string($seoOverride->faqs) ? json_decode($seoOverride->faqs, true) : $seoOverride->faqs;
+            $overrideFaqItems = is_array($rawFaqs)
+                ? array_values(array_filter($rawFaqs, fn($f) => is_array($f) && !empty(trim((string)($f['question'] ?? ''))) && !empty(trim((string)($f['answer'] ?? '')))))
+                : [];
+        @endphp
+        @if(count($overrideFaqItems) > 0)
+            <script type="application/ld+json">
+            {!! json_encode([
+                '@context' => 'https://schema.org',
+                '@type' => 'FAQPage',
+                'mainEntity' => array_map(fn($f) => [
+                    '@type' => 'Question',
+                    'name' => trim((string)$f['question']),
+                    'acceptedAnswer' => [
+                        '@type' => 'Answer',
+                        'text' => trim((string)$f['answer']),
+                    ],
+                ], $overrideFaqItems),
+            ], JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) !!}
+            </script>
+        @endif
+    @endif
 
     @stack('schema')
 
@@ -694,6 +765,96 @@
         </div>
     </footer>
 
+    <!-- ── HOUSING365 FLOATING WHATSAPP CHAT BOX ── -->
+    @php
+        $rawWaPhone = \App\Models\Setting::get('whatsapp_number') ?: (\App\Models\Setting::get('contact_phone') ?: '+916376163263');
+        $cleanWaDigits = preg_replace('/[^0-9]/', '', (string) $rawWaPhone);
+        if (strlen($cleanWaDigits) === 10) {
+            $cleanWaDigits = '91' . $cleanWaDigits;
+        }
+        $defaultWaMsg = \App\Models\Setting::get('whatsapp_default_message') ?: 'Hi Housing365 India, I am interested in property services.';
+    @endphp
+    <div id="h365-wa-widget" class="fixed z-50 bottom-20 lg:bottom-6 right-4 sm:right-6 flex flex-col items-end pointer-events-auto">
+        <!-- Floating Popup Chat Window (Toggled via JS) -->
+        <div id="h365-wa-popup" class="hidden mb-3 w-[320px] sm:w-[360px] bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden transform transition-all duration-300 origin-bottom-right">
+            <!-- Header -->
+            <div class="bg-gradient-to-r from-brand-navy via-brand-navy-light to-brand-navy-dark p-4 text-white relative">
+                <button type="button" onclick="toggleWhatsAppChat()" class="absolute top-3.5 right-3.5 w-7 h-7 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition" aria-label="Close Chat">
+                    <i class="fa-solid fa-xmark text-xs"></i>
+                </button>
+                <div class="flex items-center gap-3">
+                    <div class="relative">
+                        <div class="w-11 h-11 rounded-full bg-emerald-500 text-white flex items-center justify-center text-xl shadow-inner font-bold">
+                            <i class="fa-brands fa-whatsapp"></i>
+                        </div>
+                        <span class="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-emerald-400 border-2 border-brand-navy"></span>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-1.5">
+                            <h4 class="font-bold text-sm tracking-tight text-white leading-tight">Housing365 India</h4>
+                            <i class="fa-solid fa-circle-check text-emerald-400 text-xs" title="Verified Concierge"></i>
+                        </div>
+                        <p class="text-[11px] text-emerald-300 font-medium">Online &bull; Quick WhatsApp Support</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Body with Chat Bubbles -->
+            <div class="p-4 bg-slate-50 space-y-3 max-h-[340px] overflow-y-auto">
+                <!-- Welcome Agent Bubble -->
+                <div class="flex items-start gap-2.5">
+                    <div class="w-7 h-7 rounded-full bg-brand-navy text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
+                        <i class="fa-solid fa-headset"></i>
+                    </div>
+                    <div class="bg-white p-3 rounded-2xl rounded-tl-none border border-slate-200/80 shadow-sm text-xs text-slate-700 leading-relaxed max-w-[85%]">
+                        <p class="font-bold text-brand-navy mb-1">Namaste! 🙏</p>
+                        Welcome to Housing365 India. Looking to rent, list, buy, or manage a property?
+                        <span class="block text-[10px] text-slate-400 text-right mt-1">Just now</span>
+                    </div>
+                </div>
+
+                <!-- Quick Prompt Option Pills -->
+                <div class="pt-1">
+                    <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2">How can we help you?</p>
+                    <div class="grid grid-cols-1 gap-1.5">
+                        <button type="button" onclick="sendWhatsAppQuick('Hi Housing365, I am looking to rent a verified property in India.')" class="text-left w-full px-3 py-2 rounded-xl bg-white hover:bg-emerald-50 border border-slate-200 hover:border-emerald-300 text-xs font-medium text-slate-700 transition flex items-center justify-between group">
+                            <span>🔑 Find Rental Property</span>
+                            <i class="fa-solid fa-chevron-right text-[10px] text-slate-400 group-hover:text-emerald-600 transition"></i>
+                        </button>
+                        <button type="button" onclick="sendWhatsAppQuick('Hi Housing365, I am an owner and want to list my property with ₹0 brokerage.')" class="text-left w-full px-3 py-2 rounded-xl bg-white hover:bg-emerald-50 border border-slate-200 hover:border-emerald-300 text-xs font-medium text-slate-700 transition flex items-center justify-between group">
+                            <span>🏠 List Property Free (₹0 Brokerage)</span>
+                            <i class="fa-solid fa-chevron-right text-[10px] text-slate-400 group-hover:text-emerald-600 transition"></i>
+                        </button>
+                        <button type="button" onclick="sendWhatsAppQuick('Hi Housing365, I need an online 11-month legal rent agreement with e-stamp.')" class="text-left w-full px-3 py-2 rounded-xl bg-white hover:bg-emerald-50 border border-slate-200 hover:border-emerald-300 text-xs font-medium text-slate-700 transition flex items-center justify-between group">
+                            <span>📜 Rent Agreement &amp; e-Stamp</span>
+                            <i class="fa-solid fa-chevron-right text-[10px] text-slate-400 group-hover:text-emerald-600 transition"></i>
+                        </button>
+                        <button type="button" onclick="sendWhatsAppQuick('Hi Housing365, I want to know more about Housing365 Care property management.')" class="text-left w-full px-3 py-2 rounded-xl bg-white hover:bg-emerald-50 border border-slate-200 hover:border-emerald-300 text-xs font-medium text-slate-700 transition flex items-center justify-between group">
+                            <span>🛡️ Housing365 Care &amp; Management</span>
+                            <i class="fa-solid fa-chevron-right text-[10px] text-slate-400 group-hover:text-emerald-600 transition"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Direct Action -->
+            <div class="p-3 bg-white border-t border-slate-100">
+                <a id="h365-wa-direct-link" href="https://wa.me/{{ $cleanWaDigits }}?text={{ urlencode($defaultWaMsg) }}" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 px-4 rounded-xl bg-[#25D366] hover:bg-[#20BD5A] text-white font-bold text-xs uppercase tracking-wider shadow-md hover:shadow-lg flex items-center justify-center gap-2 transition">
+                    <i class="fa-brands fa-whatsapp text-lg"></i>
+                    <span>Start WhatsApp Chat</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Floating Button Trigger -->
+        <button id="h365-wa-trigger" type="button" onclick="toggleWhatsAppChat()" class="group relative flex items-center justify-center w-14 h-14 rounded-full bg-[#25D366] hover:bg-[#20BD5A] text-white shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 focus:outline-none" aria-label="Chat on WhatsApp">
+            <!-- Ping animation ring -->
+            <span class="absolute -inset-1 rounded-full bg-[#25D366] opacity-30 group-hover:opacity-50 animate-ping pointer-events-none"></span>
+            <i class="fa-brands fa-whatsapp text-3xl relative z-10"></i>
+            <span class="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-red-500 border-2 border-white text-white text-[10px] font-black flex items-center justify-center shadow">1</span>
+        </button>
+    </div>
+
     <!-- Mobile Sticky Bottom CTA Bar -->
     <div class="fixed bottom-0 left-0 right-0 z-50 lg:hidden p-2.5 bg-white/95 backdrop-blur-lg border-t border-slate-200 shadow-xl">
         <div class="flex items-center gap-2">
@@ -710,12 +871,25 @@
         </div>
     </div>
 
-    <!-- Mobile Drawer JS -->
+    <!-- Mobile Drawer JS & WhatsApp Chat Toggle JS -->
     <script>
         document.getElementById('mobile-toggle-btn').addEventListener('click', function() {
             var d = document.getElementById('mobile-drawer');
             d.classList.toggle('hidden');
         });
+
+        function toggleWhatsAppChat() {
+            var popup = document.getElementById('h365-wa-popup');
+            if (popup) {
+                popup.classList.toggle('hidden');
+            }
+        }
+
+        function sendWhatsAppQuick(message) {
+            var phone = '{{ $cleanWaDigits }}';
+            var url = 'https://wa.me/' + phone + '?text=' + encodeURIComponent(message);
+            window.open(url, '_blank');
+        }
     </script>
     @stack('scripts')
 </body>

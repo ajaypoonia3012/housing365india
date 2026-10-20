@@ -93,7 +93,7 @@
                         @endif
                     </div>
                     <p style="font-size: 0.775rem; color: #64748B; margin: 0.2rem 0 0 0;">
-                        Proves website ownership to index all 57 programmatic US cities and Canadian landing pages in Google search.
+                        Proves website ownership to index all 28 Indian states, top metro cities, and verified property landing pages across Google search.
                     </p>
                 </div>
             </div>
@@ -115,7 +115,69 @@
             </div>
         </div>
 
-        <!-- CARD 3: Additional Custom Header Script -->
+        <!-- CARD 3: WhatsApp Concierge & Live Chat Box -->
+        <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 1rem; padding: 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+            <div style="display: flex; align-items: center; gap: 1rem; border-bottom: 1px solid #F1F5F9; padding-bottom: 1rem; margin-bottom: 1.25rem;">
+                <div style="width: 44px; height: 44px; min-width: 44px; min-height: 44px; max-width: 44px; max-height: 44px; border-radius: 12px; background: rgba(37, 211, 102, 0.12); color: #25D366; display: flex; align-items: center; justify-content: center;">
+                    <i class="fa-brands fa-whatsapp" style="font-size: 24px;"></i>
+                </div>
+                <div style="flex: 1;">
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <h3 style="font-size: 1rem; font-weight: 700; color: #03234B; margin: 0;">
+                            WhatsApp Concierge &amp; Floating Chat Box
+                        </h3>
+                        @if(!empty($whatsapp_number))
+                            <span style="background: #DCFCE7; color: #15803D; font-size: 0.65rem; font-weight: 800; padding: 0.15rem 0.5rem; border-radius: 9999px; text-transform: uppercase;">
+                                Active &middot; {{ $whatsapp_number }}
+                            </span>
+                        @else
+                            <span style="background: #FEF3C7; color: #B45309; font-size: 0.65rem; font-weight: 800; padding: 0.15rem 0.5rem; border-radius: 9999px; text-transform: uppercase;">
+                                Number Needed
+                            </span>
+                        @endif
+                    </div>
+                    <p style="font-size: 0.775rem; color: #64748B; margin: 0.2rem 0 0 0;">
+                        Controls the floating WhatsApp widget on all public website pages and instant client lead routing.
+                    </p>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem;">
+                <div>
+                    <label for="wa_num" style="display: block; font-size: 0.825rem; font-weight: 700; color: #1E293B; margin-bottom: 0.4rem;">
+                        Support WhatsApp Number (with Country Code)
+                    </label>
+                    <input type="text"
+                           id="wa_num"
+                           wire:model="whatsapp_number"
+                           placeholder="e.g. +91 63761 63263 or 916376163263"
+                           style="width: 100%; border: 1px solid #CBD5E1; border-radius: 0.625rem; padding: 0.65rem 0.85rem; font-size: 0.85rem; color: #0F172A; outline: none; transition: border-color 0.15s; font-family: monospace;"
+                           onfocus="this.style.borderColor='#25D366'"
+                           onblur="this.style.borderColor='#CBD5E1'">
+                    <p style="font-size: 0.75rem; color: #64748B; margin: 0.4rem 0 0 0;">
+                        Indian mobile format: +91 XXXXX XXXXX. Users clicking the floating widget will be routed to this number.
+                    </p>
+                </div>
+
+                <div>
+                    <label for="wa_msg" style="display: block; font-size: 0.825rem; font-weight: 700; color: #1E293B; margin-bottom: 0.4rem;">
+                        Default Greeting / Inbound Prompt
+                    </label>
+                    <input type="text"
+                           id="wa_msg"
+                           wire:model="whatsapp_default_message"
+                           placeholder="e.g. Hi Housing365 India, I am interested in property services."
+                           style="width: 100%; border: 1px solid #CBD5E1; border-radius: 0.625rem; padding: 0.65rem 0.85rem; font-size: 0.85rem; color: #0F172A; outline: none; transition: border-color 0.15s;"
+                           onfocus="this.style.borderColor='#25D366'"
+                           onblur="this.style.borderColor='#CBD5E1'">
+                    <p style="font-size: 0.75rem; color: #64748B; margin: 0.4rem 0 0 0;">
+                        Pre-filled starter message when visitors initiate chat on WhatsApp.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 4: Additional Custom Header Script -->
         <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 1rem; padding: 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
             <div style="display: flex; align-items: center; gap: 1rem; border-bottom: 1px solid #F1F5F9; padding-bottom: 1rem; margin-bottom: 1.25rem;">
                 <div style="width: 44px; height: 44px; min-width: 44px; min-height: 44px; max-width: 44px; max-height: 44px; border-radius: 12px; background: rgba(212, 168, 83, 0.15); color: #B45309; display: flex; align-items: center; justify-content: center;">
@@ -152,7 +214,7 @@
                     onmouseover="this.style.background='#0096C7'; this.style.transform='translateY(-1px)';" 
                     onmouseout="this.style.background='#00AEEF'; this.style.transform='none';">
                 <i class="fa-solid fa-floppy-disk"></i>
-                <span>Save Analytics &amp; SEO Settings</span>
+                <span>Save Analytics, SEO &amp; WhatsApp Settings</span>
             </button>
         </div>
 
@@ -186,7 +248,7 @@
                     </div>
                     <ol style="margin: 0; padding-left: 1.25rem;">
                         <li>Open <a href="https://search.google.com/search-console" target="_blank" style="color: #00AEEF; text-decoration: underline;">search.google.com/search-console</a></li>
-                        <li>Add your domain/URL (e.g. <code>https://housing365.ca</code>)</li>
+                        <li>Add your domain/URL (e.g. <code>https://housing365.in</code>)</li>
                         <li>Select <strong>HTML tag</strong> as the verification method</li>
                         <li>Copy the tag, paste it above, click <strong>Save</strong>, then click <strong>Verify</strong> in Google.</li>
                     </ol>

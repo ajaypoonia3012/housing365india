@@ -9,7 +9,9 @@
     @endforeach
 
     @foreach($cities as $city)
-    @php $stateSlug = $city->state_slug ?: ($city->state ? $city->state->slug : 'india'); @endphp
+    @php
+        $stateSlug = $city->state_slug ?: ($city->state ? $city->state->slug : ($city->province_or_state ? \Illuminate\Support\Str::slug($city->province_or_state) : 'india'));
+    @endphp
     <url>
         <loc>{{ url('/rent/' . $stateSlug . '/' . $city->slug) }}</loc>
         <changefreq>daily</changefreq>
@@ -25,7 +27,7 @@
     @foreach($localities as $loc)
     @php
         $cSlug = $loc->city?->slug ?: 'city';
-        $sSlug = $loc->city?->state_slug ?: ($loc->state?->slug ?: 'india');
+        $sSlug = $loc->city?->state_slug ?: ($loc->state?->slug ?: ($loc->city?->province_or_state ? \Illuminate\Support\Str::slug($loc->city->province_or_state) : 'india'));
     @endphp
     <url>
         <loc>{{ url('/rent/' . $sSlug . '/' . $cSlug . '/' . $loc->slug) }}</loc>

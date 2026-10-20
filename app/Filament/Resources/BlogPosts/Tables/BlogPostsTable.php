@@ -22,7 +22,9 @@ class BlogPostsTable
                     ->searchable(),
                 TextColumn::make('category')
                     ->searchable(),
-                ImageColumn::make('image'),
+                ImageColumn::make('image')
+                    ->circular()
+                    ->checkFileExistence(false),
                 TextColumn::make('author_name')
                     ->searchable(),
                 TextColumn::make('read_time')

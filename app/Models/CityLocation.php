@@ -20,6 +20,10 @@ class CityLocation extends Model
         'display_order' => 'integer',
     ];
 
+    protected $attributes = [
+        'country' => 'IN',
+    ];
+
     public function state(): BelongsTo
     {
         return $this->belongsTo(State::class, 'state_id');

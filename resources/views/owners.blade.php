@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title', $page->meta_title ?? 'Full-Service Leasing for Landlords & Property Owners | Housing 365')
-@section('meta_description', $page->meta_description ?? 'Strategic pricing, professional 4K marketing, structured tenant screening, and legal lease execution for Canadian and US rental property owners. Performance-based leasing.')
+@section('meta_description', $page->meta_description ?? 'Strategic pricing, professional marketing, verified tenant screening, and legal lease execution for Indian property owners and NRIs. Performance-based leasing.')
 
 @section('content')
 

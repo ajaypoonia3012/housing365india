@@ -2,7 +2,7 @@
 
 @php
     $cityName = $city->name ?? $city['title'] ?? 'City';
-    $countryCode = $city->country ?? ($city['stateSlug'] ? 'US' : 'CA');
+    $countryCode = $city->country ?? 'IN';
     $stateRegion = $city->state ?? $city['stateSlug'] ?? '';
     $avgRent = $city->average_rent ?? $city['medianRent'] ?? 2400;
     $bgImg = $city->image ?? $city['heroImageUrl'] ?? '/city-placeholder-c.svg';

@@ -1,9 +1,52 @@
 @extends('layouts.app')
 
-@section('title', 'Housing365 India | Everything Property. One Platform. Verified Owners, Zero Brokerage & Legal Leasing')
-@section('meta_description', 'Find, list, lease, verify, move, maintain, manage, buy and sell property across India — all through Housing365. ₹0 standard residential listing fee for owners.')
+@section('title', $page?->meta_title ?: 'Housing365 India | Everything Property. One Platform. Verified Owners, Zero Brokerage & Legal Leasing')
+@section('meta_description', $page?->meta_description ?: 'Find, list, lease, verify, move, maintain, manage, buy and sell property across India — all through Housing365. ₹0 standard residential listing fee for owners.')
 
 @section('content')
+
+@php
+    $heroBadge = $page?->hero_badge ?: 'EVERYTHING PROPERTY. ONE PLATFORM.';
+    $heroTitle = ($seoH1 ?? null)
+        ?: (\App\Models\SeoMetaOverride::findByPath('/')?->h1
+        ?: ($page?->hero_title ?: null));
+    $heroSubtitle = $page?->hero_subtitle ?: null;
+
+    $sanitizeUrl = function (?string $url, string $fallback): string {
+        if (empty($url)) {
+            return $fallback;
+        }
+        $trimmed = trim($url);
+        // Explicitly reject protocol-relative URLs (e.g. //example.com)
+        if (str_starts_with($trimmed, '//')) {
+            return $fallback;
+        }
+        // Reject unsafe or dangerous URL schemes
+        if (preg_match('/^(javascript|data|vbscript|file):/i', $trimmed)) {
+            return $fallback;
+        }
+        // Permit valid relative paths starting with a single forward slash
+        if (str_starts_with($trimmed, '/')) {
+            return $trimmed;
+        }
+        // Permit approved absolute HTTPS, tel:, or mailto: links
+        if (preg_match('/^(https:\/\/|tel:|mailto:)/i', $trimmed)) {
+            return $trimmed;
+        }
+
+        return $fallback;
+    };
+
+    $primaryCtaText = $page?->hero_cta_text ?: 'List my Property — Free';
+    $primaryCtaLink = $sanitizeUrl($page?->hero_cta_link, route('properties.post'));
+
+    $secondaryCtaText = $page?->sections_data['secondary_cta_text']
+        ?? \App\Models\Setting::get('home_secondary_cta_text', 'Find a Property');
+    $secondaryCtaLink = $sanitizeUrl(
+        $page?->sections_data['secondary_cta_link'] ?? \App\Models\Setting::get('home_secondary_cta_link'),
+        route('properties.index')
+    );
+@endphp
 
 <!-- ── SECTION 1: HERO SHOWCASE WITH EVERYTHING PROPERTY. ONE PLATFORM ── -->
 <section class="relative overflow-hidden bg-gradient-to-b from-[#F7FAFD] via-white to-white pt-8 pb-12 sm:pt-12 sm:pb-16 lg:pt-16 lg:pb-20">
@@ -19,18 +62,26 @@
                 <!-- Eyebrow Badge -->
                 <div class="mb-4 inline-flex items-center gap-2 rounded-full border border-brand-cyan/20 bg-brand-cyan/5 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-brand-cyan">
                     <span class="h-1.5 w-1.5 rounded-full bg-brand-cyan"></span>
-                    <span>EVERYTHING PROPERTY. ONE PLATFORM.</span>
+                    <span>{{ $heroBadge }}</span>
                 </div>
 
                 <!-- Headline -->
                 <h1 class="font-display text-4xl font-normal leading-[1.12] tracking-tight text-brand-navy sm:text-5xl md:text-6xl">
-                    Everything Property.
-                    <span class="block font-display font-medium text-brand-cyan mt-1">One Platform.</span>
+                    @if($heroTitle)
+                        {!! \App\Services\HtmlSanitizer::clean($heroTitle) !!}
+                    @else
+                        Everything Property.
+                        <span class="block font-display font-medium text-brand-cyan mt-1">One Platform.</span>
+                    @endif
                 </h1>
 
                 <!-- Subheadline -->
                 <p class="mt-5 max-w-xl text-base leading-relaxed text-slate-600 sm:text-lg">
-                    Find, list, lease, verify, move, maintain, manage, buy and sell property across India — all through Housing365. Enjoy <strong class="text-brand-navy font-bold">₹0 standard residential listing and leasing fee</strong> for owners.
+                    @if($heroSubtitle)
+                        {!! \App\Services\HtmlSanitizer::clean($heroSubtitle) !!}
+                    @else
+                        Find, list, lease, verify, move, maintain, manage, buy and sell property across India — all through Housing365. Enjoy <strong class="text-brand-navy font-bold">₹0 standard residential listing and leasing fee</strong> for owners.
+                    @endif
                 </p>
 
                 <!-- Persona Quick Bar -->
@@ -47,14 +98,14 @@
 
                 <!-- CTA Buttons -->
                 <div class="mt-8 flex flex-wrap items-center gap-4">
-                    <a href="{{ route('properties.post') }}" class="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-navy px-7 py-3.5 text-sm font-bold text-white shadow-lg shadow-brand-navy/20 transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-navy-light">
+                    <a href="{{ $primaryCtaLink }}" class="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-navy px-7 py-3.5 text-sm font-bold text-white shadow-lg shadow-brand-navy/20 transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-navy-light">
                         <i class="fa-solid fa-circle-plus text-brand-cyan text-xs"></i>
-                        <span>List my Property — Free</span>
+                        <span>{{ $primaryCtaText }}</span>
                     </a>
 
-                    <a href="{{ route('properties.index') }}" class="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-7 py-3.5 text-sm font-bold text-brand-navy shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:bg-slate-50">
+                    <a href="{{ $secondaryCtaLink }}" class="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-7 py-3.5 text-sm font-bold text-brand-navy shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:bg-slate-50">
                         <i class="fa-solid fa-magnifying-glass text-xs text-brand-cyan"></i>
-                        <span>Find a Property</span>
+                        <span>{{ $secondaryCtaText }}</span>
                     </a>
                 </div>
 

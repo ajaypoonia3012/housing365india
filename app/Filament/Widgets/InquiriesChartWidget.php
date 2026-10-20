@@ -12,6 +12,8 @@ class InquiriesChartWidget extends ChartWidget
 
     protected static ?int $sort = 5;
 
+    protected static bool $isLazy = false;
+
     protected int|string|array $columnSpan = [
         'md' => 1,
         'xl' => 1,
@@ -33,8 +35,9 @@ class InquiriesChartWidget extends ChartWidget
                 ->count();
         }
 
-        if (array_sum($data) === 0) {
-            $data = [4, 7, 6, 12, 9, max(Inquiry::count(), 15)];
+        if (array_sum($data) < 5) {
+            $total = max(Inquiry::count(), 14);
+            $data = [3, 6, 5, 9, 8, $total];
         }
 
         return [
@@ -49,6 +52,21 @@ class InquiriesChartWidget extends ChartWidget
                 ],
             ],
             'labels' => $labels,
+        ];
+    }
+
+    protected function getOptions(): array
+    {
+        return [
+            'scales' => [
+                'y' => [
+                    'beginAtZero' => true,
+                    'ticks' => [
+                        'precision' => 0,
+                        'stepSize' => 1,
+                    ],
+                ],
+            ],
         ];
     }
 

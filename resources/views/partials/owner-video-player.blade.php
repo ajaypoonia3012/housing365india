@@ -1,5 +1,5 @@
 {{-- Housing365 Interactive Owner Strategy Video Player --}}
-{{-- Faithfully ported from movesmartrental-website OwnerVideoPlayer React component --}}
+{{-- Housing365 Owner Strategy Video Player component --}}
 
 <div id="owner-video-root" class="relative w-full">
     <div id="owner-video-player-container"
