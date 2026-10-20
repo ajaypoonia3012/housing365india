@@ -78,7 +78,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        // 5. City Locations (Toronto, Vancouver, Ottawa, New York, etc.)
+        // 5. City Locations (Bengaluru, Mumbai, Delhi, Pune, Hyderabad, etc.)
         Schema::create('city_locations', function (Blueprint $table) {
             $table->id();
             $table->string('name');

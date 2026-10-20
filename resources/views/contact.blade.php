@@ -189,7 +189,7 @@
 
                         <div>
                             <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">Subject</label>
-                            <input type="text" name="subject" class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-cyan focus:border-brand-cyan transition" placeholder="e.g. Inquiring about Toronto 2-bedroom rental listing">
+                            <input type="text" name="subject" class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-cyan focus:border-brand-cyan transition" placeholder="e.g. Inquiring about Mumbai 2BHK rental listing in Bandra West">
                         </div>
 
                         <div>

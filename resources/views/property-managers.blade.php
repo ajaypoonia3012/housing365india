@@ -439,7 +439,7 @@
                 <div>
                     <div class="flex items-center justify-between mb-4">
                         <span class="px-3 py-1 rounded-full text-xs font-bold bg-sky-50 text-brand-cyan">Multi-Family PMC Partner</span>
-                        <span class="text-xs text-slate-400 font-semibold">Toronto &amp; Mississauga, ON</span>
+                        <span class="text-xs text-slate-400 font-semibold">Bengaluru &amp; Pune, India</span>
                     </div>
                     <h3 class="font-display text-2xl font-bold text-brand-navy mb-3">120-Unit Rental Portfolio Leased in 28 Days</h3>
                     <p class="text-slate-600 text-sm sm:text-base leading-relaxed mb-6">

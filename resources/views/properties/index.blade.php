@@ -540,8 +540,8 @@
             return;
         }
 
-        const defaultLat = 43.6532; // Toronto
-        const defaultLng = -79.3832;
+        const defaultLat = 28.6139; // India (Delhi NCR center)
+        const defaultLng = 77.2090;
 
         mapInstance = L.map('properties-leaflet-map').setView([defaultLat, defaultLng], 11);
 
