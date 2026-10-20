@@ -4,6 +4,7 @@ namespace App\Filament\Resources\BlogPosts\Schemas;
 
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -45,6 +46,21 @@ class BlogPostForm
                     ->default('4 min read'),
                 Toggle::make('is_published')
                     ->required(),
+                Toggle::make('auto_post_to_linkedin')
+                    ->label('Post to LinkedIn automatically upon publishing')
+                    ->helperText('Automatically shares this article to your company LinkedIn feed when published.')
+                    ->default(false),
+                Placeholder::make('linkedin_status')
+                    ->label('LinkedIn Publication Status')
+                    ->content(function ($record) {
+                        if (! $record || ! $record->linkedin_shared_at) {
+                            return 'Not shared on LinkedIn yet.';
+                        }
+                        $url = $record->linkedin_post_url ? "<a href='{$record->linkedin_post_url}' target='_blank' style='color:#0a66c2; font-weight:600; text-decoration:underline; margin-left:8px;'>Open LinkedIn Post ↗</a>" : '';
+                        $dateStr = $record->linkedin_shared_at->format('d M Y, H:i');
+                        return new \Illuminate\Support\HtmlString("<span>✅ Shared to LinkedIn on <strong>{$dateStr}</strong></span>{$url}");
+                    })
+                    ->visible(fn ($record) => $record && $record->linkedin_shared_at),
                 DateTimePicker::make('published_at'),
             ]);
     }

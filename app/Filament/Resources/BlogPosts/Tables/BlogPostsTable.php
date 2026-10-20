@@ -34,6 +34,14 @@ class BlogPostsTable
                 TextColumn::make('published_at')
                     ->dateTime()
                     ->sortable(),
+                TextColumn::make('linkedin_shared_at')
+                    ->label('LinkedIn')
+                    ->badge()
+                    ->state(fn ($record): string => $record->linkedin_shared_at ? 'Posted' : 'Not Shared')
+                    ->color(fn ($record): string => $record->linkedin_shared_at ? 'success' : 'gray')
+                    ->icon(fn ($record): string => $record->linkedin_shared_at ? 'heroicon-m-check-badge' : 'heroicon-m-share')
+                    ->tooltip(fn ($record): string => $record->linkedin_shared_at ? 'Shared on ' . $record->linkedin_shared_at->format('d M Y, H:i') : 'Not shared on LinkedIn yet')
+                    ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -47,6 +55,7 @@ class BlogPostsTable
                 //
             ])
             ->recordActions([
+                \App\Services\LinkedInPublishingService::createFilamentAction(),
                 EditAction::make(),
             ])
             ->toolbarActions([
