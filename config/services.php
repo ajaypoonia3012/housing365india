@@ -35,4 +35,19 @@ return [
         ],
     ],
 
+    'anthropic' => [
+        'api_key' => env('ANTHROPIC_API_KEY'),
+        'model' => env('ANTHROPIC_MODEL', 'claude-sonnet-5-5'),
+    ],
+
+    'linkedin' => [
+        'access_token' => env('LINKEDIN_ACCESS_TOKEN'),
+        'author_urn' => env('LINKEDIN_AUTHOR_URN'),
+        'version' => env('LINKEDIN_API_VERSION', '202401'),
+    ],
+
+    'blog' => [
+        'auto_publish' => env('BLOG_AUTO_PUBLISH', false),
+    ],
+
 ];

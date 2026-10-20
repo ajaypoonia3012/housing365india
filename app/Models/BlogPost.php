@@ -16,7 +16,23 @@ class BlogPost extends Model
         'published_at' => 'datetime',
         'linkedin_shared_at' => 'datetime',
         'auto_post_to_linkedin' => 'boolean',
+        'tags' => 'array',
     ];
+
+    public function topic(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(BlogTopic::class, 'blog_post_id');
+    }
+
+    public function getBodyAttribute(): ?string
+    {
+        return $this->attributes['content'] ?? null;
+    }
+
+    public function setBodyAttribute(?string $value): void
+    {
+        $this->attributes['content'] = $value;
+    }
 
     public function getPublicUrlAttribute(): string
     {

@@ -111,9 +111,9 @@ class LinkedInBlogPublishingTest extends TestCase
         Setting::set('linkedin_author_urn', 'urn:li:organization:998877', 'social', 'text', 'URN');
 
         Http::fake([
-            'https://api.linkedin.com/v2/ugcPosts' => Http::response([
-                'id' => 'urn:li:share:987654321',
-            ], 201),
+            'https://api.linkedin.com/rest/posts' => Http::response([], 201, [
+                'x-restli-id' => 'urn:li:share:987654321',
+            ]),
         ]);
 
         $post = BlogPost::create([

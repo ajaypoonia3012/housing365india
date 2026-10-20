@@ -98,27 +98,32 @@ class LinkedInPublishingService
     /**
      * Check if LinkedIn API integration credentials exist.
      */
+    /**
+     * Check if LinkedIn API integration credentials exist.
+     */
     public static function isApiConfigured(): bool
     {
-        $token = Setting::get('linkedin_access_token');
+        $token = config('services.linkedin.access_token') ?: Setting::get('linkedin_access_token');
 
         return ! empty($token);
     }
 
     /**
-     * Publish article directly to LinkedIn feed via official LinkedIn REST API.
+     * Publish article directly to LinkedIn feed via official LinkedIn REST Posts API.
+     * Uses POST https://api.linkedin.com/rest/posts with modern Linkedin-Version and X-Restli-Protocol-Version headers.
      */
     public static function publishViaApi(BlogPost $post, ?string $customCommentary = null): array
     {
-        $token = Setting::get('linkedin_access_token');
+        $token = config('services.linkedin.access_token') ?: Setting::get('linkedin_access_token');
         if (empty($token)) {
             return [
                 'success' => false,
-                'message' => 'LinkedIn Access Token is not configured. Go to Admin Settings to connect your LinkedIn API token or use the 1-click web share option.',
+                'message' => 'LinkedIn Access Token is not configured. Set LINKEDIN_ACCESS_TOKEN in .env or configure in Admin Settings.',
             ];
         }
 
-        $authorUrn = Setting::get('linkedin_author_urn');
+        $authorUrn = config('services.linkedin.author_urn') ?: Setting::get('linkedin_author_urn');
+        $apiVersion = config('services.linkedin.version', '202401');
 
         // If author URN is not set, try to resolve authenticated user's URN from userinfo endpoint
         if (empty($authorUrn)) {
@@ -139,7 +144,7 @@ class LinkedInPublishingService
         if (empty($authorUrn)) {
             return [
                 'success' => false,
-                'message' => 'Could not determine LinkedIn Author URN. Please configure your LinkedIn Organization URN (e.g. urn:li:organization:1234567) or Person URN in Settings.',
+                'message' => 'Could not determine LinkedIn Author URN. Please configure LINKEDIN_AUTHOR_URN in .env (e.g. urn:li:organization:1234567 or urn:li:person:abcdef) or Settings.',
             ];
         }
 
@@ -147,44 +152,42 @@ class LinkedInPublishingService
 
         $payload = [
             'author' => $authorUrn,
-            'lifecycleState' => 'PUBLISHED',
-            'specificContent' => [
-                'com.linkedin.ugc.ShareContent' => [
-                    'shareCommentary' => [
-                        'text' => $commentary,
-                    ],
-                    'shareMediaCategory' => 'ARTICLE',
-                    'media' => [
-                        [
-                            'status' => 'READY',
-                            'description' => [
-                                'text' => substr($post->excerpt ?: $post->title, 0, 200),
-                            ],
-                            'originalUrl' => $post->public_url,
-                            'title' => [
-                                'text' => $post->title,
-                            ],
-                        ],
-                    ],
+            'commentary' => $commentary,
+            'visibility' => 'PUBLIC',
+            'distribution' => [
+                'feedDistribution' => 'MAIN_FEED',
+                'targetEntities' => [],
+                'thirdPartyDistributionChannels' => [],
+            ],
+            'content' => [
+                'article' => [
+                    'source' => $post->public_url,
+                    'title' => $post->title,
+                    'description' => substr($post->excerpt ?: $post->title, 0, 200),
                 ],
             ],
-            'visibility' => [
-                'com.linkedin.ugc.MemberNetworkVisibility' => 'PUBLIC',
-            ],
+            'lifecycleState' => 'PUBLISHED',
+            'isReshareDisabledByAuthor' => false,
         ];
 
         try {
             $response = Http::withToken($token)
                 ->withHeaders([
+                    'Linkedin-Version' => $apiVersion,
                     'X-Restli-Protocol-Version' => '2.0.0',
                     'Content-Type' => 'application/json',
                 ])
                 ->timeout(15)
-                ->post('https://api.linkedin.com/v2/ugcPosts', $payload);
+                ->post('https://api.linkedin.com/rest/posts', $payload);
 
-            if ($response->successful()) {
-                $postId = $response->json('id') ?: 'urn:li:share:' . time();
-                $postUrl = 'https://www.linkedin.com/feed/update/' . $postId;
+            if ($response->successful() || $response->status() === 201) {
+                $postId = $response->header('x-restli-id')
+                    ?: $response->json('id')
+                    ?: ($response->header('Location') ? basename($response->header('Location')) : 'urn:li:share:' . time());
+
+                $postUrl = str_starts_with($postId, 'urn:')
+                    ? 'https://www.linkedin.com/feed/update/' . $postId
+                    : 'https://www.linkedin.com/feed/update/urn:li:share:' . $postId;
 
                 $post->update([
                     'linkedin_post_id' => $postId,
@@ -196,16 +199,16 @@ class LinkedInPublishingService
                     'success' => true,
                     'post_id' => $postId,
                     'post_url' => $postUrl,
-                    'message' => 'Successfully published article to LinkedIn!',
+                    'message' => 'Successfully published article to LinkedIn via Posts API!',
                 ];
             }
 
             $errorBody = $response->body();
-            Log::error('LinkedIn API Error: ' . $errorBody);
+            Log::error('LinkedIn Posts API Error: ' . $errorBody);
 
             return [
                 'success' => false,
-                'message' => 'LinkedIn API returned error: ' . ($response->json('message') ?: $response->status()),
+                'message' => 'LinkedIn Posts API returned error: ' . ($response->json('message') ?: 'HTTP ' . $response->status()),
                 'details' => $errorBody,
             ];
         } catch (\Throwable $e) {
